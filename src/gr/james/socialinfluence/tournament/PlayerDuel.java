@@ -36,7 +36,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new ComplementaryGreedyDistancePlayer();
+		Player p2 = new LocalSearchDistancePlayer();
 		// p2.setOption("epsilon", 0.001);
 		// p2.setOption("weight_levels", 2);
 		// p2.setOption("clever", true);

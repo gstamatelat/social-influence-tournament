@@ -62,7 +62,6 @@ public class LocalSearchDistancePlayer extends
 	@Override
 	public void getMove() {
 		Move m = new Move();
-		long start = System.currentTimeMillis();
 
 		/*
 		 * First, we select an initial move. Afterwards, we will start tweaking
@@ -88,7 +87,7 @@ public class LocalSearchDistancePlayer extends
 
 		double maxDistance = 0.0;
 		/* Keep searching until time is up. */
-		while (System.currentTimeMillis() - start < this.d.getExecution()) {
+		while (!this.isInterrupted()) {
 			/* Generate a new, mutated move. */
 			m = mutateMove(m);
 
