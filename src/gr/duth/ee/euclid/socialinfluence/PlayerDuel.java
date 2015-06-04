@@ -7,7 +7,6 @@ import gr.james.socialinfluence.game.GameResult;
 import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.PlayerEnum;
 import gr.james.socialinfluence.game.players.*;
-import gr.james.socialinfluence.game.players.Player;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
 
