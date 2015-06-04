@@ -1,6 +1,5 @@
-package gr.duth.ee.euclid.socialinfluence;
+package gr.james.socialinfluence.tournament;
 
-import gr.duth.ee.euclid.socialinfluence.players.*;
 import gr.james.socialinfluence.game.Game;
 import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.GameResult;
@@ -9,6 +8,7 @@ import gr.james.socialinfluence.game.PlayerEnum;
 import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
+import gr.james.socialinfluence.tournament.players.*;
 
 public class PlayerDuel {
 

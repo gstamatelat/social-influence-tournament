@@ -1,4 +1,4 @@
-package gr.duth.ee.euclid.socialinfluence;
+package gr.james.socialinfluence.tournament;
 
 import gr.james.socialinfluence.game.Game;
 import gr.james.socialinfluence.game.GameDefinition;

@@ -1,4 +1,4 @@
-package gr.duth.ee.euclid.socialinfluence.players;
+package gr.james.socialinfluence.tournament.players;
 
 import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.graph.Vertex;

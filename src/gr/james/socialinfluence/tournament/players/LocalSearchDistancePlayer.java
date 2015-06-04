@@ -1,4 +1,4 @@
-package gr.duth.ee.euclid.socialinfluence.players;
+package gr.james.socialinfluence.tournament.players;
 
 import java.util.HashMap;
 import java.util.Map;
