@@ -1,4 +1,3 @@
-social-influence-tournament
-===========================
+# Social Influence Tournament
 
 Tournament edition of social-influence for courses
