@@ -5,6 +5,7 @@ import java.util.Map;
 
 import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.MovePoint;
+import gr.james.socialinfluence.game.players.Player;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.graph.algorithms.Dijkstra;
@@ -13,8 +14,7 @@ import gr.james.socialinfluence.graph.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.helper.Finals;
 import gr.james.socialinfluence.helper.Helper;
 
-public class LocalSearchDistancePlayer extends
-		gr.james.socialinfluence.game.players.Player {
+public class LocalSearchDistancePlayer extends Player {
 
 	public static class VertexPair {
 		public Vertex source;

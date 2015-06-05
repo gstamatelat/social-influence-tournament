@@ -4,29 +4,50 @@ Tournament edition of social-influence for courses
 
 ## Usage
 
+The user must implement a player by deriving the `Player` abstract class using the following template.
+
+```java
+package gr.james.socialinfluence.tournament.players;
+
+import gr.james.socialinfluence.game.players.Player;
+
+public class MyPlayer extends Player {
+
+	@Override
+	public void getMove() {
+		// Player logic here
+	}
+
+}
+```
+
 `Player` class contains the following members:
 
-- `Graph g`
-- `GameDefinition d`
-- `MovePointer movePtr`
-- `boolean isInterrupted()`
-- `Map<String, String> options`
+- `Graph g`: Represents the graph which will host the influence game.
+- `GameDefinition d`: Contains the game-specific fields:
+	- `int numOfMoves`: Maximum amount of vertices to influence.
+	- `double budget`: Maximum sum of weights for all chosen move vertices.
+	- `long execution`: Time in milliseconds available to the player to complete their execution.
+	- `boolean tournament`: Flag raised when the player is competing in a tournament context.
+- `MovePointer movePtr`: Used to submit a move with `movePtr.set()`. Subsequent calls will overwrite the previous move.
+- `boolean isInterrupted()`: Interrupt flag by the game engine, signaling that this player has exhausted the available execution time and has to terminate. Submitting a move while this flag is raised has no effect. This flag is raised when `d.execution` milliseconds have elapsed since the invocation of `getMove()`.
+- `Map<String, String> options`: Player-specific parameters, passed by the caller.
 
 `Player` class must overload `void getMove()` and optionally `Player putDefaultOptions()`.
 
-Example of `void getMove()` that submits a random move:
+Example of `getMove()` that submits a random move:
 
 ```java
 public void getMove() {
 	Move m = new Move();
 	RandomVertexIterator rvi = new RandomVertexIterator(g);
-	while (m.getVerticesCount() < d.getNumOfMoves()) {
+	while (m.getVerticesCount() < this.d.getNumOfMoves()) {
 		m.putVertex(rvi.next(), 1.0);
 	}
 	if (!this.d.getTournament()) {
 		Helper.log("Player: " + m);
 	}
-	movePtr.set(m);
+	this.movePtr.set(m);
 }
 ```
 

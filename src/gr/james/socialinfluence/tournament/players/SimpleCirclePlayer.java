@@ -1,10 +1,11 @@
 package gr.james.socialinfluence.tournament.players;
 
 import gr.james.socialinfluence.game.Move;
+import gr.james.socialinfluence.game.players.Player;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.helper.Helper;
 
-public class SimpleCirclePlayer extends gr.james.socialinfluence.game.players.Player {
+public class SimpleCirclePlayer extends Player {
 
 	@Override
 	/**
@@ -33,11 +34,13 @@ public class SimpleCirclePlayer extends gr.james.socialinfluence.game.players.Pl
 	 */
 	public void getMove() {
 		
-		if (!this.g.getMeta().startsWith("Path,") || !this.g.getMeta().contains("cycle=true")) {
+		if (!this.g.getMeta().startsWith("Path,")
+				|| !this.g.getMeta().contains("cycle=true")) {
 			return;
 		}
 
-		int period = (int) Math.round(((double) this.g.getVerticesCount() / this.d.getBudget()));
+		int period = (int) Math
+				.round(((double) this.g.getVerticesCount() / this.d.getBudget()));
 
 		Move m = new Move();
 		int c = 1;

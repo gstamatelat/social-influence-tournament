@@ -3,22 +3,25 @@ package gr.james.socialinfluence.tournament.players;
 import java.util.Set;
 
 import gr.james.socialinfluence.game.Move;
+import gr.james.socialinfluence.game.players.Player;
 import gr.james.socialinfluence.graph.Edge;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.helper.Helper;
 
-public class AdvancedCirclePlayer extends gr.james.socialinfluence.game.players.Player {
+public class AdvancedCirclePlayer extends Player {
 
 	@Override
 	public void getMove() {
-		
-		if (!this.g.getMeta().startsWith("Path,") || !this.g.getMeta().contains("cycle=true")) {
+
+		if (!this.g.getMeta().startsWith("Path,")
+				|| !this.g.getMeta().contains("cycle=true")) {
 			return;
 		}
 
 		Move m = new Move();
 
-		int period = (int) Math.round(((double) this.g.getVerticesCount() / this.d.getBudget()));
+		int period = (int) Math
+				.round(((double) this.g.getVerticesCount() / this.d.getBudget()));
 
 		Vertex v = this.g.getRandomVertex();
 		Vertex previous = v;
