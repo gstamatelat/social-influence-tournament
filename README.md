@@ -67,7 +67,6 @@ public Player putDefaultOptions() {
 ### v1.3
 
 - Extra method `isInterrupted()` on `Player` class gets whether the game mechanism wants the player to terminate. More convenient that manually keeping track of time using `System.currentTimeMillis()`.
-- Test
 
 ### v1.2
 
