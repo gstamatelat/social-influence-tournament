@@ -28,7 +28,7 @@ public class PlayerDuel {
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new GreedyDistancePlayer();
+		Player p1 = new SimpleCirclePlayer();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -36,7 +36,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new LocalSearchDistancePlayer();
+		Player p2 = new AdvancedCirclePlayer();
 		// p2.setOption("epsilon", 0.001);
 		// p2.setOption("weight_levels", 2);
 		// p2.setOption("clever", true);
