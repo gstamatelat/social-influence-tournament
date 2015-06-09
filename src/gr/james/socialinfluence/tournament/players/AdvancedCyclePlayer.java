@@ -20,8 +20,9 @@ public class AdvancedCyclePlayer extends Player {
 
 		Move m = new Move();
 
-		int period = (int) Math
-				.round(((double) this.g.getVerticesCount() / this.d.getBudget()));
+		final double period = (double) this.g.getVerticesCount()
+				/ this.d.getNumOfMoves();
+		double c = period;
 
 		Vertex v = this.g.getRandomVertex();
 		Vertex previous = v;
@@ -29,7 +30,7 @@ public class AdvancedCyclePlayer extends Player {
 		m.putVertex(v, 1.0);
 
 		while (m.getVerticesCount() < this.d.getNumOfMoves()) {
-			for (int j = 0; j < period; j++) {
+			for (int j = 0; j < (int) (c + 0.5); j++) {
 				Set<Edge> edges = v.getOutEdges();
 				Edge[] edgesArray = edges.toArray(new Edge[0]);
 				if (edgesArray[0].getTarget().equals(previous)) {
@@ -41,6 +42,7 @@ public class AdvancedCyclePlayer extends Player {
 				}
 			}
 			m.putVertex(v, 1.0);
+			c += period - (int) (c + 0.5);
 		}
 
 		if (!this.d.getTournament()) {

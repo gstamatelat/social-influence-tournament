@@ -17,7 +17,7 @@ public class SimpleCyclePlayer extends Player {
 		}
 
 		/* Optimal spreading distance */
-		double period = (double) this.g.getVerticesCount()
+		final double period = (double) this.g.getVerticesCount()
 				/ this.d.getNumOfMoves();
 
 		/* Initialize a new move without any vertices */
@@ -26,7 +26,8 @@ public class SimpleCyclePlayer extends Player {
 		/* Start with a random ID */
 		double c = (double) g.getRandomVertex().getId();
 
-		for (int i = 0; i < this.d.getNumOfMoves(); i++) {
+		/* Repeat until m is full */
+		while (m.getVerticesCount() < this.d.getNumOfMoves()) {
 			/* Select the vertex that corresponds to [c mod N] to avoid overflow */
 			Vertex n = this.g.getVertexFromId(((int) (c + 0.5) - 1)
 					% g.getVerticesCount() + 1);
@@ -38,7 +39,7 @@ public class SimpleCyclePlayer extends Player {
 			c += period;
 		}
 
-		/* We can print stuff if we don't compete in tournament */
+		/* We can print stuff if we aren't competing in tournament */
 		if (!this.d.getTournament()) {
 			Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
 		}

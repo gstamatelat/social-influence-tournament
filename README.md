@@ -68,6 +68,7 @@ public Player putDefaultOptions() {
 
 - Renamed `SimpleCirclePlayer` to `SimpleCyclePlayer` and `AdvancedCirclePlayer` to `AdvancedCyclePlayer`.
 - `SimpleCyclePlayer` has been updated. This player will begin with a random ID to avoid a situation where there is no ID 1 (like when there are multiple graphs in the same framework instance). Furthermore, it better handles rounding on the `period` and achieves theoretical optimal performance.
+- `AdvancedCyclePlayer` has been updated. It better handles rounding on the `period` and achieves theoretical optimal performance similar to `SimpleCyclePlayer`.
 
 ### v1.3
 
