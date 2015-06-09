@@ -5,7 +5,7 @@ import gr.james.socialinfluence.game.players.Player;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.helper.Helper;
 
-public class SimpleCirclePlayer extends Player {
+public class SimpleCyclePlayer extends Player {
 
 	@Override
 	public void getMove() {

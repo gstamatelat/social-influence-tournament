@@ -8,7 +8,7 @@ import gr.james.socialinfluence.graph.Edge;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.helper.Helper;
 
-public class AdvancedCirclePlayer extends Player {
+public class AdvancedCyclePlayer extends Player {
 
 	@Override
 	public void getMove() {
