@@ -10,7 +10,7 @@ public class SimpleCyclePlayer extends Player {
 	@Override
 	public void getMove() {
 
-		/* This player only works in the circle graph */
+		/* This player only works in the cycle graph */
 		if (!this.g.getMeta().startsWith("Path,")
 				|| !this.g.getMeta().contains("cycle=true")) {
 			return;
@@ -31,10 +31,10 @@ public class SimpleCyclePlayer extends Player {
 			/* Select the vertex that corresponds to [c mod N] to avoid overflow */
 			Vertex n = this.g.getVertexFromId(((int) (c + 0.5) - 1)
 					% g.getVerticesCount() + 1);
-			
+
 			/* Add the vertex to m */
 			m.putVertex(n, 1.0);
-			
+
 			/* Advance by period vertices */
 			c += period;
 		}
