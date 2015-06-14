@@ -70,6 +70,7 @@ public Player putDefaultOptions() {
 - `SimpleCyclePlayer` has been updated. This player will begin with a random ID to avoid a situation where there is no ID 1 (like when there are multiple graphs in the same framework instance). Furthermore, it better handles rounding on the `period` and achieves theoretical optimal performance.
 - `AdvancedCyclePlayer` has been updated. It better handles rounding on the `period` and achieves theoretical optimal performance similar to `SimpleCyclePlayer`.
 - Distance maps are now calculated using the Floyd-Warshall algorithm, instead of multiple Dijkstra executions.
+- `VertexPair` class has been merged to the main project.
 - Increased verbosity and error reporting.
 
 ### v1.3
