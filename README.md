@@ -64,6 +64,10 @@ public Player putDefaultOptions() {
 
 ## Changelog
 
+### v1.5
+
+- Fixed a bug on the generator of the TwoWheels graph.
+
 ### v1.4
 
 - Renamed `SimpleCirclePlayer` to `SimpleCyclePlayer` and `AdvancedCirclePlayer` to `AdvancedCyclePlayer`.

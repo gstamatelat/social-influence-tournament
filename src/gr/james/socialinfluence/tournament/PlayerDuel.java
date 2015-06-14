@@ -8,6 +8,7 @@ import gr.james.socialinfluence.game.PlayerEnum;
 import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
+import gr.james.socialinfluence.helper.Helper;
 import gr.james.socialinfluence.tournament.players.*;
 
 public class PlayerDuel {
@@ -21,7 +22,7 @@ public class PlayerDuel {
 		 * tournament: Use tournament settings.
 		 */
 		int numOfMoves = 4;
-		long execution = 30000;
+		long execution = 10000;
 		boolean tournament = false;
 
 		GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
@@ -37,9 +38,6 @@ public class PlayerDuel {
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
 		Player p2 = new ComplementaryGreedyDistancePlayer();
-		// p2.setOption("epsilon", 0.001);
-		// p2.setOption("weight_levels", 2);
-		// p2.setOption("clever", true);
 
 		/*
 		 * The graph object of the game. Use different ones from
@@ -53,7 +51,7 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-		Graph g = RandomG.generate(150, 0.05);
+		Graph g = BarabasiAlbert.generate(25, 2, 2, 1.0);
 
 		/* The game execution */
 		Game game = new Game(g);
