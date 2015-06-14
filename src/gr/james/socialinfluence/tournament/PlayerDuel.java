@@ -9,8 +9,6 @@ import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
 import gr.james.socialinfluence.tournament.players.*;
-import gr.james.socialinfluence.tournament.studentplayers.*;
-import gr.james.socialinfluence.tournament.studentplayers.Obelix;
 
 public class PlayerDuel {
 
@@ -30,7 +28,7 @@ public class PlayerDuel {
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new VaSot();
+		Player p1 = new GreedyDistancePlayer();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -38,7 +36,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new Obelix();
+		Player p2 = new ComplementaryGreedyDistancePlayer();
 		// p2.setOption("epsilon", 0.001);
 		// p2.setOption("weight_levels", 2);
 		// p2.setOption("clever", true);
