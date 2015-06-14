@@ -7,30 +7,27 @@ import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.generators.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.tournament.players.*;
-import gr.james.socialinfluence.tournament.studentplayers.*;
-import gr.james.socialinfluence.tournament.studentplayers.Obelix;
 
 import java.util.HashMap;
 
 public class Tournament {
 	public static void main(String[] args) {
-		int[] maxMoves_t = { 1, 2, 5, 10 }; // CHANGE THIS
-		long[] execution_t = { 5000L }; // CHANGE THIS
+		int[] maxMoves_t = { 1, 2, 5 }; // CHANGE THIS
+		long[] execution_t = { 2000L, 5000L, 20000L }; // CHANGE THIS
 		int rounds = 5; // CHANGE THIS (USUALLY NO NEED)
 
 		for (int maxMoves : maxMoves_t) {
 			for (long execution : execution_t) {
 				HashMap<Player, Double> players = new HashMap<Player, Double>();
-				players.put(new Obelix(), 0.0);
-				players.put(new VaSot(), 0.0);
-				players.put(new yalamas(), 0.0);
-				players.put(new Yoda(), 0.0);
+				players.put(new LocalSearchDistancePlayer(), 0.0);
+				players.put(new GreedyDistancePlayer(), 0.0);
+				players.put(new ComplementaryGreedyDistancePlayer(), 0.0);
 
 				for (Player p1 : players.keySet()) {
 					for (Player p2 : players.keySet()) {
 						if (p1 != p2) {
 							for (int i = 0; i < rounds; i++) {
-								Graph g = RandomG.generate(150, 0.05); // CHANGE THIS
+								Graph g = BarabasiAlbert.generate(25, 2, 2, 1.0); // CHANGE THIS
 								Game game = new Game(g);
 								GameDefinition d = new GameDefinition(maxMoves,
 										maxMoves * 1.0, execution, true);
