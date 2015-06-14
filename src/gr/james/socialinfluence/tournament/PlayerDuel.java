@@ -9,6 +9,8 @@ import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
 import gr.james.socialinfluence.tournament.players.*;
+import gr.james.socialinfluence.tournament.studentplayers.*;
+import gr.james.socialinfluence.tournament.studentplayers.Obelix;
 
 public class PlayerDuel {
 
@@ -21,14 +23,14 @@ public class PlayerDuel {
 		 * tournament: Use tournament settings.
 		 */
 		int numOfMoves = 4;
-		long execution = 10000;
+		long execution = 30000;
 		boolean tournament = false;
 
 		GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new ComplementaryGreedyDistancePlayer();
+		Player p1 = new VaSot();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -36,7 +38,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new GreedyDistancePlayer();
+		Player p2 = new Obelix();
 		// p2.setOption("epsilon", 0.001);
 		// p2.setOption("weight_levels", 2);
 		// p2.setOption("clever", true);
@@ -53,7 +55,7 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-		Graph g = Path.generate(30, true);
+		Graph g = RandomG.generate(150, 0.05);
 
 		/* The game execution */
 		Game game = new Game(g);
@@ -76,7 +78,9 @@ public class PlayerDuel {
 			System.out.println("0.5 - 0.5");
 		}
 
-		System.out.println(String.format("%s - %s", m1, m2));
+		System.out.println(String.format("%s - %s", m1.deepCopy()
+				.normalizeWeights(d.getBudget()), m2.deepCopy()
+				.normalizeWeights(d.getBudget())));
 
 		System.out.println(String.format("Full State: %s", gResult.fullState));
 		System.out.println(String.format("Average Full State: %s",
