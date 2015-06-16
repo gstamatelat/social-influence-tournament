@@ -8,7 +8,6 @@ import gr.james.socialinfluence.game.PlayerEnum;
 import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
-import gr.james.socialinfluence.helper.Helper;
 import gr.james.socialinfluence.tournament.players.*;
 
 public class PlayerDuel {
@@ -29,7 +28,7 @@ public class PlayerDuel {
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new BruteForcePlayer();
+		Player p1 = new SimpleCyclePlayer();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -37,7 +36,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new ComplementaryGreedyDistancePlayer();
+		Player p2 = new AdvancedCyclePlayer();
 
 		/*
 		 * The graph object of the game. Use different ones from
@@ -51,7 +50,7 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-		Graph g = TwoWheels.generate(27);
+		Graph g = Path.generate(27, true);
 
 		/* The game execution */
 		Game game = new Game(g);

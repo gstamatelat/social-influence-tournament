@@ -23,14 +23,13 @@ public class SimpleCyclePlayer extends Player {
 		/* Initialize a new move without any vertices */
 		Move m = new Move();
 
-		/* Start with a random ID */
-		double c = (double) g.getRandomVertex().getId();
+		/* Start with the first vertex */
+		double c = 0;
 
 		/* Repeat until m is full */
 		while (m.getVerticesCount() < this.d.getNumOfMoves()) {
-			/* Select the vertex that corresponds to [c mod N] to avoid overflow */
-			Vertex n = this.g.getVertexFromId(((int) (c + 0.5) - 1)
-					% g.getVerticesCount() + 1);
+			/* Select the vertex that corresponds to round(c) */
+			Vertex n = this.g.getVertexFromIndex((int) (c + 0.5));
 
 			/* Add the vertex to m */
 			m.putVertex(n, 1.0);

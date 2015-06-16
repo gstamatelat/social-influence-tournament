@@ -64,6 +64,10 @@ public Player putDefaultOptions() {
 
 ## Changelog
 
+### v1.6
+
+- Added method `public Vertex getVertexFromIndex(int index)` that returns a vertex based on its index. Index is a deterministic, per-graph, attribute in [0, N), indicating the ranking of the ID of the vertex.
+
 ### v1.5
 
 - Fixed a bug on the generator of the TwoWheels graph.
