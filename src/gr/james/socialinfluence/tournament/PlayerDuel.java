@@ -21,15 +21,15 @@ public class PlayerDuel {
 		 * 
 		 * tournament: Use tournament settings.
 		 */
-		int numOfMoves = 4;
-		long execution = 10000;
+		int numOfMoves = 3;
+		long execution = 0;
 		boolean tournament = false;
 
 		GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new GreedyDistancePlayer();
+		Player p1 = new BruteForcePlayer();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -51,7 +51,7 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-		Graph g = BarabasiAlbert.generate(25, 2, 2, 1.0);
+		Graph g = TwoWheels.generate(27);
 
 		/* The game execution */
 		Game game = new Game(g);
