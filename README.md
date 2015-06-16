@@ -66,7 +66,7 @@ public Player putDefaultOptions() {
 
 ### v1.6
 
-- Added method `public Vertex getVertexFromIndex(int index)` that returns a vertex based on its index. Index is a deterministic, per-graph, attribute in [0, N), indicating the rank of the ID of the specific vertex in the ordered ID list.
+- Added method `public Vertex getVertexFromIndex(int index)` that returns a vertex based on its index. Index is a deterministic, per-graph attribute in [0, N), indicating the rank of the ID of the specific vertex in the ordered ID list.
 
 ### v1.5
 
