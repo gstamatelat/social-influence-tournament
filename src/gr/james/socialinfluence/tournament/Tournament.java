@@ -7,6 +7,7 @@ import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.generators.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.helper.Helper;
+import gr.james.socialinfluence.tournament.student.*;
 
 import java.util.HashMap;
 
@@ -21,13 +22,11 @@ public class Tournament {
 		for (int maxMoves : maxMoves_t) {
 			for (long execution : execution_t) {
 				HashMap<Player, Double> players = new HashMap<Player, Double>();
-				/*
-				 * players.put(new DarthVader(), 0.0);
-				 * players.put(new Obelix(), 0.0);
-				 * players.put(new VaSot(), 0.0);
-				 * players.put(new YalamasPro(), 0.0);
-				 */
-
+				players.put(new DarthVader(), 0.0);
+				players.put(new Obelix(), 0.0);
+				players.put(new VaSot(), 0.0);
+				players.put(new YalamasPro(), 0.0);
+				
 				int max = rounds * players.size() * (players.size() - 1);
 				int completed = 0;
 
