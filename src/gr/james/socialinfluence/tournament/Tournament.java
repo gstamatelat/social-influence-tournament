@@ -43,12 +43,14 @@ public class Tournament {
 								game.setPlayer(PlayerEnum.B, p2.findMove(g, d));
 								int result = game.runGame(d).score;
 								if (result == 0) {
-									players.put(p1, players.get(p1) + 0.5);
-									players.put(p2, players.get(p2) + 0.5);
+									players.put(p1, players.get(p1) + TournamentFinals.DRAW);
+									players.put(p2, players.get(p2) + TournamentFinals.DRAW);
 								} else if (result == -1) {
-									players.put(p1, players.get(p1) + 1.0);
+									players.put(p2, players.get(p2) + TournamentFinals.LOSE);
+									players.put(p1, players.get(p1) + TournamentFinals.WIN);
 								} else {
-									players.put(p2, players.get(p2) + 1.0);
+									players.put(p1, players.get(p1) + TournamentFinals.LOSE);
+									players.put(p2, players.get(p2) + TournamentFinals.WIN);
 								}
 								System.out.print(String.format("%d%% ", 100
 										* (++completed) / max));

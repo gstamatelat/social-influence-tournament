@@ -50,7 +50,7 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-		Graph g = Path.generate(27, true);
+		Graph g = Path.generate(26, true);
 
 		/* The game execution */
 		Game game = new Game(g);
