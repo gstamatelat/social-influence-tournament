@@ -15,20 +15,22 @@ public class Tournament {
 		int[] maxMoves_t = { 2, 3, 5 }; // CHANGE THIS
 		long[] execution_t = { 5000L }; // CHANGE THIS
 		int rounds = 5; // CHANGE THIS (USUALLY NO NEED)
-		
+
 		long now = System.currentTimeMillis();
 
 		for (int maxMoves : maxMoves_t) {
 			for (long execution : execution_t) {
 				HashMap<Player, Double> players = new HashMap<Player, Double>();
-				/*players.put(new DarthVader(), 0.0);
-				players.put(new Obelix(), 0.0);
-				players.put(new VaSot(), 0.0);
-				players.put(new YalamasPro(), 0.0);*/
+				/*
+				 * players.put(new DarthVader(), 0.0);
+				 * players.put(new Obelix(), 0.0);
+				 * players.put(new VaSot(), 0.0);
+				 * players.put(new YalamasPro(), 0.0);
+				 */
 
 				int max = rounds * players.size() * (players.size() - 1);
 				int completed = 0;
-				
+
 				System.out.print(String.format("Moves %d: 0%% ", maxMoves));
 
 				for (Player p1 : players.keySet()) {
@@ -43,14 +45,20 @@ public class Tournament {
 								game.setPlayer(PlayerEnum.B, p2.findMove(g, d));
 								int result = game.runGame(d).score;
 								if (result == 0) {
-									players.put(p1, players.get(p1) + TournamentFinals.DRAW);
-									players.put(p2, players.get(p2) + TournamentFinals.DRAW);
+									players.put(p1, players.get(p1)
+											+ TournamentFinals.DRAW);
+									players.put(p2, players.get(p2)
+											+ TournamentFinals.DRAW);
 								} else if (result == -1) {
-									players.put(p2, players.get(p2) + TournamentFinals.LOSE);
-									players.put(p1, players.get(p1) + TournamentFinals.WIN);
+									players.put(p2, players.get(p2)
+											+ TournamentFinals.LOSE);
+									players.put(p1, players.get(p1)
+											+ TournamentFinals.WIN);
 								} else {
-									players.put(p1, players.get(p1) + TournamentFinals.LOSE);
-									players.put(p2, players.get(p2) + TournamentFinals.WIN);
+									players.put(p1, players.get(p1)
+											+ TournamentFinals.LOSE);
+									players.put(p2, players.get(p2)
+											+ TournamentFinals.WIN);
 								}
 								System.out.print(String.format("%d%% ", 100
 										* (++completed) / max));
@@ -74,7 +82,8 @@ public class Tournament {
 				}
 			}
 		}
-		
-		Helper.log("Time for this graph: %d", Math.round((System.currentTimeMillis() - now)/1000.));
+
+		Helper.log("Time for this graph: %d",
+				Math.round((System.currentTimeMillis() - now) / 1000.));
 	}
 }
