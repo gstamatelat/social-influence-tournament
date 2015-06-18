@@ -64,6 +64,10 @@ public Player putDefaultOptions() {
 
 ## Changelog
 
+### v1.7
+
+- Added `IndexIterator` that iterates over vertices in a graph in index-based ascending order.
+
 ### v1.6
 
 - Added method `public Vertex getVertexFromIndex(int index)` that returns a vertex based on its index. Index is a deterministic, per-graph attribute in [0, N), indicating the rank of the ID of the specific vertex in the ordered ID list.
