@@ -67,6 +67,7 @@ public Player putDefaultOptions() {
 ### v1.7
 
 - Added `IndexIterator` that iterates over vertices in a graph in index-based ascending order.
+- `Game` now ignores player vertices for the final opinion vector mean.
 
 ### v1.6
 

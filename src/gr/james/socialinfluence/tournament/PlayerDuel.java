@@ -8,11 +8,10 @@ import gr.james.socialinfluence.game.PlayerEnum;
 import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
-import gr.james.socialinfluence.tournament.players.*;
 
 public class PlayerDuel {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		/*
 		 * numOfMoves: How many nodes does a move consist of.
 		 * 
@@ -21,7 +20,7 @@ public class PlayerDuel {
 		 * tournament: Use tournament settings.
 		 */
 		int numOfMoves = 3;
-		long execution = 0;
+		long execution = 1000;
 		boolean tournament = false;
 
 		GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
@@ -36,7 +35,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new AdvancedCyclePlayer();
+		Player p2 = new BruteForcePlayer();
 
 		/*
 		 * The graph object of the game. Use different ones from

@@ -12,7 +12,7 @@ import gr.james.socialinfluence.tournament.student.*;
 import java.util.HashMap;
 
 public class Tournament {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		int[] maxMoves_t = { 2, 3, 5 }; // CHANGE THIS
 		long[] execution_t = { 5000L }; // CHANGE THIS
 		int rounds = 5; // CHANGE THIS (USUALLY NO NEED)
@@ -36,7 +36,7 @@ public class Tournament {
 					for (Player p2 : players.keySet()) {
 						if (p1 != p2) {
 							for (int i = 0; i < rounds; i++) {
-								Graph g = BarabasiAlbert.generate(50, 2, 1, 1.0); // CHANGE THIS
+								Graph g = TwoWheels.generate(6); // CHANGE THIS
 								Game game = new Game(g);
 								GameDefinition d = new GameDefinition(maxMoves,
 										maxMoves * 1.0, execution, true);
