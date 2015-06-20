@@ -7,11 +7,8 @@ import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.generators.*;
 import gr.james.socialinfluence.graph.io.Csv;
 import gr.james.socialinfluence.graph.Graph;
-import gr.james.socialinfluence.helper.Finals;
 import gr.james.socialinfluence.helper.Helper;
 import gr.james.socialinfluence.helper.RandomHelper;
-import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
-import gr.james.socialinfluence.tournament.players.PRComplementaryGreedyDistancePlayer;
 import gr.james.socialinfluence.tournament.student.*;
 
 import java.io.IOException;

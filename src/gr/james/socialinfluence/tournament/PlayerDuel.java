@@ -8,6 +8,7 @@ import gr.james.socialinfluence.game.PlayerEnum;
 import gr.james.socialinfluence.game.players.*;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.generators.*;
+import gr.james.socialinfluence.tournament.players.*;
 
 public class PlayerDuel {
 
@@ -19,15 +20,15 @@ public class PlayerDuel {
 		 * 
 		 * tournament: Use tournament settings.
 		 */
-		int numOfMoves = 3;
-		long execution = 1000;
+		int numOfMoves = 1;
+		long execution = 30000;
 		boolean tournament = false;
 
 		GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new BruteForcePlayer();
+		Player p1 = new GreedyDistancePlayer();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -35,7 +36,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new BruteForcePlayer();
+		Player p2 = new ComplementaryGreedyDistancePlayer();
 
 		/*
 		 * The graph object of the game. Use different ones from
@@ -49,7 +50,7 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-		Graph g = TwoWheels.generate(5);
+		Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 
 		/* The game execution */
 		Game game = new Game(g);
@@ -77,7 +78,7 @@ public class PlayerDuel {
 				.normalizeWeights(d.getBudget())));
 
 		System.out.println(String.format("Full State: %s", gResult.fullState));
-		System.out.println(String.format("Average Full State: %s",
-				gResult.fullState.getMean()));
+		System.out.println(String.format("Average Full State w/o Stubborn Agents: %s",
+				gResult.fullState.getMean(g.getVertices())));
 	}
 }
