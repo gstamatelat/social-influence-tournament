@@ -11,8 +11,8 @@ import gr.james.socialinfluence.graph.algorithms.FloydWarshall;
 import gr.james.socialinfluence.graph.algorithms.iterators.RandomSurferIterator;
 import gr.james.socialinfluence.graph.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.graph.collections.VertexPair;
-import gr.james.socialinfluence.helper.Finals;
 import gr.james.socialinfluence.helper.Helper;
+import gr.james.socialinfluence.helper.RandomHelper;
 
 public class LocalSearchDistancePlayer extends Player {
 
@@ -65,7 +65,7 @@ public class LocalSearchDistancePlayer extends Player {
 			Vertex v = mp.vertex;
 			RandomSurferIterator randomSurfer = new RandomSurferIterator(
 					v.getParentGraph(), 0.0, v);
-			while (Finals.RANDOM.nextDouble() < jump_probability) {
+			while (RandomHelper.getRandom().nextDouble() < jump_probability) {
 				v = randomSurfer.next();
 			}
 
