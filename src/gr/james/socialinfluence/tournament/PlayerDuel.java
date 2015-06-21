@@ -28,7 +28,7 @@ public class PlayerDuel {
 				execution, tournament);
 
 		/* This is your player. Rename accordingly. */
-		Player p1 = new GreedyDistancePlayer();
+		Player p1 = new MaxPageRankPlayer();
 
 		/*
 		 * This is your opponent. Use different default player from
@@ -36,7 +36,7 @@ public class PlayerDuel {
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
-		Player p2 = new ComplementaryGreedyDistancePlayer();
+		Player p2 = new RandomPlayer();
 
 		/*
 		 * The graph object of the game. Use different ones from
@@ -59,7 +59,7 @@ public class PlayerDuel {
 		game.setPlayer(PlayerEnum.A, m1);
 		game.setPlayer(PlayerEnum.B, m2);
 
-		GameResult gResult = game.runGame(d);
+		GameResult gResult = game.runGame(d, 0.0);
 
 		System.out.println(String.format("Graph: %s", g.getMeta()));
 		System.out.println(String.format("%s[0] - %s[1]", p1.getClass()

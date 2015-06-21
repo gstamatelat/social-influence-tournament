@@ -44,13 +44,15 @@ public class Tournament {
 		long seed = Long.parseLong(args[0]);
 		RandomHelper.initRandom(seed);
 		
-		int graphId = Integer.parseInt(args[1]);
-		String[] actionsStr = args[2].split(",");
+		double precision = Double.parseDouble(args[1]);
+		int graphId = Integer.parseInt(args[2]);
+		String[] actionsStr = args[3].split(",");
 		int[] actions = new int[actionsStr.length];
 		for (int i = 0; i < actionsStr.length; i++) { actions[i] = Integer.parseInt(actionsStr[i]); }
 		
 		System.out.println();
 		Helper.log("Using seed on global Random: %d", seed);
+		Helper.log("Using precision: %7.1e", precision);
 		Helper.log("Using graph id: %d, {%s}", graphId, getGraphFromId(graphId).getMeta());
 		Helper.log("Using move actions count: %s", Arrays.toString(actions));
 		System.out.println();
@@ -83,7 +85,7 @@ public class Tournament {
 								GameDefinition d = new GameDefinition(maxMoves, maxMoves * 1.0, execution, true);
 								game.setPlayer(PlayerEnum.A, p1.findMove(g, d));
 								game.setPlayer(PlayerEnum.B, p2.findMove(g, d));
-								int result = game.runGame(d).score;
+								int result = game.runGame(d, precision).score;
 								if (result == 0) {
 									players.put(p1, players.get(p1) + TournamentFinals.DRAW);
 									players.put(p2, players.get(p2) + TournamentFinals.DRAW);

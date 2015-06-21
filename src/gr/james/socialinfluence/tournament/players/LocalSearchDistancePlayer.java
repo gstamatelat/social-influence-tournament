@@ -10,7 +10,7 @@ import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.graph.algorithms.FloydWarshall;
 import gr.james.socialinfluence.graph.algorithms.iterators.RandomSurferIterator;
 import gr.james.socialinfluence.graph.algorithms.iterators.RandomVertexIterator;
-import gr.james.socialinfluence.graph.collections.VertexPair;
+import gr.james.socialinfluence.collections.VertexPair;
 import gr.james.socialinfluence.helper.Helper;
 import gr.james.socialinfluence.helper.RandomHelper;
 
