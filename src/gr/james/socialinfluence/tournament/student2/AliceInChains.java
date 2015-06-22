@@ -27,21 +27,21 @@ public class AliceInChains extends Player {
 
 	@Override
 	public void getMove() {
-
+		
 		long startTime = System.currentTimeMillis();
 		String graphType = this.g.getMeta();
 		boolean verbose = !this.d.getTournament();
-		// num of moves o arithmos twn epitreptwn kinhsewn
+		//num of moves o arithmos twn epitreptwn kinhsewn
 		int numOfMoves = this.d.getNumOfMoves();
 		// numOfVertices panta monos arithmos
 		int numOfNodes = this.g.getVerticesCount();
 		Move m = new Move();
 		parseGraphType(graphType);
-
+		
 		if (numOfMoves < numOfNodes) {
 			if (graphName.equals("TwoWheels")) {
 				// to seed sto generate()
-				int n = (numOfVertices + 1) / 2;
+				int n = (numOfNodes + 1) / 2;
 
 				if (verbose) {
 					System.out.println("GraphType: " + graphType
@@ -59,7 +59,7 @@ public class AliceInChains extends Player {
 					largestDegreeVertices[i] = this.g.getVertexFromId(2);
 				}
 
-				// find the 3 largest values and their vertex position
+				//find the 3 largest values and their vertex position
 				for (Vertex v : degrees.keySet()) {
 					Double val = new Double(degrees.get(v).doubleValue());
 					if (val.intValue() > largestDegrees[0]) {
@@ -187,8 +187,8 @@ public class AliceInChains extends Player {
 					break;
 				default:
 					/*
-					 * movesLeft is the number of moves that need to be defined
-					 * for each half circle after the first 3 moves are defined
+					 * movesLeft is the number of moves that need to be defined for each half circle
+					 * after the first 3 moves are defined
 					 */
 					int nodesOnEachSide = n - 2;
 					int movesLeft = numOfMoves - 3;
@@ -223,12 +223,12 @@ public class AliceInChains extends Player {
 
 					double nBudget = (double) 1;
 					double ratio = ((double) numOfMoves / numOfVertices);
-					// double ratio = 1;
+					//	            double ratio = 1;
 					cgBudget = 1.27 * nBudget;
-					// cwBudget = ((double) (n - 1) / 3.883495146 ) * cgBudget;
-					// if((ratio > (double) 0.75) && n != 4){
+					//	            cwBudget = ((double) (n - 1) / 3.883495146 ) * cgBudget;
+					//	            if((ratio > (double) 0.75) && n != 4){
 					cwBudget = ((double) ((n - 1) / (ratio * 10))) * cgBudget;
-					// }
+					//	            }
 
 					m.putVertex(cg, cgBudget);
 					m.putVertex(cw1, cwBudget);
@@ -257,18 +257,17 @@ public class AliceInChains extends Player {
 						m.putVertex(ppt, nBudget);
 					}
 					int sizeOfMove = m.getVerticesCount();
-					// an perissepsan kinhseis, pare prwta ayta poy einai pio
-					// konta sto kentro
-					// kai meta dialekse random nodes
-					// if(sizeOfMove<numOfMoves){
-					// Set<Edge> cgEdges = cg.getOutEdges();
-					// for (Edge e:cgEdges){
-					// if(!m.containsVertex(e.getTarget())&&(sizeOfMove<numOfMoves)){
-					// m.putVertex(e.getTarget(), nBudget);
-					// sizeOfMove++;
-					// }
-					// }
-					// }
+					//an perissepsan kinhseis, pare prwta ayta poy einai pio konta sto kentro
+					//kai meta dialekse random nodes
+					//		        if(sizeOfMove<numOfMoves){
+					//		        	Set<Edge> cgEdges = cg.getOutEdges();
+					//		        	for (Edge e:cgEdges){
+					//		        		if(!m.containsVertex(e.getTarget())&&(sizeOfMove<numOfMoves)){
+					//		        			m.putVertex(e.getTarget(), nBudget);
+					//		        			sizeOfMove++;
+					//		        		}
+					//		        	}
+					//		        }
 					boolean side = true;
 					while (sizeOfMove < numOfMoves) {
 						Vertex v = this.g.getRandomVertex();
@@ -291,61 +290,53 @@ public class AliceInChains extends Player {
 					break;
 				}
 			} // TwoWheels ends here
-			else if (graphName.equals("BarabasiAlbert")) {
+			else if (graphName.equals("BarabasiAlbert")) {			
 				GraphState pagerank = PageRank.execute(g, 0.0);
 				HashMap<Vertex, Double> eccentricities = calculateEccentricity(this.g);
-				Double minPathSums = findMin(sums, this.g);
-
-				Double[][] sortedPagerank = sortToNumOfMoves(pagerank,
-						numOfNodes, false); // descending
-				List<Double> PagerankID = new ArrayList<Double>(
-						Arrays.asList(sortedPagerank[0]));
-				Double[][] sortedEc = sortToNumOfMoves(eccentricities,
-						numOfNodes, true); // ascending
-				Double[][] sortedSums = sortToNumOfMoves(sums, numOfMoves, true); // ascending
-
+				Double minPathSums = findMin(sums,this.g);
+				
+				Double[][] sortedPagerank =  sortToNumOfMoves(pagerank, numOfNodes, false); // descending
+				List<Double> PagerankID = new ArrayList<Double>(Arrays.asList(sortedPagerank[0]));
+				Double[][] sortedEc = sortToNumOfMoves(eccentricities, numOfNodes, true); //ascending
+				Double[][] sortedSums = sortToNumOfMoves(sums, numOfMoves, true); //ascending
+				
+				
 				double weight = 1.0;
-				double ratio = (double) numOfNodes / numOfMoves;
-				Vertex v0, v1;
-
+				double ratio = (double) numOfNodes/numOfMoves;
+				Vertex v0,v1;
+				
 				int i = 0;
 				int sizeOfMove = 0;
 				boolean EdgeinMove = false;
 				boolean EdgeinMove2 = false;
-
+				
 				if (numOfMoves == 1) {
-					v0 = this.g.getVertexFromId((int) ((double) PagerankID
-							.get(0)));
-					v1 = this.g
-							.getVertexFromId((int) ((double) sortedEc[0][0]));
-					if ((Double.compare(eccentricities.get(v0), sortedEc[1][0]) == 0)
-							|| (0.8 * pagerank.get(v0) > pagerank.get(v1))) {
+					v0 = this.g.getVertexFromId((int) ((double) PagerankID.get(0)));
+					v1 = this.g.getVertexFromId((int) ((double) sortedEc[0][0]));
+					if ((Double.compare(eccentricities.get(v0), sortedEc[1][0]) == 0) || (0.8 * pagerank.get(v0) > pagerank.get(v1))){
 						m.putVertex(v0, 1);
 					} else {
 						m.putVertex(v1, 1);
 					}
-				} else {
-
+				} else { 
+				
 					while (sizeOfMove < numOfMoves) {
-
+		
 						i = numOfMoves - sizeOfMove;
 						EdgeinMove = false;
 						EdgeinMove2 = false;
-						v0 = this.g.getVertexFromId((int) ((double) PagerankID
-								.get(0)));
-						v1 = this.g.getVertexFromId((int) ((double) PagerankID
-								.get(1)));
+						v0 = this.g.getVertexFromId((int) ((double) PagerankID.get(0)));		
+						v1 = this.g.getVertexFromId((int) ((double) PagerankID.get(1)));
 						weight = (pagerank.get(v0));
-
-						if ((pagerank.get(v0) - pagerank.get(v1)) < (0.1 * (pagerank
-								.get(v0)))) {
-
+						
+						if ((pagerank.get(v0) - pagerank.get(v1)) < (0.1 * (pagerank.get(v0)))) {
+							
 							Set<Edge> edges = v0.getOutEdges();
-							for (Edge e : edges) {
+							for (Edge e: edges) {
 								if (m.containsVertex(e.getTarget())) {
 									EdgeinMove = true;
 									break;
-								}
+								} 						
 							}
 							if (EdgeinMove) {
 								Set<Edge> edges2 = v1.getOutEdges();
@@ -356,10 +347,10 @@ public class AliceInChains extends Player {
 									}
 								}
 							}
-							if (eccentricities.get(v0) > eccentricities.get(v1)) {
+							if ( eccentricities.get(v0) > eccentricities.get(v1) ) {
 								m.putVertex(v1, weight);
 								PagerankID.remove(1);
-							} else if ((!EdgeinMove) || (EdgeinMove2)) {
+							}else if ((!EdgeinMove) || (EdgeinMove2)) {
 								weight = weight * ((i / 100) + 1);
 								m.putVertex(v0, weight);
 								PagerankID.remove(0);
@@ -367,16 +358,14 @@ public class AliceInChains extends Player {
 								weight = weight * ((i / 100) + 1);
 								m.putVertex(v1, weight);
 								PagerankID.remove(1);
-							}
-
-						} else if ((pagerank.get(v0) - pagerank.get(v1)) < (0.2 * (pagerank
-								.get(v0)))) {
+							}				
+							
+						} else if ((pagerank.get(v0) - pagerank.get(v1)) < (0.2 * (pagerank.get(v0)))) {
 							weight = weight * ((i / 100) + 1);
 							m.putVertex(v0, weight);
 							PagerankID.remove(0);
-
-						} else if ((pagerank.get(v0) - pagerank.get(v1)) > (0.3 * (pagerank
-								.get(v0)))) {
+						
+						} else if ((pagerank.get(v0) - pagerank.get(v1)) > ( 0.3 * (pagerank.get(v0)))) {
 							weight = weight / ((i / 100) + 1);
 							m.putVertex(v0, weight);
 							PagerankID.remove(0);
@@ -384,29 +373,33 @@ public class AliceInChains extends Player {
 							m.putVertex(v0, weight);
 							PagerankID.remove(0);
 						}
-
+						
 						sizeOfMove = m.getVerticesCount();
-					}
+					}	
 				}
 			} // BarabasiAlbert ends here
 			else if (graphName.equals("BarabasiAlbertCluster")) {
 				GraphState pagerank = PageRank.execute(g, 0.0);
 
 				HashMap<Vertex, Double> eccentricities = calculateEccentricity(this.g);
-				// after calculateEccentricity, sums have been calculated as
-				// well
+				//after calculateEccentricity, sums have been calculated as well
 				Double minPathSums = findMin(sums, this.g);
 
 				Double[][] sortedPagerank = sortToNumOfMoves(pagerank,
 						numOfNodes, false); // descending
-				Double[][] sortedSums = sortToNumOfMoves(sums, numOfNodes, true); // ascending
+				Double[][] sortedSums = sortToNumOfMoves(sums, numOfNodes, true); //ascending
+				double ratio = (double) numOfMoves/numOfNodes;
 				int p = 0;
-				// just put the top pagerank values and vertices in case we run
-				// out of time;
+				double weight = 1.0;
+				//just put the top pagerank values and vertices in case we run out of time;
 				while (m.getVerticesCount() < numOfMoves) {
+					if(ratio <=  0.5)
+						weight = sortedPagerank[1][p];
+					else
+						weight = Math.log10(10 * sortedPagerank[1][p]); 
 					m.putVertex(
 							this.g.getVertexFromId((int) (double) sortedPagerank[0][p]),
-							Math.log10(10 * sortedPagerank[1][p]));
+							weight);
 					p++;
 				}
 				this.movePtr.set(m);
@@ -461,16 +454,22 @@ public class AliceInChains extends Player {
 
 				for (int i = 0; i < numOfClusters; i++) {
 					for (int j = 0; j < movesPerCluster; j++) {
+						if(ratio <=  0.5)
+							weight = sortedClusters[i][1][j];
+						else
+							weight = Math.log10(10 * sortedClusters[i][1][j]); 
 						m.putVertex(
 								this.g.getVertexFromId((int) (double) sortedClusters[i][0][j]),
-								sortedClusters[i][1][j]);
+								weight);
 					}
 				}
 				while (remainingMoves > 0) {
-					m.putVertex(
-							this.g.getVertexFromId((int) (double) sortedClusters[numOfMoves
-									- remainingMoves][0][movesPerCluster]),
-							sortedClusters[numOfMoves - remainingMoves][1][movesPerCluster]);
+					Vertex v = this.g.getVertexFromId((int) (double) sortedClusters[(numOfClusters - remainingMoves)][0][movesPerCluster]);
+					if(ratio <=  0.5)
+						weight = sortedClusters[(numOfClusters - remainingMoves)][1][movesPerCluster];
+					else
+						weight = Math.log10(10 * sortedClusters[(numOfClusters - remainingMoves)][1][movesPerCluster]);
+					m.putVertex(v,weight);
 					remainingMoves--;
 				}
 			} // BarabasiAlbertCluster ends here
@@ -486,67 +485,67 @@ public class AliceInChains extends Player {
 				for (int i = 0; i < numOfMoves; i++) {
 					v0 = this.g
 							.getVertexFromId((int) ((double) sortedPagerank[0][i]));
-					// weight = pagerank.get(v0);
+					//				weight = pagerank.get(v0);
 					weight = Math.log10(10 * pagerank.get(v0));
 					m.putVertex(v0, weight);
 				}
-			} // random graph stuff end here
-		} else if (numOfMoves == numOfNodes) {
+			} //random graph stuff end here
+		} else if (numOfMoves == numOfNodes){
 			for (Vertex v : this.g.getVertices()) {
 				m.putVertex(v, 1);
 			}
 		}
-		if (verbose) {
-			System.out.println("EXECUTION TIME(ms): "
-					+ ((long) System.currentTimeMillis() - startTime));
+		if (verbose){
+			System.out.println("EXECUTION TIME(ms): " + ((long) System.currentTimeMillis()-startTime));
 		}
 		this.movePtr.set(m);
-	} // getMove ends here
-
-	private Vertex chooseVertex(Vertex source, Vertex previous,
-			Vertex circleCenter) {
+	} //getMove ends here
+	private Vertex chooseVertex(Vertex source, Vertex previous, Vertex circleCenter) {
 		Set<Edge> edges = source.getOutEdges();
-		for (Edge e : edges) {
-			if ((e.getTarget() != previous) && (e.getTarget() != circleCenter)
-					&& (hasEdge(e.getTarget(), circleCenter)))
+		for (Edge e: edges) {
+			if ((e.getTarget() != previous) && (e.getTarget() != circleCenter) && (hasEdge(e.getTarget(),circleCenter)))
 				return e.getTarget();
 		}
 		return null;
 	}
-
+	
 	private boolean hasEdge(Vertex source, Vertex target) {
-		for (Edge e : source.getOutEdges()) {
+		for (Edge e: source.getOutEdges()) {
 			if (e.getTarget() == target)
 				return true;
 		}
 		return false;
 	}
-
-	public void parseGraphType(String graphType) {
+	
+	public void parseGraphType(String graphType){
 		String[] tokens = graphType.split(",");
 		int size = tokens.length;
-		// for (int i = 0; i < size; i++){
-		// System.out.println(tokens[i]);
-		// }
-		if (size > 0) {
-			graphName = tokens[0];
-			if (graphName.equals("BarabasiAlbert")
-					|| graphName.equals("BarabasiAlbertCluster")
-					|| graphName.equals("Path")
-					|| graphName.equals("TwoWheels")) {
-				if (size == 2) { // TwoWheels
+//		for (int i = 0; i < size; i++){
+//			System.out.println(tokens[i]);
+//		}
+		if(size > 0){
+			graphName = tokens[0];			
+			if (graphName.equals("BarabasiAlbert")||graphName.equals("BarabasiAlbertCluster")
+					||graphName.equals("Path")||graphName.equals("TwoWheels")) {
+				if (size == 2) { //TwoWheels
 					String[] twTokens = tokens[1].split("=");
 					numOfVertices = Integer.parseInt(twTokens[1]);
 				} else if (size == 3) { // Path
 					String[] pathTokens = tokens[1].split("=");
 					numOfVertices = Integer.parseInt(pathTokens[1]);
-				} else if (size == 6) { // BarabasiAlbert
+				} else if (size == 6) { //BarabasiAlbert
 					String[] baTokens = tokens[1].split("=");
 					numOfVertices = Integer.parseInt(baTokens[1]);
 					baTokens = tokens[2].split("=");
 					initialClique = Integer.parseInt(baTokens[1]);
 					baTokens = tokens[3].split("=");
 					stepEdges = Integer.parseInt(baTokens[1]);
+					//bugfix for cluster
+					if (tokens[4].length()>3){ //e.g. a=1.000000
+						baTokens = tokens[5].split("=");
+						numOfClusters = Integer.parseInt(baTokens[1]);
+					}
+					
 				} else if (size == 7) {
 					String[] bacTokens = tokens[1].split("=");
 					numOfVertices = Integer.parseInt(bacTokens[1]);
@@ -558,19 +557,19 @@ public class AliceInChains extends Player {
 					numOfClusters = Integer.parseInt(bacTokens[1]);
 				}
 			}
-		}
+		}		
 	}
 
-	public HashMap<Vertex, Double> calculateEccentricity(Graph g) {
-		sums = new HashMap<Vertex, Double>();
+	public HashMap<Vertex,Double> calculateEccentricity(Graph g){
+		sums = new HashMap<Vertex,Double>();
 		HashMap<Vertex, Double> eccentricities = new HashMap<Vertex, Double>();
-		for (Vertex v : g.getVertices()) {
-			HashMap<Vertex, Double> hm = Dijkstra.execute(g, v);
-			for (Vertex u : g.getVertices()) {
+		for (Vertex v : g.getVertices()){
+			HashMap<Vertex,Double> hm = Dijkstra.execute(g, v);		
+			for (Vertex u : g.getVertices() ){
 				double val = 0;
 				if (sums.get(v) != null) {
 					val = sums.get(v) + hm.get(u);
-				} else
+				} else 
 					val = hm.get(u);
 				sums.put(v, val);
 			}
@@ -579,84 +578,82 @@ public class AliceInChains extends Player {
 		}
 		return eccentricities;
 	}
-
 	/*
 	 * returns the maximum distance from a node to any other node
 	 */
-	public static Double findMax(HashMap<Vertex, Double> vectorDistances,
-			Graph g) {
+	public static Double findMax(HashMap<Vertex,Double> vectorDistances, Graph g){
 		double max = -1;
-		for (Vertex v : g.getVertices()) {
+		for (Vertex v : g.getVertices()){
 			if (vectorDistances.get(v) > max) {
 				max = vectorDistances.get(v);
 			}
 		}
 		return max;
 	}
-
 	/*
-	 * returns the minimum sum of path steps from any node to all the others
+	 * returns the minimum sum of path steps from any node to all the others 
 	 */
-	public static Double findMin(HashMap<Vertex, Double> sums, Graph g) {
+	public static Double findMin(HashMap<Vertex, Double> sums, Graph g){
 		double min = Double.POSITIVE_INFINITY;
-
-		for (Vertex v : g.getVertices()) {
+		
+		for (Vertex v : g.getVertices()){
 			if (sums.get(v) < min) {
 				min = sums.get(v);
 			}
 		}
 		return min;
 	}
-
+	
 	/*
-	 * sort by type if type is true ascending, else descending
+	 * sort by type
+	 * if type is true ascending, else descending
 	 */
-	public static Double[][] sortToNumOfMoves(HashMap<Vertex, Double> ec,
-			int size, boolean type) {
-		// int size = ec.size();
+	public static Double[][] sortToNumOfMoves(HashMap<Vertex, Double> ec,int size, boolean type){
+//		int size = ec.size();
 		Double[] sortedVertices = new Double[size];
 		Double[] sortedDoubles = new Double[size];
-
-		if (type) {
-			for (int i = 0; i < size; i++)
-				sortedDoubles[i] = Double.POSITIVE_INFINITY;
-		} else {
-			for (int i = 0; i < size; i++)
-				sortedDoubles[i] = -1D;
-		}
-
+		
+     	if (type){
+     		for (int i = 0; i < size; i++)
+     			sortedDoubles[i] = Double.POSITIVE_INFINITY;
+     	} else {
+     		for (int i = 0; i < size; i++)
+     			sortedDoubles[i] = -1D;
+     	}
+     	
 		for (Vertex v : ec.keySet()) {
-			Double val = new Double(ec.get(v).doubleValue());
-
-			for (int i = 0; i < size; i++) {
-				if (type) {
-					if (val < sortedDoubles[i]) {
-						for (int j = size - 1; j > i; j--) {
-							sortedDoubles[j] = sortedDoubles[j - 1];
-							sortedVertices[j] = sortedVertices[j - 1];
-						}
-						sortedDoubles[i] = val;
-						sortedVertices[i] = (double) v.getId();
-						break;
+	       	Double val = new Double(ec.get(v).doubleValue());
+	        
+       	for (int i = 0; i < size; i++){
+       		if (type) {
+				if (val < sortedDoubles[i]) {
+					for (int j = size - 1; j > i; j--) {
+						sortedDoubles[j] = sortedDoubles[j - 1];
+						sortedVertices[j] = sortedVertices[j - 1];
 					}
-				} else {
-					if (val > sortedDoubles[i]) {
-						for (int j = size - 1; j > i; j--) {
-							sortedDoubles[j] = sortedDoubles[j - 1];
-							sortedVertices[j] = sortedVertices[j - 1];
-						}
-						sortedDoubles[i] = val;
-						sortedVertices[i] = (double) v.getId();
-						break;
+					sortedDoubles[i] = val;
+					sortedVertices[i] = (double) v.getId();
+					break;
+				}
+			} else {
+				if (val > sortedDoubles[i]) {
+					for (int j = size - 1; j > i; j--) {
+						sortedDoubles[j] = sortedDoubles[j - 1];
+						sortedVertices[j] = sortedVertices[j - 1];
 					}
+					sortedDoubles[i] = val;
+					sortedVertices[i] = (double) v.getId();
+					break;
 				}
 			}
+       	}
 		}
 		Double[][] multi = new Double[2][];
-
+		
 		multi[0] = sortedVertices;
 		multi[1] = sortedDoubles;
 		return multi;
 	}
+
 
 }
