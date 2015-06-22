@@ -9,13 +9,14 @@ import gr.james.socialinfluence.graph.io.Csv;
 import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.helper.Helper;
 import gr.james.socialinfluence.helper.RandomHelper;
-import gr.james.socialinfluence.tournament.student.*;
+import gr.james.socialinfluence.helper.WeightedRandom.ObjectWithWeight;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 public class Tournament {
 	public static Graph getGraphFromId(int id) throws MalformedURLException, IOException {
@@ -57,6 +58,10 @@ public class Tournament {
 		Helper.log("Using move actions count: %s", Arrays.toString(actions));
 		System.out.println();
 		
+		System.out.print("Press enter to start ... ");
+		System.in.read();
+		System.out.println();
+		
 		int[] maxMoves_t = actions;
 		long[] execution_t = { 2000L, 10000L }; // CHANGE THIS
 		int rounds = 5; // CHANGE THIS (USUALLY NO NEED)
@@ -66,10 +71,11 @@ public class Tournament {
 		for (int maxMoves : maxMoves_t) {
 			for (long execution : execution_t) {
 				HashMap<Player, Integer> players = new HashMap<Player, Integer>();
-				players.put(new DarthVader(), 0);
-				players.put(new Obelix(), 0);
-				players.put(new VaSot(), 0);
-				players.put(new YalamasPro(), 0);
+				players.put(new gr.james.socialinfluence.tournament.student2.DarthVader(), 0);
+				players.put(new gr.james.socialinfluence.tournament.student2.ObelixOnMagicPotion(), 0);
+				players.put(new gr.james.socialinfluence.tournament.student2.VS(), 0);
+				players.put(new gr.james.socialinfluence.tournament.student2.YalamasPro(), 0);
+				players.put(new gr.james.socialinfluence.tournament.student2.AliceInChains(), 0);
 				
 				int max = rounds * players.size() * (players.size() - 1);
 				int completed = 0;
@@ -113,18 +119,31 @@ public class Tournament {
 				System.out.print("/"); for (int i = 0; i < maxLine; i++) { System.out.print("-"); }; System.out.println("\\");
 				System.out.print(header); for (int i = 0; i < maxLine - header.length(); i++) { System.out.print(" "); }; System.out.println(" |");
 				System.out.print("|"); for (int i = 0; i < maxLine; i++) { System.out.print("-"); }; System.out.println("|");
+				
+				PriorityQueue<ObjectWithWeight<Player>> pQueue = new PriorityQueue<ObjectWithWeight<Player>>();
 				for (Player p : players.keySet()) {
-					String line = String.format("%3d %s", players.get(p), p.getClass().getSimpleName());
+					pQueue.add(new ObjectWithWeight<Player>(p, players.get(p)));
+				}
+				
+				while (pQueue.size() > 0) {
+					ObjectWithWeight<Player> ex = pQueue.poll();
+					String line = String.format("%3.0f %s", ex.w, ex.e.getClass().getSimpleName());
 					System.out.print("| ");
 					System.out.print(line);
 					for (int i = 0; i < maxLine - line.length() - 1; i++) { System.out.print(" "); }; System.out.println("|");
 				}
+				
 				System.out.print("\\"); for (int i = 0; i < maxLine; i++) { System.out.print("-"); }; System.out.println("/");
-				/*try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}*/
+				
+				int counter = 16;
+				System.out.println();
+				System.out.print("Continue in ");
+				while (--counter > 0) {
+					System.out.printf("%d ", counter);
+					Thread.sleep(1000);
+				}
+				System.out.print("0");
+				System.out.println();
 			}
 		}
 
