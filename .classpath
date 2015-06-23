@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="lib/social-influence-0.50.jar" sourcepath="lib/social-influence-0.50-sources.jar">
+	<classpathentry kind="lib" path="lib/social-influence-1.0-SNAPSHOT.jar" sourcepath="lib/social-influence-1.0-SNAPSHOT-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/social-influence-tournament/lib/social-influence-0.50-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/social-influence-tournament/lib/social-influence-1.0-SNAPSHOT-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
