@@ -25,7 +25,7 @@ public class MyPlayer extends Player {
 
 - `Graph g`: Represents the graph which will host the influence game. You may not change this object.
 - `GameDefinition d`: Contains the game-specific fields:
-	- `int numOfMoves`: How many nodes you are allowed to influence at most. The Move object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
+	- `int actions`: How many nodes you are allowed to influence at most. The Move object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
 	- `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to numOfNodes. If your player exceeds this amount, the game will automatically normalize your move.
 	- `long execution`: Time in milliseconds available to the player to complete their execution.
 	- `boolean tournament`: Flag raised when the player is competing in a tournament settings context. If this is ``false``, you may print additional messages that can help you debug your player. If not, consider optimizing for performance and avoid printing anything.
@@ -41,7 +41,7 @@ Example of `getMove()` that submits a random move:
 public void getMove() {
 	Move m = new Move();
 	RandomVertexIterator rvi = new RandomVertexIterator(g);
-	while (m.getVerticesCount() < this.d.getNumOfMoves()) {
+	while (m.getVerticesCount() < this.d.getActions()) {
 		m.putVertex(rvi.next(), 1.0);
 	}
 	if (!this.d.getTournament()) {
@@ -68,6 +68,7 @@ public Player putDefaultOptions() {
 
 - Added `IndexIterator` that iterates over vertices in a graph in index-based ascending order.
 - `Game` now ignores player vertices for the final opinion vector average.
+- Renamed `numOfMoves` to `actions`.
 
 ### v1.6
 
