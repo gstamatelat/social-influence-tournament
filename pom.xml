@@ -31,6 +31,9 @@
     </dependencies>
 
     <build>
+
+        <sourceDirectory>src/main</sourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -68,6 +71,7 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
 
 </project>
