@@ -1,14 +1,10 @@
 package gr.james.socialinfluence.tournament;
 
-import gr.james.socialinfluence.game.Game;
-import gr.james.socialinfluence.game.GameDefinition;
-import gr.james.socialinfluence.game.GameResult;
-import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.PlayerEnum;
-import gr.james.socialinfluence.game.players.*;
+import gr.james.socialinfluence.game.*;
+import gr.james.socialinfluence.game.players.Player;
+import gr.james.socialinfluence.game.players.RandomPlayer;
 import gr.james.socialinfluence.graph.Graph;
-import gr.james.socialinfluence.graph.generators.*;
-import gr.james.socialinfluence.tournament.players.*;
+import gr.james.socialinfluence.graph.generators.TwoWheels;
 
 public class PlayerDuel {
 
@@ -62,8 +58,7 @@ public class PlayerDuel {
 		GameResult gResult = game.runGame(d, 0.0);
 
 		System.out.println(String.format("Graph: %s", g.getMeta()));
-		System.out.println(String.format("%s[0] - %s[1]", p1.getClass()
-				.getSimpleName(), p2.getClass().getSimpleName()));
+		System.out.println(String.format("%s[0] - %s[1]", p1.getClass().getSimpleName(), p2.getClass().getSimpleName()));
 
 		if (gResult.score > 0) {
 			System.out.println("0 - 1");
