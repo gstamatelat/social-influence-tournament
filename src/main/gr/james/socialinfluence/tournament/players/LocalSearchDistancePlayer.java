@@ -52,7 +52,7 @@ public class LocalSearchDistancePlayer extends Player {
 
     public static double getMoveDistance(Move m,
                                          Map<VertexPair, Double> distanceMap) {
-		/*
+        /*
 		 * Calculates the product of the distances of every pair of vertices in
 		 * the move (aka geometric mean).
 		 */

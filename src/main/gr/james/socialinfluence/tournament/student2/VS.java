@@ -29,8 +29,8 @@ public class VS extends Player {
             if (us.contains(u)) {
                 double d = distanceMap.get(new VertexPair(u, v));
                 if (d != 0.0) {
-					/*
-					 * totalDistance += Math.pow(distanceMap.get(new
+                    /*
+                     * totalDistance += Math.pow(distanceMap.get(new
 					 * VertexPair(u, v), 2.0));
 					 */
                     totalDistance *= d;

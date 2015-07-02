@@ -49,7 +49,7 @@ public class GreedyDistancePlayer extends Player {
         Move m = new Move();
 
 		/*
-		 * It is imperative to our strategy to quickly select a move, even a
+         * It is imperative to our strategy to quickly select a move, even a
 		 * random one.
 		 */
         m = getRandomMove(g, this.d.getNumOfMoves());

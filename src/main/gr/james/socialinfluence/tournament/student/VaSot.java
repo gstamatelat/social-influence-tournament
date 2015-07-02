@@ -32,7 +32,7 @@ public class VaSot extends Player {
         double[] denominator = new double[nom];
         double[] inffact = new double[nom];
         double[] bribes = new double[nom];
-		
+
 		/*Initialize arrays*/
         for (int j = 0; j < nom; j++) {
             possible[j] = pgi2.next();

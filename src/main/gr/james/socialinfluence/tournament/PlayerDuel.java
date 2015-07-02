@@ -23,19 +23,19 @@ public class PlayerDuel {
         GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
                 execution, tournament);
 
-		/* This is your player. Rename accordingly. */
+        /* This is your player. Rename accordingly. */
         Player p1 = new gr.james.socialinfluence.tournament.student2.ObelixOnMagicPotion();
 
-		/*
-		 * This is your opponent. Use different default player from
+        /*
+         * This is your opponent. Use different default player from
 		 * gr.james.socialinfluence.game.players or create your own.
 		 * 
 		 * Player p2 = new MaxPageRankPlayer().
 		 */
         Player p2 = new RandomPlayer();
 
-		/*
-		 * The graph object of the game. Use different ones from
+        /*
+         * The graph object of the game. Use different ones from
 		 * gr.james.socialinfluence.graph.generators or create your own.
 		 * 
 		 * Graph g = Path.generate(30, true);
@@ -48,7 +48,7 @@ public class PlayerDuel {
 		 */
         Graph g = TwoWheels.generate(11);
 
-		/* The game execution */
+        /* The game execution */
         Game game = new Game(g);
         Move m1 = p1.findMove(g, d);
         Move m2 = p2.findMove(g, d);
