@@ -10,7 +10,7 @@ public class PlayerDuel {
 
     public static void main(String[] args) throws Exception {
         /*
-		 * numOfMoves: How many nodes does a move consist of.
+         * numOfMoves: How many nodes does a move consist of.
 		 * 
 		 * execution: Time limit in milliseconds.
 		 * 

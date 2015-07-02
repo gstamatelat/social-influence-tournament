@@ -25,7 +25,7 @@ public class YalamasPro extends Player {
     // double maxD = 0.;
     // Vertex maxV = null;
     /*
-	 * for (Vertex v: g.getVertices()) {
+     * for (Vertex v: g.getVertices()) {
 	 *
 	 *
 	 *

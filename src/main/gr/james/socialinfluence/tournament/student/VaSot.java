@@ -25,7 +25,7 @@ public class VaSot extends Player {
 		/*More complex move*/
         GraphState gs = PageRank.execute(this.g, 0.15);
         PageRankIterator pgi2 = new PageRankIterator(g, 0.15);
-		
+
 		/*Arrays used to calculate optimum weights assigned to vertices*/
         int nom = d.getNumOfMoves();
         Vertex[] possible = new Vertex[nom];

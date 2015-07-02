@@ -10,40 +10,40 @@ public class SimpleCyclePlayer extends Player {
     @Override
     public void getMove() {
 
-		/* This player only works in the cycle graph */
+        /* This player only works in the cycle graph */
         if (!this.g.getMeta().startsWith("Path,")
                 || !this.g.getMeta().contains("cycle=true")) {
             return;
         }
 
-		/* Optimal spreading distance */
+        /* Optimal spreading distance */
         final double period = (double) this.g.getVerticesCount()
                 / this.d.getNumOfMoves();
 
-		/* Initialize a new move without any vertices */
+        /* Initialize a new move without any vertices */
         Move m = new Move();
 
-		/* Start with the first vertex */
+        /* Start with the first vertex */
         double c = 0;
 
-		/* Repeat until m is full */
+        /* Repeat until m is full */
         while (m.getVerticesCount() < this.d.getNumOfMoves()) {
             /* Select the vertex that corresponds to round(c) */
             Vertex n = this.g.getVertexFromIndex((int) (c + 0.5));
 
-			/* Add the vertex to m */
+            /* Add the vertex to m */
             m.putVertex(n, 1.0);
 
-			/* Advance by period vertices */
+            /* Advance by period vertices */
             c += period;
         }
 
-		/* We can print stuff if we aren't competing in tournament */
+        /* We can print stuff if we aren't competing in tournament */
         if (!this.d.getTournament()) {
             Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
         }
 
-		/* Submit the move */
+        /* Submit the move */
         this.movePtr.set(m);
     }
 }

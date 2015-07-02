@@ -28,7 +28,7 @@ public class ComplementaryGreedyDistancePlayer extends Player {
     public static double getVertexDistance(Graph g, Vertex v, List<Vertex> us,
                                            Map<VertexPair, Double> distanceMap) {
         /*
-		 * This method returns the product of distances from all vertices NOT in
+         * This method returns the product of distances from all vertices NOT in
 		 * 'us' to 'v'.
 		 */
         double totalDistance = 1.0;

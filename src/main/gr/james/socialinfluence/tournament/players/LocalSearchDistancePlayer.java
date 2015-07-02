@@ -41,7 +41,7 @@ public class LocalSearchDistancePlayer extends Player {
     }
 
     public static Move getRandomMove(Graph g, int num) {
-		/* Return a random move. */
+        /* Return a random move. */
         Move m = new Move();
         RandomVertexIterator rvi = new RandomVertexIterator(g);
         while (m.getVerticesCount() < num) {

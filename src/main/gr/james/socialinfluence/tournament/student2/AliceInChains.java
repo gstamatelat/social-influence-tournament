@@ -261,7 +261,7 @@ public class AliceInChains extends Player {
                         break;
                     default:
                     /*
-					 * movesLeft is the number of moves that need to be defined for each half circle
+                     * movesLeft is the number of moves that need to be defined for each half circle
 					 * after the first 3 moves are defined
 					 */
                         int nodesOnEachSide = n - 2;
