@@ -53,7 +53,7 @@ public class LocalSearchDistancePlayer extends Player {
     public static double getMoveDistance(Move m,
                                          Map<VertexPair, Double> distanceMap) {
         /*
-		 * Calculates the product of the distances of every pair of vertices in
+         * Calculates the product of the distances of every pair of vertices in
 		 * the move (aka geometric mean).
 		 */
         double distance = 0.0;
@@ -72,8 +72,8 @@ public class LocalSearchDistancePlayer extends Player {
     public void getMove() {
         Move m = new Move();
 
-		/*
-		 * First, we select an initial move. Afterwards, we will start tweaking
+        /*
+         * First, we select an initial move. Afterwards, we will start tweaking
 		 * it.
 		 */
         m = getRandomMove(g, this.d.getNumOfMoves());
@@ -82,19 +82,19 @@ public class LocalSearchDistancePlayer extends Player {
         }
         this.movePtr.set(m);
 
-		/*
-		 * Create the distance map. Each key is of the form {source, target} and
+        /*
+         * Create the distance map. Each key is of the form {source, target} and
 		 * the values are the distances.
 		 */
         Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
 
         double maxDistance = 0.0;
-		/* Keep searching until time is up. */
+        /* Keep searching until time is up. */
         while (!this.isInterrupted()) {
-			/* Generate a new, mutated move. */
+            /* Generate a new, mutated move. */
             m = mutateMove(m);
 
-			/* If the mutated move creates more distance, keep it. */
+            /* If the mutated move creates more distance, keep it. */
             double newDistance = getMoveDistance(m, distanceMap);
             if (newDistance > maxDistance) {
                 maxDistance = newDistance;

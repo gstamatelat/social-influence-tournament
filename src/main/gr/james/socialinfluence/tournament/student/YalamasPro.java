@@ -66,8 +66,8 @@ public class YalamasPro extends Player {
 
 
             while (m.getVerticesCount() < this.d.getNumOfMoves()) {
-    			/*
-    			 * Select the vertex that creates the minimum sum of squares of
+                /*
+                 * Select the vertex that creates the minimum sum of squares of
     			 * distances from nodes that don't exist in the move.
     			 */
                 double min = Double.POSITIVE_INFINITY;

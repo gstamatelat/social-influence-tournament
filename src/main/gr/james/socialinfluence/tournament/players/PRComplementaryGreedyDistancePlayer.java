@@ -58,8 +58,8 @@ public class PRComplementaryGreedyDistancePlayer extends Player {
     public void getMove() {
         Move m = new Move();
 
-		/*
-		 * It is imperative to our strategy to quickly select a move, even a
+        /*
+         * It is imperative to our strategy to quickly select a move, even a
 		 * random one.
 		 */
         m = getRandomMove(g, this.d.getNumOfMoves());
@@ -68,32 +68,32 @@ public class PRComplementaryGreedyDistancePlayer extends Player {
         }
         this.movePtr.set(m);
 
-		/*
-		 * Clear the move for future use. We could also re-instantiate the
+        /*
+         * Clear the move for future use. We could also re-instantiate the
 		 * object with m = new Move().
 		 */
         m.clear();
 
-		/*
-		 * Create the distance map. Each key is of the form {source, target} and
+        /*
+         * Create the distance map. Each key is of the form {source, target} and
 		 * the values are the distances.
 		 */
         Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
 
-		/* Start by inserting the max PR vertex to the Move object. */
+        /* Start by inserting the max PR vertex to the Move object. */
         m.putVertex(new PageRankIterator(g, 0.0).next(), 1.0);
 
-		/* Gradually fill the Move object in a greedy way. */
+        /* Gradually fill the Move object in a greedy way. */
         while (m.getVerticesCount() < this.d.getNumOfMoves()) {
-			/*
-			 * Select the vertex that creates the minimum sum of squares of
+            /*
+             * Select the vertex that creates the minimum sum of squares of
 			 * distances from nodes that don't exist in the move.
 			 */
             double min = Double.POSITIVE_INFINITY;
             Vertex lowest = null;
             for (Vertex v : this.g.getVertices()) {
-				/*
-				 * Candidates are all nodes in the graph except those in the
+                /*
+                 * Candidates are all nodes in the graph except those in the
 				 * move already.
 				 */
                 if (!m.containsVertex(v)) {
@@ -115,8 +115,8 @@ public class PRComplementaryGreedyDistancePlayer extends Player {
     }
 
     public List<Vertex> convertMoveToList(Move m) {
-		/*
-		 * This method returns an array that contains the Vertices inside a move
+        /*
+         * This method returns an array that contains the Vertices inside a move
 		 * object.
 		 */
         List<Vertex> u = new ArrayList<Vertex>();

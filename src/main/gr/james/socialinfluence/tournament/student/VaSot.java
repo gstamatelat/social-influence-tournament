@@ -40,7 +40,7 @@ public class VaSot extends Player {
             inffact[j] = gs.get(possible[j]) / g.getVerticesCount();  //Normalize influence factor of pagerank
             bribes[j] = 0.0;
         }
-		
+
 		/*Determine which vertex should get each penny of the bribe*/
         for (int j = 0; j < nom * 100; j++) {
             double infl_incr = 0.0;

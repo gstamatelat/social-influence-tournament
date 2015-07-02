@@ -173,8 +173,8 @@ public class VS extends Player {
     }
 
     public List<Vertex> convertArrayToList(Vertex m[], int n) {
-		/*
-		 * This method returns an array that contains the Vertices inside a move
+        /*
+         * This method returns an array that contains the Vertices inside a move
 		 * object.
 		 */
         List<Vertex> u = new ArrayList<Vertex>();
