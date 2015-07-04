@@ -1,10 +1,10 @@
 package gr.james.socialinfluence.tournament.players;
 
+import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.collections.VertexPair;
 import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.MovePoint;
-import gr.james.socialinfluence.game.players.Player;
-import gr.james.socialinfluence.graph.Graph;
+import gr.james.socialinfluence.game.players.AbstractPlayer;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.graph.algorithms.FloydWarshall;
 import gr.james.socialinfluence.graph.algorithms.iterators.PageRankIterator;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PRComplementaryGreedyDistancePlayer extends Player {
+public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
 
     public static Move getRandomMove(Graph g, int num) {
         Move m = new Move();

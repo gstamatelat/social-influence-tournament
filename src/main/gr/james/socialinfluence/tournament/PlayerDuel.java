@@ -1,10 +1,9 @@
 package gr.james.socialinfluence.tournament;
 
+import gr.james.socialinfluence.api.Graph;
+import gr.james.socialinfluence.api.Player;
 import gr.james.socialinfluence.game.*;
-import gr.james.socialinfluence.game.players.Player;
 import gr.james.socialinfluence.game.players.RandomPlayer;
-import gr.james.socialinfluence.graph.Graph;
-import gr.james.socialinfluence.graph.generators.TwoWheels;
 
 public class PlayerDuel {
 
@@ -20,8 +19,7 @@ public class PlayerDuel {
         long execution = 30000;
         boolean tournament = false;
 
-        GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves,
-                execution, tournament);
+        GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves, execution);
 
         /* This is your player. Rename accordingly. */
         Player p1 = new gr.james.socialinfluence.tournament.student2.ObelixOnMagicPotion();

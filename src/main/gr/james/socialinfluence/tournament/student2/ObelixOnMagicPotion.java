@@ -1,10 +1,10 @@
 package gr.james.socialinfluence.tournament.student2;
 
+import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.collections.GraphState;
 import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.players.Player;
+import gr.james.socialinfluence.game.players.AbstractPlayer;
 import gr.james.socialinfluence.graph.Edge;
-import gr.james.socialinfluence.graph.Graph;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.graph.algorithms.Degree;
 import gr.james.socialinfluence.graph.algorithms.Dijkstra;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public class ObelixOnMagicPotion extends Player {
+public class ObelixOnMagicPotion extends AbstractPlayer {
 
     HashMap<Vertex, Double> sums;
     String graphName = "";
@@ -107,9 +107,9 @@ public class ObelixOnMagicPotion extends Player {
 
         long startTime = System.currentTimeMillis();
         String graphType = this.g.getMeta();
-        boolean verbose = !this.d.getTournament();
+        boolean verbose = false;
         //num of moves o arithmos twn epitreptwn kinhsewn
-        int numOfMoves = this.d.getNumOfMoves();
+        int numOfMoves = this.d.getActions();
         // numOfVertices panta monos arithmos
         int numOfNodes = this.g.getVerticesCount();
         Move m = new Move();

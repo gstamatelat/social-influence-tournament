@@ -1,7 +1,7 @@
 package gr.james.socialinfluence.tournament.student2;
 
 import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.players.Player;
+import gr.james.socialinfluence.game.players.AbstractPlayer;
 import gr.james.socialinfluence.graph.Edge;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.graph.algorithms.Dijkstra;
@@ -11,7 +11,7 @@ import gr.james.socialinfluence.helper.Helper;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class DarthVader extends Player {
+public class DarthVader extends AbstractPlayer {
 
     public static Move getMinimum(HashMap<Move, Double> treeMoves) {
         Double minSumMove = Double.POSITIVE_INFINITY;
@@ -57,7 +57,7 @@ public class DarthVader extends Player {
 
             m.putVertex(v, 1.0);
 
-            while (m.getVerticesCount() < this.d.getNumOfMoves()) {
+            while (m.getVerticesCount() < this.d.getActions()) {
                 for (int j = 0; j < period; j++) {
                     Set<Edge> edges = v.getOutEdges();
                     Edge[] edgesArray = edges.toArray(new Edge[0]);
