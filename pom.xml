@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.gstamatelat</groupId>
             <artifactId>social-influence</artifactId>
-            <version>88daea9ecac21673c337143b7a2248e1772d16d5</version>
+            <version>5e3460f6ca6392cc8ef370ebb38dcc8ac1460667</version>
         </dependency>
     </dependencies>
 
@@ -65,8 +65,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>

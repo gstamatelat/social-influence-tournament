@@ -1,46 +1,46 @@
 package gr.james.socialinfluence.tournament;
 
+import gr.james.socialinfluence.algorithms.generators.BarabasiAlbertClusterGenerator;
+import gr.james.socialinfluence.algorithms.generators.BarabasiAlbertGenerator;
+import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
+import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.Game;
 import gr.james.socialinfluence.game.GameDefinition;
-import gr.james.socialinfluence.game.PlayerEnum;
-import gr.james.socialinfluence.game.players.Player;
-import gr.james.socialinfluence.graph.Graph;
-import gr.james.socialinfluence.graph.generators.BarabasiAlbert;
-import gr.james.socialinfluence.graph.generators.BarabasiAlbertCluster;
-import gr.james.socialinfluence.graph.generators.TwoWheels;
+import gr.james.socialinfluence.game.Player;
+import gr.james.socialinfluence.game.players.GreedyPlayer;
+import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
+import gr.james.socialinfluence.graph.MemoryGraph;
 import gr.james.socialinfluence.graph.io.Csv;
-import gr.james.socialinfluence.helper.Helper;
-import gr.james.socialinfluence.helper.RandomHelper;
-import gr.james.socialinfluence.helper.WeightedRandom.ObjectWithWeight;
+import gr.james.socialinfluence.util.RandomHelper;
+import gr.james.socialinfluence.util.collections.Weighted;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class Tournament {
-    public static Graph getGraphFromId(int id) throws MalformedURLException, IOException {
+    public static Graph getGraphFromId(int id) throws IOException {
         switch (id) {
             case 1:
-                return TwoWheels.generate(5);
+                return new TwoWheelsGenerator<>(MemoryGraph.class, 5).create();
             case 2:
-                return TwoWheels.generate(11);
+                return new TwoWheelsGenerator<>(MemoryGraph.class, 11).create();
             case 3:
-                return TwoWheels.generate(25);
+                return new TwoWheelsGenerator<>(MemoryGraph.class, 25).create();
             case 4:
-                return BarabasiAlbert.generate(35, 2, 2, 1.0);
+                return new BarabasiAlbertGenerator<>(MemoryGraph.class, 35, 2, 2, 1.0).create();
             case 5:
-                return BarabasiAlbert.generate(75, 3, 3, 1.0);
+                return new BarabasiAlbertGenerator<>(MemoryGraph.class, 75, 3, 3, 1.0).create();
             case 6:
-                return BarabasiAlbert.generate(250, 5, 2, 1.0);
+                return new BarabasiAlbertGenerator<>(MemoryGraph.class, 250, 5, 2, 1.0).create();
             case 7:
-                return BarabasiAlbertCluster.generate(25, 2, 2, 1, 10);
+                return new BarabasiAlbertClusterGenerator<>(MemoryGraph.class, 25, 2, 2, 1, 10).create();
             case 8:
-                return Csv.from(new URL("http://loki.ee.duth.gr/school.csv").openStream());
+                return new Csv().from(new URL("http://loki.ee.duth.gr/school.csv").openStream());
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     public static void main(String[] args) throws Exception {
@@ -56,10 +56,10 @@ public class Tournament {
         }
 
         System.out.println();
-        Helper.log("Using seed on global Random: %d", seed);
-        Helper.log("Using precision: %7.1e", precision);
-        Helper.log("Using graph id: %d, {%s}", graphId, getGraphFromId(graphId).getMeta());
-        Helper.log("Using move actions count: %s", Arrays.toString(actions));
+        System.out.printf("Using seed on global Random: %d", seed);
+        System.out.printf("Using precision: %7.1e", precision);
+        System.out.printf("Using graph id: %d, {%s}", graphId, getGraphFromId(graphId));
+        System.out.printf("Using move actions count: %s", Arrays.toString(actions));
         System.out.println();
 
         System.out.print("Press enter to start ... ");
@@ -74,12 +74,9 @@ public class Tournament {
 
         for (int maxMoves : maxMoves_t) {
             for (long execution : execution_t) {
-                HashMap<Player, Integer> players = new HashMap<Player, Integer>();
-                players.put(new gr.james.socialinfluence.tournament.student2.DarthVader(), 0);
-                players.put(new gr.james.socialinfluence.tournament.student2.ObelixOnMagicPotion(), 0);
-                players.put(new gr.james.socialinfluence.tournament.student2.VS(), 0);
-                players.put(new gr.james.socialinfluence.tournament.student2.YalamasPro(), 0);
-                players.put(new gr.james.socialinfluence.tournament.student2.AliceInChains(), 0);
+                HashMap<Player, Integer> players = new HashMap<>();
+                players.put(new MaxPageRankPlayer(), 0);
+                players.put(new GreedyPlayer(), 0);
 
                 int max = rounds * players.size() * (players.size() - 1);
                 int completed = 0;
@@ -91,11 +88,8 @@ public class Tournament {
                         if (p1 != p2) {
                             for (int i = 0; i < rounds; i++) {
                                 Graph g = getGraphFromId(graphId);
-                                Game game = new Game(g);
-                                GameDefinition d = new GameDefinition(maxMoves, maxMoves * 1.0, execution, true);
-                                game.setPlayer(PlayerEnum.A, p1.findMove(g, d));
-                                game.setPlayer(PlayerEnum.B, p2.findMove(g, d));
-                                int result = game.runGame(d, precision).score;
+                                GameDefinition d = new GameDefinition(maxMoves, maxMoves * 1.0, execution);
+                                int result = Game.runPlayers(p1, p2, g, d).score;
                                 if (result == 0) {
                                     players.put(p1, players.get(p1) + TournamentFinals.DRAW);
                                     players.put(p2, players.get(p2) + TournamentFinals.DRAW);
@@ -124,35 +118,31 @@ public class Tournament {
                 for (int i = 0; i < maxLine; i++) {
                     System.out.print("-");
                 }
-                ;
                 System.out.println("\\");
                 System.out.print(header);
                 for (int i = 0; i < maxLine - header.length(); i++) {
                     System.out.print(" ");
                 }
-                ;
                 System.out.println(" |");
                 System.out.print("|");
                 for (int i = 0; i < maxLine; i++) {
                     System.out.print("-");
                 }
-                ;
                 System.out.println("|");
 
-                PriorityQueue<ObjectWithWeight<Player>> pQueue = new PriorityQueue<ObjectWithWeight<Player>>();
+                PriorityQueue<Weighted<Player, Integer>> pQueue = new PriorityQueue<>();
                 for (Player p : players.keySet()) {
-                    pQueue.add(new ObjectWithWeight<Player>(p, players.get(p)));
+                    pQueue.add(new Weighted<>(p, players.get(p)));
                 }
 
                 while (pQueue.size() > 0) {
-                    ObjectWithWeight<Player> ex = pQueue.poll();
-                    String line = String.format("%3.0f %s", ex.w, ex.e.getClass().getSimpleName());
+                    Weighted<Player, Integer> ex = pQueue.poll();
+                    String line = String.format("%d %s", ex.getWeight(), ex.getObject().getClass().getSimpleName());
                     System.out.print("| ");
                     System.out.print(line);
                     for (int i = 0; i < maxLine - line.length() - 1; i++) {
                         System.out.print(" ");
                     }
-                    ;
                     System.out.println("|");
                 }
 
@@ -160,7 +150,6 @@ public class Tournament {
                 for (int i = 0; i < maxLine; i++) {
                     System.out.print("-");
                 }
-                ;
                 System.out.println("/");
 
                 int counter = 16;
@@ -175,6 +164,6 @@ public class Tournament {
             }
         }
 
-        Helper.log("Time for this graph: %d sec", Math.round((System.currentTimeMillis() - now) / 1000.));
+        System.out.printf("Time for this graph: %d sec", Math.round((System.currentTimeMillis() - now) / 1000.));
     }
 }

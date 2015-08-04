@@ -1,9 +1,14 @@
 package gr.james.socialinfluence.tournament;
 
+import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.socialinfluence.api.Graph;
-import gr.james.socialinfluence.api.Player;
-import gr.james.socialinfluence.game.*;
+import gr.james.socialinfluence.game.Game;
+import gr.james.socialinfluence.game.GameDefinition;
+import gr.james.socialinfluence.game.GameResult;
+import gr.james.socialinfluence.game.Player;
+import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
 import gr.james.socialinfluence.game.players.RandomPlayer;
+import gr.james.socialinfluence.graph.MemoryGraph;
 
 public class PlayerDuel {
 
@@ -22,7 +27,7 @@ public class PlayerDuel {
         GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves, execution);
 
         /* This is your player. Rename accordingly. */
-        Player p1 = new gr.james.socialinfluence.tournament.student2.ObelixOnMagicPotion();
+        Player p1 = new MaxPageRankPlayer();
 
         /*
          * This is your opponent. Use different default player from
@@ -44,18 +49,12 @@ public class PlayerDuel {
 		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
 		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
 		 */
-        Graph g = TwoWheels.generate(11);
+        Graph g = new TwoWheelsGenerator<>(MemoryGraph.class, 11).create();
 
         /* The game execution */
-        Game game = new Game(g);
-        Move m1 = p1.findMove(g, d);
-        Move m2 = p2.findMove(g, d);
-        game.setPlayer(PlayerEnum.A, m1);
-        game.setPlayer(PlayerEnum.B, m2);
+        GameResult gResult = Game.runPlayers(p1, p2, g, d);
 
-        GameResult gResult = game.runGame(d, 0.0);
-
-        System.out.println(String.format("Graph: %s", g.getMeta()));
+        System.out.println(String.format("Graph: %s", g));
         System.out.println(String.format("%s[0] - %s[1]", p1.getClass().getSimpleName(), p2.getClass().getSimpleName()));
 
         if (gResult.score > 0) {
@@ -66,8 +65,8 @@ public class PlayerDuel {
             System.out.println("0.5 - 0.5");
         }
 
-        System.out.println(String.format("%s - %s", m1.deepCopy()
-                .normalizeWeights(d.getBudget()), m2.deepCopy()
+        System.out.println(String.format("%s - %s", gResult.m1.deepCopy()
+                .normalizeWeights(d.getBudget()), gResult.m2.deepCopy()
                 .normalizeWeights(d.getBudget())));
 
         System.out.println(String.format("Full State: %s", gResult.fullState));

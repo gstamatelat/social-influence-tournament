@@ -1,14 +1,15 @@
 package gr.james.socialinfluence.tournament.players;
 
-import gr.james.socialinfluence.collections.VertexPair;
+import gr.james.socialinfluence.algorithms.distance.Dijkstra;
+import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
+import gr.james.socialinfluence.api.Graph;
+import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.MovePoint;
-import gr.james.socialinfluence.game.players.Player;
-import gr.james.socialinfluence.graph.Graph;
+import gr.james.socialinfluence.game.MovePointer;
+import gr.james.socialinfluence.game.Player;
+import gr.james.socialinfluence.graph.ImmutableGraph;
 import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.graph.algorithms.FloydWarshall;
-import gr.james.socialinfluence.graph.algorithms.iterators.RandomVertexIterator;
-import gr.james.socialinfluence.helper.Helper;
+import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,11 @@ public class GreedyDistancePlayer extends Player {
         return m;
     }
 
-    public static double getVertexDistance(Graph g, Vertex v, List<Vertex> us,
-                                           Map<VertexPair, Double> distanceMap) {
-        /*
-         * This method returns the product of distances from all vertices in
-		 * 'us' to 'v'.
-		 */
+    /**
+     * <p>This method returns the product of distances from all vertices in 'us' to 'v'.</p>
+     */
+    public static double getVertexDistance(Graph g, Vertex v, List<Vertex> us, Map<VertexPair, Double> distanceMap) {
+
         double totalDistance = 1.0;
 
         for (Vertex u : us) {
@@ -38,51 +38,36 @@ public class GreedyDistancePlayer extends Player {
         }
 
         if (totalDistance == 0.0) {
-            Helper.logError("totalDistance = 0");
+            log.error("totalDistance = 0");
         }
 
         return totalDistance;
     }
 
     @Override
-    public void getMove() {
-        Move m = new Move();
+    public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
+        Move m;
 
-        /*
-         * It is imperative to our strategy to quickly select a move, even a
-		 * random one.
-		 */
-        m = getRandomMove(g, this.d.getNumOfMoves());
-        if (!this.d.getTournament()) {
-            Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
-        }
-        this.movePtr.set(m);
+        /* It is imperative to our strategy to quickly select a move, even a random one. */
+        m = getRandomMove(g, d.getActions());
+        log.info("Submitting random move {}", m);
+        movePtr.submit(m);
 
-        /*
-         * Clear the move for future use. We could also re-instantiate the
-		 * object with m = new Move().
-		 */
+        /* Clear the move for future use. We could also re-instantiate the object with m = new Move(). */
         m.clear();
 
-        /*
-         * Create the distance map. Each key is of the form {source, target} and
-		 * the values are the distances.
-		 */
-        Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
+        /* Create the distance map. Each key is of the form {source, target} and the values are the distances. */
+        Map<VertexPair, Double> distanceMap = Dijkstra.executeDistanceMap(g);
 
         /* Start by inserting a random vertex to the Move object. */
-        m.putVertex(this.g.getRandomVertex(), 1.0);
+        m.putVertex(g.getRandomVertex(), 1.0);
 
         /* Gradually fill the Move object in a greedy way. */
-        while (m.getVerticesCount() < this.d.getNumOfMoves()) {
-            /*
-             * Check the distance that each vertex in the graph creates from the
-			 * nodes that already exist in the move object and select the
-			 * highest.
-			 */
+        while (m.getVerticesCount() < d.getActions()) {
+            /* Check the distance that each vertex in the graph creates from the nodes that already exist in the move object and select the highest. */
             double max = .0;
             Vertex highest = null;
-            for (Vertex v : this.g.getVertices()) {
+            for (Vertex v : g.getVertices()) {
                 /*
                  * Candidates are all nodes in the graph except those in the
 				 * move already.
@@ -99,22 +84,18 @@ public class GreedyDistancePlayer extends Player {
             m.putVertex(highest, 1.0);
         }
 
-        if (!this.d.getTournament()) {
-            Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
-        }
-        this.movePtr.set(m);
+        log.info("{}", m);
+        movePtr.submit(m);
     }
 
+    /**
+     * <p>This method returns an array that contains the Vertices inside a move object.</p>
+     */
     public List<Vertex> convertMoveToList(Move m) {
-        /*
-         * This method returns an array that contains the Vertices inside a move
-		 * object.
-		 */
         List<Vertex> u = new ArrayList<Vertex>();
-        for (MovePoint e : m) {
-            u.add(e.vertex);
+        for (Vertex e : m) {
+            u.add(e);
         }
         return u;
     }
-
 }

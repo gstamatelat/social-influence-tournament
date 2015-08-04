@@ -1,31 +1,30 @@
 package gr.james.socialinfluence.tournament.players;
 
-import gr.james.socialinfluence.collections.VertexPair;
+import gr.james.socialinfluence.algorithms.distance.FloydWarshall;
+import gr.james.socialinfluence.algorithms.iterators.RandomSurferIterator;
+import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
+import gr.james.socialinfluence.api.Graph;
+import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.MovePoint;
-import gr.james.socialinfluence.game.players.Player;
-import gr.james.socialinfluence.graph.Graph;
+import gr.james.socialinfluence.game.MovePointer;
+import gr.james.socialinfluence.game.Player;
+import gr.james.socialinfluence.graph.ImmutableGraph;
 import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.graph.algorithms.FloydWarshall;
-import gr.james.socialinfluence.graph.algorithms.iterators.RandomSurferIterator;
-import gr.james.socialinfluence.graph.algorithms.iterators.RandomVertexIterator;
-import gr.james.socialinfluence.helper.Helper;
-import gr.james.socialinfluence.helper.RandomHelper;
+import gr.james.socialinfluence.util.RandomHelper;
+import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.Map;
 
 public class LocalSearchDistancePlayer extends Player {
 
-    public static Move mutateMove(Move m) {
+    public static Move mutateMove(Move m, Graph g) {
         /* Slightly change the vertices in the move. */
         double jump_probability = 0.2;
 
         Move moves = new Move();
 
-        for (MovePoint mp : m) {
-            Vertex v = mp.vertex;
-            RandomSurferIterator randomSurfer = new RandomSurferIterator(
-                    v.getParentGraph(), 0.0, v);
+        for (Vertex v : m) {
+            RandomSurferIterator randomSurfer = new RandomSurferIterator(g, 0.0, v);
             while (RandomHelper.getRandom().nextDouble() < jump_probability) {
                 v = randomSurfer.next();
             }
@@ -34,7 +33,7 @@ public class LocalSearchDistancePlayer extends Player {
         }
 
         if (moves.getVerticesCount() < m.getVerticesCount()) {
-            return mutateMove(m);
+            return mutateMove(m, g);
         } else {
             return moves;
         }
@@ -50,18 +49,15 @@ public class LocalSearchDistancePlayer extends Player {
         return m;
     }
 
-    public static double getMoveDistance(Move m,
-                                         Map<VertexPair, Double> distanceMap) {
-        /*
-         * Calculates the product of the distances of every pair of vertices in
-		 * the move (aka geometric mean).
-		 */
+    /**
+     * Calculates the product of the distances of every pair of vertices in the move (aka geometric mean).
+     */
+    public static double getMoveDistance(Move m, Map<VertexPair, Double> distanceMap) {
         double distance = 0.0;
-        for (MovePoint x : m) {
-            for (MovePoint y : m) {
-                if (!x.vertex.equals(y.vertex)) {
-                    distance += Math.log(distanceMap.get(new VertexPair(
-                            x.vertex, y.vertex)));
+        for (Vertex x : m) {
+            for (Vertex y : m) {
+                if (!x.equals(y)) {
+                    distance += Math.log(distanceMap.get(new VertexPair(x, y)));
                 }
             }
         }
@@ -69,42 +65,30 @@ public class LocalSearchDistancePlayer extends Player {
     }
 
     @Override
-    public void getMove() {
+    public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
         Move m = new Move();
 
-        /*
-         * First, we select an initial move. Afterwards, we will start tweaking
-		 * it.
-		 */
-        m = getRandomMove(g, this.d.getNumOfMoves());
-        if (!this.d.getTournament()) {
-            Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
-        }
-        this.movePtr.set(m);
+        /* First, we select an initial move. Afterwards, we will start tweaking it. */
+        m = getRandomMove(g, d.getActions());
+        log.info("{}", m);
+        movePtr.submit(m);
 
-        /*
-         * Create the distance map. Each key is of the form {source, target} and
-		 * the values are the distances.
-		 */
+        /* Create the distance map. Each key is of the form {source, target} and the values are the distances. */
         Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
 
         double maxDistance = 0.0;
         /* Keep searching until time is up. */
         while (!this.isInterrupted()) {
             /* Generate a new, mutated move. */
-            m = mutateMove(m);
+            m = mutateMove(m, g);
 
             /* If the mutated move creates more distance, keep it. */
             double newDistance = getMoveDistance(m, distanceMap);
             if (newDistance > maxDistance) {
                 maxDistance = newDistance;
-                if (!this.d.getTournament()) {
-                    Helper.log(this.getClass().getSimpleName() + ": "
-                            + m.toString());
-                }
-                this.movePtr.set(m);
+                log.info("{}", m);
+                movePtr.submit(m);
             }
         }
     }
-
 }

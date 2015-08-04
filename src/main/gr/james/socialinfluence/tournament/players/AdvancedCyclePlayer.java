@@ -1,55 +1,47 @@
 package gr.james.socialinfluence.tournament.players;
 
+import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.players.Player;
-import gr.james.socialinfluence.graph.Edge;
+import gr.james.socialinfluence.game.MovePointer;
+import gr.james.socialinfluence.game.Player;
+import gr.james.socialinfluence.graph.ImmutableGraph;
 import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.helper.Helper;
-
-import java.util.Set;
 
 public class AdvancedCyclePlayer extends Player {
 
     @Override
-    public void getMove() {
-
-        if (!this.g.getMeta().startsWith("Path,")
-                || !this.g.getMeta().contains("cycle=true")) {
+    public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
+        if (!g.getGraphType().equals("Cycle")) {
+            log.warn("Graph {} is not a cycle. AdvancedCyclePlayer only works for cycles. Aborting now.", g);
             return;
         }
 
         Move m = new Move();
 
-        final double period = (double) this.g.getVerticesCount()
-                / this.d.getNumOfMoves();
+        final double period = (double) g.getVerticesCount() / d.getActions();
         double c = period;
 
-        Vertex v = this.g.getRandomVertex();
+        Vertex v = g.getRandomVertex();
         Vertex previous = v;
 
         m.putVertex(v, 1.0);
 
-        while (m.getVerticesCount() < this.d.getNumOfMoves()) {
+        while (m.getVerticesCount() < d.getActions()) {
             for (int j = 0; j < (int) (c + 0.5); j++) {
-                Set<Edge> edges = v.getOutEdges();
-                Edge[] edgesArray = edges.toArray(new Edge[0]);
-                if (edgesArray[0].getTarget().equals(previous)) {
+                Vertex[] verticesArray = g.getOutEdges(v).keySet().toArray(new Vertex[2]);
+                if (verticesArray[0].equals(previous)) {
                     previous = v;
-                    v = edgesArray[1].getTarget();
+                    v = verticesArray[1];
                 } else {
                     previous = v;
-                    v = edgesArray[0].getTarget();
+                    v = verticesArray[0];
                 }
             }
             m.putVertex(v, 1.0);
             c += period - (int) (c + 0.5);
         }
 
-        if (!this.d.getTournament()) {
-            Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
-        }
-
-        this.movePtr.set(m);
+        log.info("{}", m);
+        movePtr.submit(m);
     }
-
 }

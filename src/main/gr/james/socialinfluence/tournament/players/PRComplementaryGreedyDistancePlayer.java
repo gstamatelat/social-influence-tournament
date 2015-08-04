@@ -1,21 +1,22 @@
 package gr.james.socialinfluence.tournament.players;
 
+import gr.james.socialinfluence.algorithms.distance.Dijkstra;
+import gr.james.socialinfluence.algorithms.iterators.PageRankIterator;
+import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.api.Graph;
-import gr.james.socialinfluence.collections.VertexPair;
+import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.MovePoint;
-import gr.james.socialinfluence.game.players.AbstractPlayer;
+import gr.james.socialinfluence.game.MovePointer;
+import gr.james.socialinfluence.game.Player;
+import gr.james.socialinfluence.graph.ImmutableGraph;
 import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.graph.algorithms.FloydWarshall;
-import gr.james.socialinfluence.graph.algorithms.iterators.PageRankIterator;
-import gr.james.socialinfluence.graph.algorithms.iterators.RandomVertexIterator;
-import gr.james.socialinfluence.helper.Helper;
+import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
+public class PRComplementaryGreedyDistancePlayer extends Player {
 
     public static Move getRandomMove(Graph g, int num) {
         Move m = new Move();
@@ -26,8 +27,7 @@ public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
         return m;
     }
 
-    public static double getVertexDistance(Graph g, Vertex v, List<Vertex> us,
-                                           Map<VertexPair, Double> distanceMap) {
+    public static double getVertexDistance(Graph g, Vertex v, List<Vertex> us, Map<VertexPair, Double> distanceMap) {
         /*
          * This method returns the product of distances from all vertices NOT in
 		 * 'us' to 'v'.
@@ -48,25 +48,23 @@ public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
         }
 
         if (totalDistance == 0.0) {
-            Helper.logError("totalDistance = 0");
+            log.error("totalDistance = 0");
         }
 
         return totalDistance;
     }
 
     @Override
-    public void getMove() {
+    public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
         Move m = new Move();
 
         /*
          * It is imperative to our strategy to quickly select a move, even a
 		 * random one.
 		 */
-        m = getRandomMove(g, this.d.getNumOfMoves());
-        if (!this.d.getTournament()) {
-            Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
-        }
-        this.movePtr.set(m);
+        m = getRandomMove(g, d.getActions());
+        log.info("{}", m);
+        movePtr.submit(m);
 
         /*
          * Clear the move for future use. We could also re-instantiate the
@@ -78,20 +76,20 @@ public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
          * Create the distance map. Each key is of the form {source, target} and
 		 * the values are the distances.
 		 */
-        Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
+        Map<VertexPair, Double> distanceMap = Dijkstra.executeDistanceMap(g);
 
         /* Start by inserting the max PR vertex to the Move object. */
-        m.putVertex(new PageRankIterator(g, 0.0).next(), 1.0);
+        m.putVertex(new PageRankIterator(g, 0.0).next().getObject(), 1.0);
 
         /* Gradually fill the Move object in a greedy way. */
-        while (m.getVerticesCount() < this.d.getNumOfMoves()) {
+        while (m.getVerticesCount() < d.getActions()) {
             /*
              * Select the vertex that creates the minimum sum of squares of
 			 * distances from nodes that don't exist in the move.
 			 */
             double min = Double.POSITIVE_INFINITY;
             Vertex lowest = null;
-            for (Vertex v : this.g.getVertices()) {
+            for (Vertex v : g.getVertices()) {
                 /*
                  * Candidates are all nodes in the graph except those in the
 				 * move already.
@@ -108,10 +106,8 @@ public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
             m.putVertex(lowest, 1.0);
         }
 
-        if (!this.d.getTournament()) {
-            Helper.log(this.getClass().getSimpleName() + ": " + m.toString());
-        }
-        this.movePtr.set(m);
+        log.info("{}", m);
+        movePtr.submit(m);
     }
 
     public List<Vertex> convertMoveToList(Move m) {
@@ -120,10 +116,9 @@ public class PRComplementaryGreedyDistancePlayer extends AbstractPlayer {
 		 * object.
 		 */
         List<Vertex> u = new ArrayList<Vertex>();
-        for (MovePoint e : m) {
-            u.add(e.vertex);
+        for (Vertex e : m) {
+            u.add(e);
         }
         return u;
     }
-
 }

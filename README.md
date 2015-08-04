@@ -28,7 +28,6 @@ public class MyPlayer extends Player {
 	- `int actions`: How many nodes you are allowed to influence at most. The Move object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
 	- `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to numOfNodes. If your player exceeds this amount, the game will automatically normalize your move.
 	- `long execution`: Time in milliseconds available to the player to complete their execution.
-	- `boolean tournament`: Flag raised when the player is competing in a tournament settings context. If this is ``false``, you may print additional messages that can help you debug your player. If not, consider optimizing for performance and avoid printing anything.
 - `MovePointer movePtr`: Used to submit a move with `movePtr.set()`. Subsequent calls will overwrite the previous one.
 - `boolean isInterrupted()`: Interrupt flag by the game engine, signaling that this player has exhausted the available execution time and has to terminate. Submitting a move while this flag is raised has no effect. This flag is raised when `d.execution` milliseconds have elapsed since the invocation of `getMove()`.
 - `Map<String, String> options`: Player-specific parameters, passed by the caller.
@@ -44,9 +43,7 @@ public void getMove() {
 	while (m.getVerticesCount() < this.d.getActions()) {
 		m.putVertex(rvi.next(), 1.0);
 	}
-	if (!this.d.getTournament()) {
-		Helper.log("Player: " + m);
-	}
+	log.info("{}", m);
 	this.movePtr.set(m);
 }
 ```
