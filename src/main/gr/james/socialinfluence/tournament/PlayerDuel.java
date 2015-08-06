@@ -11,47 +11,48 @@ import gr.james.socialinfluence.game.players.RandomPlayer;
 import gr.james.socialinfluence.graph.MemoryGraph;
 
 public class PlayerDuel {
+    public static void main(String[] args) {
+        /**
+         * Action count
+         */
+        int actions = 4;
 
-    public static void main(String[] args) throws Exception {
-        /*
-         * numOfMoves: How many nodes does a move consist of.
-		 * 
-		 * execution: Time limit in milliseconds.
-		 * 
-		 * tournament: Use tournament settings.
-		 */
-        int numOfMoves = 4;
-        long execution = 30000;
-        boolean tournament = false;
+        /**
+         * Time to execute, in milliseconds
+         */
+        long execution = 10000;
 
-        GameDefinition d = new GameDefinition(numOfMoves, (double) numOfMoves, execution);
-
-        /* This is your player. Rename accordingly. */
+        /**
+         * Player A
+         */
         Player p1 = new MaxPageRankPlayer();
 
-        /*
-         * This is your opponent. Use different default player from
-		 * gr.james.socialinfluence.game.players or create your own.
-		 * 
-		 * Player p2 = new MaxPageRankPlayer().
-		 */
+        /**
+         * Player B
+         */
         Player p2 = new RandomPlayer();
 
-        /*
-         * The graph object of the game. Use different ones from
-		 * gr.james.socialinfluence.graph.generators or create your own.
-		 * 
-		 * Graph g = Path.generate(30, true);
-		 * Graph g = TwoWheels.generate(7);
-		 * Graph g = TwoWheels.generate(13);
-		 * Graph g = BarabasiAlbert.generate(25, 2, 1, 1.0);
-		 * Graph g = BarabasiAlbert.generate(25, 2, 2, 1.0);
-		 * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
-		 * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
-		 */
+        /**
+         * The graph object of the game. Use different ones from gr.james.socialinfluence.algorithms.generators.
+         *
+         * Here is a sample list:
+         *
+         * Graph g = Path.generate(30, true);
+         * Graph g = TwoWheels.generate(7);
+         * Graph g = TwoWheels.generate(13);
+         * Graph g = BarabasiAlbert.generate(25, 2, 1, 1.0);
+         * Graph g = BarabasiAlbert.generate(25, 2, 2, 1.0);
+         * Graph g = BarabasiAlbert.generate(150, 2, 1, 1.0);
+         * Graph g = BarabasiAlbert.generate(150, 2, 2, 1.0);
+         */
         Graph g = new TwoWheelsGenerator<>(MemoryGraph.class, 11).create();
 
-        /* The game execution */
+        duel(g, actions, execution, p1, p2);
+    }
+
+    public static void duel(Graph g, int actions, long execution, Player p1, Player p2) {
+        GameDefinition d = new GameDefinition(actions, (double) actions, execution);
+
         GameResult gResult = Game.runPlayers(p1, p2, g, d);
 
         System.out.println(String.format("Graph: %s", g));
