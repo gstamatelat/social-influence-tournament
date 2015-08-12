@@ -9,42 +9,45 @@ The user must implement a player by deriving the `Player` abstract class using t
 ```java
 package gr.james.socialinfluence.tournament.players;
 
-import gr.james.socialinfluence.game.players.Player;
+import gr.james.socialinfluence.game.Player;
 
 public class MyPlayer extends Player {
 
 	@Override
-	public void getMove() {
+	public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
 		// Player logic here
 	}
 
 }
 ```
 
-`Player` class contains the following members:
+The method `suggestMove` has the following arguments:
 
-- `Graph g`: Represents the graph which will host the influence game. You may not change this object.
+- `ImmutableGraph g`: Represents the graph which will host the influence game. You may not change this object.
 - `GameDefinition d`: Contains the game-specific fields:
 	- `int actions`: How many nodes you are allowed to influence at most. The Move object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
-	- `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to numOfNodes. If your player exceeds this amount, the game will automatically normalize your move.
-	- `long execution`: Time in milliseconds available to the player to complete their execution.
-- `MovePointer movePtr`: Used to submit a move with `movePtr.set()`. Subsequent calls will overwrite the previous one.
+	- `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to `actions`. If your player exceeds this amount, the engine will automatically normalize your move.
+	- `long execution`: Time in milliseconds available to the player to complete their execution. Moves that are submitted after this period is exhausted will be ignored.
+- `MovePointer movePtr`: Used to submit a move with `movePtr.submit()`. Subsequent calls will overwrite the previous one. When a move is submitted, a deep copy is performed first, thus any subsequent mutations will not affect the submitted object.
+
+`Player` class contains the following members:
+
 - `boolean isInterrupted()`: Interrupt flag by the game engine, signaling that this player has exhausted the available execution time and has to terminate. Submitting a move while this flag is raised has no effect. This flag is raised when `d.execution` milliseconds have elapsed since the invocation of `getMove()`.
 - `Map<String, String> options`: Player-specific parameters, passed by the caller.
 
-`Player` class must overload `void getMove()` and optionally `Player putDefaultOptions()`.
+`Player` class must overload `void suggestMove()` and optionally `Player putDefaultOptions()`.
 
-Example of `getMove()` that submits a random move:
+Example of `suggestMove()` that submits a random move:
 
 ```java
-public void getMove() {
+public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
 	Move m = new Move();
 	RandomVertexIterator rvi = new RandomVertexIterator(g);
-	while (m.getVerticesCount() < this.d.getActions()) {
+	while (m.getVerticesCount() < d.getActions()) {
 		m.putVertex(rvi.next(), 1.0);
 	}
 	log.info("{}", m);
-	this.movePtr.set(m);
+	movePtr.submit(m);
 }
 ```
 
@@ -66,6 +69,7 @@ public Player putDefaultOptions() {
 - Added `IndexIterator` that iterates over vertices in a graph in index-based ascending order.
 - `Game` now ignores player vertices for the final opinion vector average.
 - Renamed `numOfMoves` to `actions`.
+- Convert to gradle.
 
 ### v1.6
 
