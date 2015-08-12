@@ -1,6 +1,7 @@
 package gr.james.socialinfluence.tournament.players;
 
-import gr.james.socialinfluence.algorithms.distance.FloydWarshall;
+import gr.james.socialinfluence.algorithms.distance.Dijkstra;
+import gr.james.socialinfluence.algorithms.iterators.PageRankIterator;
 import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.GameDefinition;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ComplementaryGreedyDistancePlayer extends Player {
+public class PRComplementaryGreedyDistancePlayer extends Player {
 
     public static Move getRandomMove(Graph g, int num) {
         Move m = new Move();
@@ -26,7 +27,7 @@ public class ComplementaryGreedyDistancePlayer extends Player {
         return m;
     }
 
-    public double getVertexDistance(Graph g, Vertex v, List<Vertex> us, Map<VertexPair, Double> distanceMap) {
+    public static double getVertexDistance(Graph g, Vertex v, List<Vertex> us, Map<VertexPair, Double> distanceMap) {
         /*
          * This method returns the product of distances from all vertices NOT in
 		 * 'us' to 'v'.
@@ -57,19 +58,28 @@ public class ComplementaryGreedyDistancePlayer extends Player {
     public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
         Move m = new Move();
 
-        /* It is imperative to our strategy to quickly select a move, even a random one. */
+        /*
+         * It is imperative to our strategy to quickly select a move, even a
+		 * random one.
+		 */
         m = getRandomMove(g, d.getActions());
         log.info("{}", m);
         movePtr.submit(m);
 
-        /* Clear the move for future use. We could also re-instantiate the object with m = new Move(). */
+        /*
+         * Clear the move for future use. We could also re-instantiate the
+		 * object with m = new Move().
+		 */
         m.clear();
 
-        /* Create the distance map. Each key is of the form {source, target} and the values are the distances. */
-        Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
+        /*
+         * Create the distance map. Each key is of the form {source, target} and
+		 * the values are the distances.
+		 */
+        Map<VertexPair, Double> distanceMap = Dijkstra.executeDistanceMap(g);
 
-        /* Start by inserting a random vertex to the Move object. */
-        m.putVertex(g.getRandomVertex(), 1.0);
+        /* Start by inserting the max PR vertex to the Move object. */
+        m.putVertex(new PageRankIterator(g, 0.0).next().getObject(), 1.0);
 
         /* Gradually fill the Move object in a greedy way. */
         while (m.getVerticesCount() < d.getActions()) {
@@ -80,7 +90,10 @@ public class ComplementaryGreedyDistancePlayer extends Player {
             double min = Double.POSITIVE_INFINITY;
             Vertex lowest = null;
             for (Vertex v : g.getVertices()) {
-                /* Candidates are all nodes in the graph except those in the move already. */
+                /*
+                 * Candidates are all nodes in the graph except those in the
+				 * move already.
+				 */
                 if (!m.containsVertex(v)) {
                     List<Vertex> moveList = convertMoveToList(m);
                     double c = getVertexDistance(g, v, moveList, distanceMap);
@@ -97,14 +110,12 @@ public class ComplementaryGreedyDistancePlayer extends Player {
         movePtr.submit(m);
     }
 
-    /**
-     * <p>This method returns a list that contains the Vertices inside a move object.</p>
-     *
-     * @param m the Move instance to convert to a list
-     * @return the list view of the move
-     */
     public List<Vertex> convertMoveToList(Move m) {
-        List<Vertex> u = new ArrayList<Vertex>();
+        /*
+         * This method returns an array that contains the Vertices inside a move
+		 * object.
+		 */
+        List<Vertex> u = new ArrayList<>();
         for (Vertex e : m) {
             u.add(e);
         }

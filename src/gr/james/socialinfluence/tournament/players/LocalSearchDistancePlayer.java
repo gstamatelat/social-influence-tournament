@@ -1,6 +1,6 @@
 package gr.james.socialinfluence.tournament.players;
 
-import gr.james.socialinfluence.algorithms.distance.FloydWarshall;
+import gr.james.socialinfluence.algorithms.distance.Dijkstra;
 import gr.james.socialinfluence.algorithms.iterators.RandomSurferIterator;
 import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.api.Graph;
@@ -74,7 +74,7 @@ public class LocalSearchDistancePlayer extends Player {
         movePtr.submit(m);
 
         /* Create the distance map. Each key is of the form {source, target} and the values are the distances. */
-        Map<VertexPair, Double> distanceMap = FloydWarshall.execute(g);
+        Map<VertexPair, Double> distanceMap = Dijkstra.executeDistanceMap(g);
 
         double maxDistance = 0.0;
         /* Keep searching until time is up. */
