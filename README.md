@@ -1,6 +1,6 @@
 # Social Influence Tournament
 
-Tournament edition of social-influence for courses
+Tournament edition of [social-influence](https://github.com/gstamatelat/social-influence) for courses
 
 ## Import
 
