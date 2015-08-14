@@ -2,6 +2,14 @@
 
 Tournament edition of social-influence for courses
 
+## Import
+
+1. Download and extract the zip
+2. In the terminal, type `gradlew eclipse` if you are using eclipse or `gradlew idea` if you are using IntelliJ
+3. Open the directory as project in the IDE you specified
+
+Alternatively, you may import as gradle project in the IDE of your choice, assuming gradle is supported or you have installed the appropriate plugin.
+
 ## Usage
 
 The user must implement a player by deriving the `Player` abstract class using the following template.

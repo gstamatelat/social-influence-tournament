@@ -1,6 +1,6 @@
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 project.version = 1.7
 
@@ -23,12 +23,19 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:4590321efe327cfd9392fd2b19eb553f45f25dff'
+    compile 'com.github.gstamatelat:social-influence:cd0d17047f'
 }
 
-allprojects {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:deprecation"
-        options.compilerArgs << "-Xlint:unchecked"
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }
