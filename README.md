@@ -1,12 +1,12 @@
 # Social Influence Tournament
 
-Tournament edition of [social-influence](https://github.com/gstamatelat/social-influence) for courses
+Tournament edition of [social-influence](https://github.com/gstamatelat/social-influence) for courses.
 
 ## Import
 
-1. Download and extract the zip
-2. In the terminal, type `gradlew eclipse` if you are using eclipse or `gradlew idea` if you are using IntelliJ
-3. Open the directory as project in the IDE you specified
+1. Download and extract the zip.
+2. In the terminal, type `gradlew eclipse` if you are using eclipse or `gradlew idea` if you are using IntelliJ. `java` (or `java.exe`) needs to be in your PATH for this step to work.
+3. Open the directory as existing project in the IDE you specified in the previous step.
 
 Alternatively, you may import as gradle project in the IDE of your choice, assuming gradle is supported or you have installed the appropriate plugin.
 
