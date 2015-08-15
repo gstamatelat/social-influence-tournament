@@ -33,6 +33,7 @@ task projectZip(dependsOn: 'build', type: Zip) {
     include 'src/**/*'
     include 'gradle/**/*'
     include 'README.md'
+    include 'CHANGELOG.md'
     include 'build.gradle'
     include 'gradlew'
     include 'gradlew.bat'
