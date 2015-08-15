@@ -9,6 +9,7 @@ import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.game.players.GreedyPlayer;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
+import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.graph.MemoryGraph;
 import gr.james.socialinfluence.graph.io.Csv;
 import gr.james.socialinfluence.util.RandomHelper;
@@ -91,14 +92,14 @@ public class TournamentMainOld {
                                 GameDefinition d = new GameDefinition(maxMoves, maxMoves * 1.0, execution);
                                 int result = Game.runPlayers(p1, p2, g, d).score;
                                 if (result == 0) {
-                                    players.put(p1, players.get(p1) + TournamentFinalsOld.DRAW);
-                                    players.put(p2, players.get(p2) + TournamentFinalsOld.DRAW);
+                                    players.put(p1, players.get(p1) + Tournament.DRAW);
+                                    players.put(p2, players.get(p2) + Tournament.DRAW);
                                 } else if (result == -1) {
-                                    players.put(p2, players.get(p2) + TournamentFinalsOld.LOSE);
-                                    players.put(p1, players.get(p1) + TournamentFinalsOld.WIN);
+                                    players.put(p2, players.get(p2) + Tournament.LOSE);
+                                    players.put(p1, players.get(p1) + Tournament.WIN);
                                 } else {
-                                    players.put(p1, players.get(p1) + TournamentFinalsOld.LOSE);
-                                    players.put(p2, players.get(p2) + TournamentFinalsOld.WIN);
+                                    players.put(p1, players.get(p1) + Tournament.LOSE);
+                                    players.put(p2, players.get(p2) + Tournament.WIN);
                                 }
                                 System.out.print(String.format("%d%% ", 100 * (++completed) / max));
                             }
