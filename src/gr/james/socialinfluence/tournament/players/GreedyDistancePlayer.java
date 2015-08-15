@@ -7,7 +7,6 @@ import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.MovePointer;
 import gr.james.socialinfluence.game.Player;
-import gr.james.socialinfluence.graph.ImmutableGraph;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.util.collections.VertexPair;
 
@@ -45,7 +44,7 @@ public class GreedyDistancePlayer extends Player {
     }
 
     @Override
-    public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
+    public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         Move m;
 
         /* It is imperative to our strategy to quickly select a move, even a random one. */

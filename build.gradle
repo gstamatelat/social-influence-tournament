@@ -23,7 +23,17 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:cd0d17047f'
+    compile 'com.github.gstamatelat:social-influence:c50ea901e8'
+}
+
+task projectZip(dependsOn: 'build', type: Zip) {
+    from projectDir
+    include 'src/**/*'
+    include 'gradle/**/*'
+    include 'README.md'
+    include 'build.gradle'
+    include 'gradlew'
+    include 'gradlew.bat'
 }
 
 idea {
