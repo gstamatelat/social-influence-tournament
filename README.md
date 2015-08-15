@@ -22,7 +22,7 @@ import gr.james.socialinfluence.game.Player;
 public class MyPlayer extends Player {
 
 	@Override
-	public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
+	public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
 		// Player logic here
 	}
 
@@ -31,44 +31,50 @@ public class MyPlayer extends Player {
 
 The method `suggestMove` has the following arguments:
 
-- `ImmutableGraph g`: Represents the graph which will host the influence game. You may not change this object.
+- `Graph g`: Represents the graph which will host the influence game. You may not change this object; mutating will result in an `UnsupportedOperationException`.
 - `GameDefinition d`: Contains the game-specific fields:
-	- `int actions`: How many nodes you are allowed to influence at most. The Move object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
-	- `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to `actions`. If your player exceeds this amount, the engine will automatically normalize your move.
-	- `long execution`: Time in milliseconds available to the player to complete their execution. Moves that are submitted after this period is exhausted will be ignored.
-- `MovePointer movePtr`: Used to submit a move with `movePtr.submit()`. Subsequent calls will overwrite the previous one. When a move is submitted, a deep copy is performed first, thus any subsequent mutations will not affect the submitted object.
+    - `int actions`: How many nodes you are allowed to influence at most. The `Move` object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
+    - `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to `actions`. If your player exceeds this amount, the engine will automatically normalize your move.
+    - `long execution`: Time in milliseconds available to the player to complete their execution. Moves that are submitted after this period is exhausted will be ignored.
+- `MovePointer movePtr`: Used to submit a move with `MovePointer.submit(Move)`. Subsequent calls will overwrite the previous one. When a move is submitted, a deep copy is performed first, thus any subsequent mutations will not affect the submitted object.
 
-`Player` class contains the following members:
+The `Player` class contains the following members that you can use:
 
-- `boolean isInterrupted()`: Interrupt flag by the game engine, signaling that this player has exhausted the available execution time and has to terminate. Submitting a move while this flag is raised has no effect. This flag is raised when `d.execution` milliseconds have elapsed since the invocation of `getMove()`.
-- `Map<String, String> options`: Player-specific parameters, passed by the caller.
-
-`Player` class must overload `void suggestMove()` and optionally `Player putDefaultOptions()`.
+- `boolean isInterrupted()`: Interrupt flag by the game engine, signaling that this player has exhausted the available execution time and has to terminate. Submitting a move while this flag is raised has no effect. This flag is raised when `d.getExecution()` milliseconds have elapsed since the invocation of `getMove()`.
+- `Logger log`: You may log messages in the console using this object, eg. `log.info("message")`.
+- `String getOption(String name)`: Get a player-specific parameter (see below for more information).
 
 Example of `suggestMove()` that submits a random move:
 
 ```java
-public void suggestMove(ImmutableGraph g, GameDefinition d, MovePointer movePtr) {
+public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
 	Move m = new Move();
-	RandomVertexIterator rvi = new RandomVertexIterator(g);
-	while (m.getVerticesCount() < d.getActions()) {
-		m.putVertex(rvi.next(), 1.0);
-	}
-	log.info("{}", m);
-	movePtr.submit(m);
+    RandomVertexIterator rvi = new RandomVertexIterator(g);
+    while (m.getVerticesCount() < d.getActions()) {
+        m.putVertex(rvi.next(), 1.0);
+    }
+    movePtr.submit(m);
+    log.info("{}", m);
 }
 ```
 
-Example of `putDefaultOptions()` taken from `BruteForcePlayer`:
+### Options
+
+A `Player` subclass, besides `void suggestMove(Graph, GameDefinition, MovePointer)`, can optionally implement `Map<String, String> defaultOptions()`. Options are player-specific values that can differentiate the player behavior slightly. Every option that is used by the player has to be passed in `defaultOptions()` and can then be manipulated using `setOption()` and queried using `getOption()`.
+
+Example of `defaultOptions()` taken from `BruteForcePlayer`:
 
 ```java
-public Player putDefaultOptions() {
-	this.options.put("weight_levels", "10");
-	this.options.put("epsilon", String.valueOf(Finals.DEFAULT_EPSILON));
-	this.options.put("clever", "false");
-	return this;
+public Map<String, String> defaultOptions() {
+    Map<String, String> defaultOptions = new HashMap<>();
+    defaultOptions.put("weight_levels", "10");
+    defaultOptions.put("epsilon", "0.0");
+    defaultOptions.put("clever", "false");
+    return defaultOptions;
 }
 ```
+
+This method declares that `BruteForcePlayer` is using 3 options and sets default values for these.
 
 ## Changelog
 
