@@ -3,6 +3,7 @@ package gr.james.socialinfluence.tournament;
 import gr.james.socialinfluence.algorithms.generators.BarabasiAlbertGenerator;
 import gr.james.socialinfluence.api.GraphGenerator;
 import gr.james.socialinfluence.game.GameDefinition;
+import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.game.players.GreedyPlayer;
 import gr.james.socialinfluence.game.players.MaxDegreePlayer;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
@@ -10,6 +11,9 @@ import gr.james.socialinfluence.game.players.RandomPlayer;
 import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.graph.MemoryGraph;
 import gr.james.socialinfluence.util.RandomHelper;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TournamentMain {
     public static void main(String[] args) {
@@ -23,12 +27,9 @@ public class TournamentMain {
         /**
          * Instantiate a Tournament
          */
-        Tournament tournament = new Tournament();
-
-        /**
-         * Add the players once
-         */
-        tournament.addPlayers(new MaxPageRankPlayer(), new MaxDegreePlayer(), new GreedyPlayer(), new RandomPlayer());
+        Tournament tournament = new Tournament(
+                new MaxPageRankPlayer(), new MaxDegreePlayer(), new GreedyPlayer(), new RandomPlayer()
+        );
 
         /**
          * Create a generator and a definition
@@ -39,14 +40,23 @@ public class TournamentMain {
         /**
          * Run the tournament
          */
-        tournament.run(generator, d);
+        Map<Player, Integer> score = tournament.run(generator, d, 5);
 
         /**
-         * Print rankings
+         * Print current rankings
          */
         System.out.println();
-        System.out.printf("GRAPH:      %s\n", generator.create());
-        System.out.printf("DEFINITION: %s\n", d);
-        System.out.printf("SCORES:     %s\n", tournament.getScores());
+        System.out.printf("%10s : %s\n", "GRAPH", generator.create());
+        System.out.printf("%10s : %s\n", "DEFINITION", d);
+        System.out.printf("%10s : %s\n", "SCORES", score.entrySet().stream()
+                .sorted((o1, o2) -> -o1.getValue().compareTo(o2.getValue()))
+                .map(item -> String.format("%2s %s", item.getValue(), item.getKey()))
+                .collect(Collectors.joining(String.format("%n%13s", ""))));
+
+        /**
+         * Print CSV
+         */
+        System.out.println();
+        System.out.println(tournament.getAllScoresInCsv());
     }
 }

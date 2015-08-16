@@ -2,6 +2,7 @@
 
 ### UNRELEASED
 
+- Major overhaul to interfaces due to massive changes in social-influence library.
 - Added `IndexIterator` that iterates over vertices in a graph in index-based ascending order.
 - `Game` now ignores player vertices for the final opinion vector average.
 - Renamed `numOfMoves` to `actions`.
