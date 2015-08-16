@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
-project.version = 1.7
+version = 1.6
 
 allprojects {
     sourceCompatibility = 1.8
@@ -12,7 +12,10 @@ allprojects {
 sourceSets {
     main {
         java {
-            srcDir 'src'
+            srcDir 'src/java'
+        }
+        resources {
+            srcDir 'src/resources'
         }
     }
 }
@@ -25,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:c50ea901e8'
+    compile 'com.github.gstamatelat:social-influence:1a9fa35496'
 }
 
 task projectZip(dependsOn: 'build', type: Zip) {

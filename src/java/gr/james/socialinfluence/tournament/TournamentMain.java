@@ -16,7 +16,9 @@ public class TournamentMain {
         /**
          * Set the seed
          */
-        RandomHelper.initRandom(3724);
+        if (!RandomHelper.initRandom(3724)) {
+            throw new RuntimeException();
+        }
 
         /**
          * Instantiate a Tournament

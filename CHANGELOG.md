@@ -1,6 +1,6 @@
 ## Changelog
 
-### v1.7
+### UNRELEASED
 
 - Added `IndexIterator` that iterates over vertices in a graph in index-based ascending order.
 - `Game` now ignores player vertices for the final opinion vector average.
