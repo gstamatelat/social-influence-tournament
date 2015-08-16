@@ -21,10 +21,10 @@ import gr.james.socialinfluence.game.Player;
 
 public class MyPlayer extends Player {
 
-	@Override
-	public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
-		// Player logic here
-	}
+    @Override
+    public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
+        // Player logic here
+    }
 
 }
 ```
