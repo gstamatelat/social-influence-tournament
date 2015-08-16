@@ -1,12 +1,23 @@
 apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
 version = 1.6
 
-allprojects {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+mainClassName = "gr.james.socialinfluence.tournament.TournamentMain"
+applicationDefaultJvmArgs = ["-Dapp.env=tournament"]
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+dependencies {
+    compile 'com.github.gstamatelat:social-influence:1a9fa35496'
+    compile 'org.codehaus.groovy:groovy-all:2.4.4'
 }
 
 sourceSets {
@@ -20,27 +31,12 @@ sourceSets {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url "https://jitpack.io"
-    }
+allprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
-dependencies {
-    compile 'com.github.gstamatelat:social-influence:1a9fa35496'
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'gr.james.socialinfluence.tournament.TournamentMain'
-    }
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
-
-task projectZip(type: Zip) {
+task projectZip(type: Zip, group: 'distribution') {
     from projectDir
     include 'src/**/*'
     include 'gradle/**/*'
