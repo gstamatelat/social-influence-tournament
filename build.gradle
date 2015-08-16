@@ -36,8 +36,10 @@ allprojects {
     targetCompatibility = 1.8
 }
 
-task projectZip(type: Zip, group: 'distribution') {
+task srcZip(type: Zip, group: 'distribution') {
+    classifier = 'src'
     from projectDir
+    into('social-influence-tournament')
     include 'src/**/*'
     include 'gradle/**/*'
     include 'README.md'
@@ -46,6 +48,7 @@ task projectZip(type: Zip, group: 'distribution') {
     include 'gradlew'
     include 'gradlew.bat'
 }
+build.dependsOn srcZip
 
 idea {
     module {
