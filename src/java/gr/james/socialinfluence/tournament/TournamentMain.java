@@ -12,8 +12,11 @@ import gr.james.socialinfluence.graph.MemoryGraph;
 import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
 import gr.james.socialinfluence.tournament.players.GreedyDistancePlayer;
 import gr.james.socialinfluence.util.RandomHelper;
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,9 +24,21 @@ import java.util.stream.Collectors;
 public class TournamentMain {
     public static void main(String[] args) {
         /**
+         * Command line parameters
+         */
+        OptionParser parser = new OptionParser() {
+            {
+                acceptsAll(Arrays.asList("s", "seed"), "Tournament seed").withRequiredArg().required().ofType(Long.class);
+                acceptsAll(Arrays.asList("?", "h", "help"), "Show help").forHelp();
+            }
+        };
+
+        OptionSet options = Utils.parseArgs(parser, args);
+
+        /**
          * Set the seed
          */
-        if (!RandomHelper.initRandom(3724)) {
+        if (!RandomHelper.initRandom((long) options.valueOf("seed"))) {
             throw new RuntimeException();
         }
 
@@ -51,7 +66,7 @@ public class TournamentMain {
         ));
         rounds.add(new TournamentDefinition(
                 new BarabasiAlbertGenerator<>(MemoryGraph.class, 125, 2, 2, 1.0),
-                new GameDefinition(3, 3.0, 5000L),
+                new GameDefinition(3, 3.0, 2000L),
                 5
         ));
 

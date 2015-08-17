@@ -1,18 +1,19 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.core.ConsoleAppender
 
+String encoderPattern = "%d{HH:mm:ss} [%-11thread] %-5level %class{36}.%method - %msg%n"
+
 appender("stdout", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
-        pattern = "%d{HH:mm:ss} [%-11thread] %-5level %class{36}.%method - %msg%n"
+        pattern = encoderPattern
     }
 }
 
 appender("stderr", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
-        pattern = "%d{HH:mm:ss} [%-11thread] %-5level %class{36}.%method - %msg%n"
+        pattern = encoderPattern
     }
     target = 'System.err'
-    withJansi = true
 }
 
 String env = System.properties['app.env']

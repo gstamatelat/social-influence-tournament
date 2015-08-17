@@ -16,8 +16,9 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:866e517037'
-    compile 'org.codehaus.groovy:groovy-all:2.4.4'
+    compile 'com.github.gstamatelat:social-influence:13f0ef4fbe',
+            'net.sf.jopt-simple:jopt-simple:4.9'
+    runtime 'org.codehaus.groovy:groovy-all:2.4.4'
 }
 
 sourceSets {

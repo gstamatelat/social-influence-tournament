@@ -62,7 +62,9 @@ public class PlayerDuel {
 
         System.out.println();
         System.out.printf("%-11s: %s%n", "Graph", g);
-        System.out.printf("%-11s: %s[0] - %s[1]%n", "Result", p1.getClass().getSimpleName(), p2.getClass().getSimpleName());
+        System.out.printf("%-11s: %s[0] - %s[1]%n", "Result",
+                p1.getClass().getSimpleName(), p2.getClass().getSimpleName()
+        );
         System.out.printf("%-11s: %s - %s%n", "",
                 gResult.m1.deepCopy().normalizeWeights(d.getBudget()),
                 gResult.m2.deepCopy().normalizeWeights(d.getBudget())

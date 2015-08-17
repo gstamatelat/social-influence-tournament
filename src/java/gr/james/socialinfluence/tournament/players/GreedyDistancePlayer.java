@@ -35,7 +35,7 @@ public class GreedyDistancePlayer extends Player {
 
         /* It is imperative to our strategy to quickly select a move, even a random one. */
         m = Utils.getRandomMove(g, d.getActions());
-        log.info("Submitting random move {}", m);
+        log.debug("Submitting random move {}", m);
         movePtr.submit(m);
 
         /* Clear the move for future use. We could also re-instantiate the object with m = new Move(). */
