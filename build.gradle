@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:9b6fab3e9d'
+    compile 'com.github.gstamatelat:social-influence:866e517037'
     compile 'org.codehaus.groovy:groovy-all:2.4.4'
 }
 

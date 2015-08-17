@@ -2,22 +2,21 @@ package gr.james.socialinfluence.tournament.players;
 
 import gr.james.socialinfluence.algorithms.distance.Dijkstra;
 import gr.james.socialinfluence.algorithms.iterators.RandomSurferIterator;
-import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.MovePointer;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.graph.Vertex;
+import gr.james.socialinfluence.tournament.Utils;
 import gr.james.socialinfluence.util.RandomHelper;
 import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.Map;
 
 public class LocalSearchDistancePlayer extends Player {
-
+    /* Slightly change the vertices in the move. */
     public static Move mutateMove(Move m, Graph g) {
-        /* Slightly change the vertices in the move. */
         double jump_probability = 0.2;
 
         Move moves = new Move();
@@ -38,16 +37,6 @@ public class LocalSearchDistancePlayer extends Player {
         }
     }
 
-    public static Move getRandomMove(Graph g, int num) {
-        /* Return a random move. */
-        Move m = new Move();
-        RandomVertexIterator rvi = new RandomVertexIterator(g);
-        while (m.getVerticesCount() < num) {
-            m.putVertex(rvi.next(), 1.0);
-        }
-        return m;
-    }
-
     /**
      * Calculates the product of the distances of every pair of vertices in the move (aka geometric mean).
      */
@@ -65,10 +54,10 @@ public class LocalSearchDistancePlayer extends Player {
 
     @Override
     public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
-        Move m = new Move();
+        Move m;
 
         /* First, we select an initial move. Afterwards, we will start tweaking it. */
-        m = getRandomMove(g, d.getActions());
+        m = Utils.getRandomMove(g, d.getActions());
         log.info("{}", m);
         movePtr.submit(m);
 
@@ -85,7 +74,7 @@ public class LocalSearchDistancePlayer extends Player {
             double newDistance = getMoveDistance(m, distanceMap);
             if (newDistance > maxDistance) {
                 maxDistance = newDistance;
-                log.info("{}", m);
+                log.debug("{}", m);
                 movePtr.submit(m);
             }
         }

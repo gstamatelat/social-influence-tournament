@@ -8,7 +8,6 @@ import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.graph.Vertex;
 
 public class AdvancedCyclePlayer extends Player {
-
     @Override
     public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         if (!g.getGraphType().equals("Cycle")) {
@@ -41,7 +40,7 @@ public class AdvancedCyclePlayer extends Player {
             c += period - (int) (c + 0.5);
         }
 
-        log.info("{}", m);
+        log.debug("{}", m);
         movePtr.submit(m);
     }
 }
