@@ -17,12 +17,10 @@ public class GreedyDistancePlayer extends Player {
     /**
      * This method returns the product of distances from all vertices in 'us' to 'v'.
      */
-    public static double getVertexDistance(Graph g, Vertex v, Collection<Vertex> us, Map<VertexPair, Double> distanceMap) {
-        double totalDistance = 1.0;
-
-        for (Vertex u : us) {
-            totalDistance *= distanceMap.get(new VertexPair(u, v));
-        }
+    public static double getVertexDistance(Graph g, Vertex v, Collection<Vertex> us,
+                                           Map<VertexPair, Double> distanceMap) {
+        double totalDistance = us.stream().map(item -> distanceMap.get(new VertexPair(item, v)))
+                .reduce((a, b) -> a * b).get();
 
         if (totalDistance == 0.0) {
             log.error("totalDistance = 0");

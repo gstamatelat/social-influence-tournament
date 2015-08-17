@@ -5,12 +5,12 @@ import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.game.players.GreedyPlayer;
-import gr.james.socialinfluence.game.players.MaxDegreePlayer;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
-import gr.james.socialinfluence.game.players.RandomPlayer;
 import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.game.tournament.TournamentDefinition;
 import gr.james.socialinfluence.graph.MemoryGraph;
+import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
+import gr.james.socialinfluence.tournament.players.GreedyDistancePlayer;
 import gr.james.socialinfluence.util.RandomHelper;
 
 import java.util.ArrayList;
@@ -31,7 +31,8 @@ public class TournamentMain {
          * Instantiate a Tournament
          */
         Tournament tournament = new Tournament(
-                new MaxPageRankPlayer(), new MaxDegreePlayer(), new GreedyPlayer(), new RandomPlayer()
+                new MaxPageRankPlayer(), new ComplementaryGreedyDistancePlayer(),
+                new GreedyPlayer(), new GreedyDistancePlayer()
         );
 
         /**

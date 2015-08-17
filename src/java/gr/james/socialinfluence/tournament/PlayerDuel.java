@@ -51,23 +51,25 @@ public class PlayerDuel {
 
         GameResult gResult = Game.runPlayers(p1, p2, g, d);
 
-        System.out.println(String.format("Graph: %s", g));
-        System.out.println(String.format("%s[0] - %s[1]", p1.getClass().getSimpleName(), p2.getClass().getSimpleName()));
-
+        String scoreString;
         if (gResult.score > 0) {
-            System.out.println("0 - 1");
+            scoreString = "0 - 1";
         } else if (gResult.score < 0) {
-            System.out.println("1 - 0");
+            scoreString = "1 - 0";
         } else {
-            System.out.println("0.5 - 0.5");
+            scoreString = "0.5 - 0.5";
         }
 
-        System.out.println(String.format("%s - %s", gResult.m1.deepCopy()
-                .normalizeWeights(d.getBudget()), gResult.m2.deepCopy()
-                .normalizeWeights(d.getBudget())));
+        System.out.println();
+        System.out.printf("%-11s: %s%n", "Graph", g);
+        System.out.printf("%-11s: %s[0] - %s[1]%n", "Result", p1.getClass().getSimpleName(), p2.getClass().getSimpleName());
+        System.out.printf("%-11s: %s - %s%n", "",
+                gResult.m1.deepCopy().normalizeWeights(d.getBudget()),
+                gResult.m2.deepCopy().normalizeWeights(d.getBudget())
+        );
+        System.out.printf("%-11s: %s%n", "", scoreString);
 
-        System.out.println(String.format("Full State: %s", gResult.fullState));
-        System.out.println(String.format("Average Full State w/o Stubborn Agents: %s",
-                gResult.fullState.getMean(g.getVertices())));
+        System.out.println(String.format("%-11s: %s", "Full State", gResult.fullState));
+        System.out.printf("%-11s: %f%n", "Average", gResult.fullState.getMean(g.getVertices()));
     }
 }
