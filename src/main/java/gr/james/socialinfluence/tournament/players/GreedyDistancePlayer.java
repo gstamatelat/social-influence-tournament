@@ -7,7 +7,7 @@ import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.MovePointer;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.tournament.util.Utils;
+import gr.james.socialinfluence.tournament.Utils;
 import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.Collection;

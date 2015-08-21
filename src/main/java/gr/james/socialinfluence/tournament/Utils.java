@@ -1,4 +1,4 @@
-package gr.james.socialinfluence.tournament.util;
+package gr.james.socialinfluence.tournament;
 
 import com.google.common.io.Resources;
 import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
