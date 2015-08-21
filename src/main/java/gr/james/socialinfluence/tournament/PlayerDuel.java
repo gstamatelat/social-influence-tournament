@@ -1,6 +1,7 @@
 package gr.james.socialinfluence.tournament;
 
-import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
+import aat.AsciiArtTable;
+import gr.james.socialinfluence.algorithms.generators.PathGenerator;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.Game;
 import gr.james.socialinfluence.game.GameDefinition;
@@ -25,12 +26,12 @@ public class PlayerDuel {
          * Graph g = new BarabasiAlbertGenerator<>(MemoryGraph.class, 150, 2, 1, 1.0).create();
          * Graph g = new BarabasiAlbertGenerator<>(MemoryGraph.class, 150, 2, 2, 1.0).create();
          */
-        Graph g = new TwoWheelsGenerator<>(MemoryGraph.class, 11).create();
+        Graph g = new PathGenerator<>(MemoryGraph.class, 25).create();
 
         /**
          * Action count
          */
-        int actions = 4;
+        int actions = 2;
 
         /**
          * Time to execute, in milliseconds; use 0 for unlimited time
@@ -60,18 +61,37 @@ public class PlayerDuel {
             scoreString = "0.5 - 0.5";
         }
 
-        System.out.println();
-        System.out.printf("%-11s: %s%n", "Graph", g);
-        System.out.printf("%-11s: %s[0] - %s[1]%n", "Result",
-                p1.getClass().getSimpleName(), p2.getClass().getSimpleName()
-        );
-        System.out.printf("%-11s: %s - %s%n", "",
-                gResult.m1.deepCopy().normalizeWeights(d.getBudget()),
-                gResult.m2.deepCopy().normalizeWeights(d.getBudget())
-        );
-        System.out.printf("%-11s: %s%n", "", scoreString);
+        AsciiArtTable aat = new AsciiArtTable(3);
+        aat.setBorderCharacters("+-++|+-H++++|++++");
+        aat.setNoHeaderColumns(2);
+        aat.add("Graph", g);
+        aat.add("Result", String.format("%s[0] - %s[1]", p1.getClass().getSimpleName(), p2.getClass().getSimpleName()));
+        aat.add("", String.format("%s - %s", gResult.m1.deepCopy().normalizeWeights(d.getBudget()),
+                gResult.m2.deepCopy().normalizeWeights(d.getBudget())));
+        aat.add("", scoreString);
+        aat.add("Full State", gResult.fullState);
+        aat.add("Average", String.format("%.2f", gResult.fullState.getAverage()));
+        aat.print(System.out);
 
-        System.out.println(String.format("%-11s: %s", "Full State", gResult.fullState));
-        System.out.printf("%-11s: %f%n", "Average", gResult.fullState.getMean(g.getVertices()));
+        // ---------------------------------------------------------------------------------------
+
+        /*TableFormatter tf = new SimpleTableFormatter(true)
+                .nextRow()
+                .nextCell(TableFormatter.ALIGN_RIGHT, TableFormatter.VALIGN_TOP).addLine("   Graph   ")
+                .nextCell(TableFormatter.ALIGN_LEFT, TableFormatter.VALIGN_TOP).addLine("   " + g + "   ")
+
+                .nextRow()
+                .nextCell(TableFormatter.ALIGN_LEFT, TableFormatter.VALIGN_TOP).addLine("   Full State   ")
+                .nextCell(TableFormatter.ALIGN_LEFT, TableFormatter.VALIGN_TOP).addLine("   " + gResult.fullState + "   ")
+
+                .nextRow()
+                .nextCell(TableFormatter.ALIGN_LEFT, TableFormatter.VALIGN_TOP).addLine("   Left Top   ")
+                .nextCell(TableFormatter.ALIGN_LEFT, TableFormatter.VALIGN_TOP).addLine("   Left Center   ");
+
+        String[] table = tf.getFormattedTable();
+
+        for (String aTable : table) {
+            System.out.println(aTable);
+        }*/
     }
 }

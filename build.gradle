@@ -3,9 +3,12 @@ apply plugin: 'application'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
-version = 1.6
+Properties props = new Properties()
+props.load(new FileInputStream('src/main/resources/app.properties'))
 
-mainClassName = "gr.james.socialinfluence.tournament.TournamentMain"
+version = props.getProperty("version")
+
+mainClassName = "gr.james.socialinfluence.tournament.PlayerDuel"
 applicationDefaultJvmArgs = ["-Dapp.env=tournament"]
 
 repositories {
@@ -16,21 +19,14 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:13f0ef4fbe',
-            'net.sf.jopt-simple:jopt-simple:4.9'
+    compile 'com.github.gstamatelat:social-influence:c341b91ce7',
+            'net.sf.jopt-simple:jopt-simple:4.9',
+            'com.github.gstamatelat:ascii-art-table:c0f8c09270',
+            'com.github.gstamatelat:Java-Text-Table-Formatter:5949f58d08'
     runtime 'org.codehaus.groovy:groovy-all:2.4.4'
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/java'
-        }
-        resources {
-            srcDir 'src/resources'
-        }
-    }
-}
+println sourceSets.main.resources.srcDirs
 
 allprojects {
     sourceCompatibility = 1.8

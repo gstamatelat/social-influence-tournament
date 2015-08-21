@@ -7,20 +7,28 @@ import gr.james.socialinfluence.game.Move;
 import gr.james.socialinfluence.game.MovePointer;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.tournament.Utils;
+import gr.james.socialinfluence.tournament.util.Utils;
 import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.Collection;
 import java.util.Map;
 
-public class GreedyDistancePlayer extends Player {
+public class ComplementaryGreedyDistancePlayer extends Player {
     /**
-     * This method returns the product of distances from all vertices in 'us' to 'v'.
+     * This method returns the product of distances from all vertices NOT in 'us' to 'v'.
      */
-    public static double getVertexDistance(Graph g, Vertex v, Collection<Vertex> us,
-                                           Map<VertexPair, Double> distanceMap) {
-        double totalDistance = us.stream().map(item -> distanceMap.get(new VertexPair(item, v)))
-                .reduce((a, b) -> a * b).get();
+    public double getVertexDistance(Graph g, Vertex v, Collection<Vertex> us, Map<VertexPair, Double> distanceMap) {
+        double totalDistance = 1.0;
+
+        for (Vertex u : g) {
+            if (!us.contains(u)) {
+                double d = distanceMap.get(new VertexPair(u, v));
+                if (d != 0.0) {
+                    /* totalDistance += Math.pow(distanceMap.get(new VertexPair(u, v), 2.0)); */
+                    totalDistance *= d;
+                }
+            }
+        }
 
         if (totalDistance == 0.0) {
             log.error("totalDistance = 0");
@@ -35,7 +43,7 @@ public class GreedyDistancePlayer extends Player {
 
         /* It is imperative to our strategy to quickly select a move, even a random one. */
         m = Utils.getRandomMove(g, d.getActions());
-        log.debug("Submitting random move {}", m);
+        log.info("{}", m);
         movePtr.submit(m);
 
         /* Clear the move for future use. We could also re-instantiate the object with m = new Move(). */
@@ -49,20 +57,23 @@ public class GreedyDistancePlayer extends Player {
 
         /* Gradually fill the Move object in a greedy way. */
         while (m.getVerticesCount() < d.getActions()) {
-            /* Check the distance that each vertex in the graph creates from the nodes that already exist in the move object and select the highest. */
-            double max = .0;
-            Vertex highest = null;
+            /**
+             * Select the vertex that creates the minimum sum of squares of distances from nodes that don't exist in the
+             * move.
+             */
+            double min = Double.POSITIVE_INFINITY;
+            Vertex lowest = null;
             for (Vertex v : g.getVertices()) {
                 /* Candidates are all nodes in the graph except those in the move already. */
                 if (!m.containsVertex(v)) {
                     double c = getVertexDistance(g, v, m.vertexSet(), distanceMap);
-                    if (c > max) {
-                        max = c;
-                        highest = v;
+                    if (c < min) {
+                        min = c;
+                        lowest = v;
                     }
                 }
             }
-            m.putVertex(highest, 1.0);
+            m.putVertex(lowest, 1.0);
         }
 
         log.debug("{}", m);

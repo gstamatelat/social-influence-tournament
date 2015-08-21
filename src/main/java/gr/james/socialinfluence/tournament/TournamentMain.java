@@ -11,6 +11,7 @@ import gr.james.socialinfluence.game.tournament.TournamentDefinition;
 import gr.james.socialinfluence.graph.MemoryGraph;
 import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
 import gr.james.socialinfluence.tournament.players.GreedyDistancePlayer;
+import gr.james.socialinfluence.tournament.util.Utils;
 import gr.james.socialinfluence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
