@@ -17,6 +17,6 @@ appender("stderr", ConsoleAppender) {
     target = 'System.err'
 }
 
-String env = System.properties['app.env']
+String env = System.getProperty('app.env')
 
 root(DEBUG, (env == "tournament") ? ["stderr"] : ["stdout"])

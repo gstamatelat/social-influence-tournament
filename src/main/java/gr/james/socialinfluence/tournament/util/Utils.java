@@ -1,13 +1,17 @@
 package gr.james.socialinfluence.tournament.util;
 
+import com.google.common.io.Resources;
 import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.Move;
+import gr.james.socialinfluence.util.Conditions;
+import gr.james.socialinfluence.util.Helper;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 import java.io.IOException;
+import java.util.Properties;
 
 public final class Utils {
     /**
@@ -24,6 +28,16 @@ public final class Utils {
             m.putVertex(rvi.next(), 1.0);
         }
         return m;
+    }
+
+    public static String getAppVersion() {
+        Properties props = new Properties();
+        try {
+            props.load(Resources.getResource("app.properties").openStream());
+        } catch (IOException e) {
+            throw Helper.convertCheckedException(e);
+        }
+        return Conditions.requireNonNull(props.getProperty("version"), "version property doesn't exist");
     }
 
     public static void printHelp(OptionParser p) {

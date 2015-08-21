@@ -37,6 +37,11 @@ public class TournamentMain {
         OptionSet options = Utils.parseArgs(parser, args);
 
         /**
+         * Version
+         */
+        System.out.printf("social-influence-tournament v%s%n%n", Utils.getAppVersion());
+
+        /**
          * Set the seed
          */
         if (!RandomHelper.initRandom((long) options.valueOf("seed"))) {
