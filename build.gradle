@@ -26,8 +26,6 @@ dependencies {
     runtime 'org.codehaus.groovy:groovy-all:2.4.4'
 }
 
-println sourceSets.main.resources.srcDirs
-
 allprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
