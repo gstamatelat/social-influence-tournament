@@ -57,13 +57,11 @@ public final class Utils {
         } catch (OptionException e) {
             System.out.printf("%n%s%n%n", e.getMessage());
             Utils.printHelp(p);
-            System.exit(0);
         }
 
-        if (options.has("help")) {
+        if (options != null && options.has("help")) {
             System.out.println();
             Utils.printHelp(p);
-            System.exit(0);
         }
 
         return options;

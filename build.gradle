@@ -19,11 +19,12 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:9b3a2f0a20',
+    compile 'com.github.gstamatelat:social-influence:3905236ce7',
             'net.sf.jopt-simple:jopt-simple:4.9',
             'com.github.gstamatelat:ascii-art-table:c0f8c09270',
             'com.github.gstamatelat:Java-Text-Table-Formatter:5949f58d08'
     runtime 'org.codehaus.groovy:groovy-all:2.4.4'
+    testCompile 'junit:junit:4.12'
 }
 
 allprojects {

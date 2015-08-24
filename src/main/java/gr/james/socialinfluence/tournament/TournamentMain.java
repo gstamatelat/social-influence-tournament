@@ -8,8 +8,8 @@ import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
 import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.game.tournament.TournamentDefinition;
 import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
+import gr.james.socialinfluence.tournament.players.DistanceLocalSearchPlayer;
 import gr.james.socialinfluence.tournament.players.GreedyDistancePlayer;
-import gr.james.socialinfluence.tournament.players.LocalSearchDistancePlayer;
 import gr.james.socialinfluence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -34,6 +34,10 @@ public class TournamentMain {
 
         OptionSet options = Utils.parseArgs(parser, args);
 
+        if (options == null) {
+            return;
+        }
+
         /**
          * Version
          */
@@ -51,7 +55,7 @@ public class TournamentMain {
          */
         Tournament tournament = new Tournament(
                 new MaxPageRankPlayer(), new ComplementaryGreedyDistancePlayer(),
-                new LocalSearchDistancePlayer(), new GreedyDistancePlayer()
+                new DistanceLocalSearchPlayer(), new GreedyDistancePlayer()
         );
 
         /**

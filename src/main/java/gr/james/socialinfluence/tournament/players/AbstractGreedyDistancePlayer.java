@@ -21,7 +21,7 @@ public abstract class AbstractGreedyDistancePlayer extends Player {
                                               Map<VertexPair, Double> distanceMap);
 
     @Override
-    public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
+    public final void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         Move m;
 
         /* It is imperative to our strategy to quickly select a move, even a random one. */
@@ -46,6 +46,7 @@ public abstract class AbstractGreedyDistancePlayer extends Player {
             m.putVertex(best, 1.0);
         }
 
+        /* Finally submit the move */
         log.info("{}", m);
         movePtr.submit(m);
     }

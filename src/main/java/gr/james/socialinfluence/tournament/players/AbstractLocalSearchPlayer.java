@@ -14,7 +14,7 @@ import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.Map;
 
-public class LocalSearchDistancePlayer extends Player {
+public abstract class AbstractLocalSearchPlayer extends Player {
     /* Slightly change the vertices in the move. */
     public static Move mutateMove(Move m, Graph g) {
         double jump_probability = 0.2;
@@ -37,20 +37,7 @@ public class LocalSearchDistancePlayer extends Player {
         }
     }
 
-    /**
-     * Calculates the product of the distances of every pair of vertices in the move (aka geometric mean).
-     */
-    public static double getMoveDistance(Move m, Map<VertexPair, Double> distanceMap) {
-        double distance = 0.0;
-        for (Vertex x : m) {
-            for (Vertex y : m) {
-                if (!x.equals(y)) {
-                    distance += Math.log(distanceMap.get(new VertexPair(x, y)));
-                }
-            }
-        }
-        return distance;
-    }
+    public abstract double evaluateMove(Move m, Map<VertexPair, Double> distanceMap);
 
     @Override
     public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
@@ -58,7 +45,7 @@ public class LocalSearchDistancePlayer extends Player {
 
         /* First, we select an initial move. Afterwards, we will start tweaking it. */
         m = Utils.getRandomMove(g, d.getActions());
-        log.info("{}", m);
+        log.info("Submitting random move {}", m);
         movePtr.submit(m);
 
         /* Create the distance map. Each key is of the form {source, target} and the values are the distances. */
@@ -71,7 +58,7 @@ public class LocalSearchDistancePlayer extends Player {
             m = mutateMove(m, g);
 
             /* If the mutated move creates more distance, keep it. */
-            double newDistance = getMoveDistance(m, distanceMap);
+            double newDistance = evaluateMove(m, distanceMap);
             if (newDistance > maxDistance) {
                 maxDistance = newDistance;
                 log.debug("{}", m);
