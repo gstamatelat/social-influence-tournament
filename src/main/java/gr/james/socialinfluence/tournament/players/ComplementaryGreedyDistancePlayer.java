@@ -8,7 +8,7 @@ import gr.james.socialinfluence.util.collections.VertexPair;
 import java.util.Collection;
 import java.util.Map;
 
-public class ComplementaryGreedyDistancePlayer extends GreedyDistancePlayer {
+public class ComplementaryGreedyDistancePlayer extends AbstractGreedyDistancePlayer {
     /**
      * This method returns the reciprocal product of distances from all vertices NOT in 'us' to 'v'.
      */
