@@ -2,7 +2,7 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.core.ConsoleAppender
 
 //String encoderPattern = "%d{HH:mm:ss} [%-11thread] %-5level %class{36}.%method - %msg%n"
-String encoderPattern = "%d{HH:mm:ss} [%-11thread] %-5level %class{36} - %msg%n"
+String encoderPattern = "%d{HH:mm:ss} [%-10thread] %-5level %class{36} - %msg%n"
 
 appender("stdout", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
@@ -19,4 +19,8 @@ appender("stderr", ConsoleAppender) {
 
 String env = System.getProperty('app.env')
 
-root(DEBUG, (env == "tournament") ? ["stderr"] : ["stdout"])
+if (env == "tournament") {
+    root(debug, ['stderr'])
+} else {
+    root(debug, ['stdout'])
+}

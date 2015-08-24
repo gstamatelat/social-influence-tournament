@@ -9,7 +9,6 @@ import gr.james.socialinfluence.game.GameResult;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
 import gr.james.socialinfluence.game.players.RandomPlayer;
-import gr.james.socialinfluence.graph.MemoryGraph;
 
 public class PlayerDuel {
     public static void main(String[] args) {
@@ -18,15 +17,15 @@ public class PlayerDuel {
          *
          * Here is a sample list:
          *
-         * Graph g = new PathGenerator<>(MemoryGraph.class, 30).create();
-         * Graph g = new TwoWheelsGenerator<>(MemoryGraph.class, 7).create();
-         * Graph g = new TwoWheelsGenerator<>(MemoryGraph.class, 13).create();
-         * Graph g = new BarabasiAlbertGenerator<>(MemoryGraph.class, 25, 2, 1, 1.0).create();
-         * Graph g = new BarabasiAlbertGenerator<>(MemoryGraph.class, 25, 2, 2, 1.0).create();
-         * Graph g = new BarabasiAlbertGenerator<>(MemoryGraph.class, 150, 2, 1, 1.0).create();
-         * Graph g = new BarabasiAlbertGenerator<>(MemoryGraph.class, 150, 2, 2, 1.0).create();
+         * Graph g = new PathGenerator(30).create();
+         * Graph g = new TwoWheelsGenerator(7).create();
+         * Graph g = new TwoWheelsGenerator(13).create();
+         * Graph g = new BarabasiAlbertGenerator(25, 2, 1, 1.0).create();
+         * Graph g = new BarabasiAlbertGenerator(25, 2, 2, 1.0).create();
+         * Graph g = new BarabasiAlbertGenerator(150, 2, 1, 1.0).create();
+         * Graph g = new BarabasiAlbertGenerator(150, 2, 2, 1.0).create();
          */
-        Graph g = new PathGenerator<>(MemoryGraph.class, 25).create();
+        Graph g = new PathGenerator(25).create();
 
         /**
          * Action count
@@ -73,7 +72,7 @@ public class PlayerDuel {
         aat.add("Average", String.format("%.2f", gResult.fullState.getAverage()));
         aat.print(System.out);
 
-        // ---------------------------------------------------------------------------------------
+        // ----------------------------------------------------------------------------------------
 
         /*TableFormatter tf = new SimpleTableFormatter(true)
                 .nextRow()

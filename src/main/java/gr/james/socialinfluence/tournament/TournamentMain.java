@@ -4,13 +4,12 @@ import gr.james.socialinfluence.algorithms.generators.BarabasiAlbertGenerator;
 import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.Player;
-import gr.james.socialinfluence.game.players.GreedyPlayer;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
 import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.game.tournament.TournamentDefinition;
-import gr.james.socialinfluence.graph.MemoryGraph;
 import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
 import gr.james.socialinfluence.tournament.players.GreedyDistancePlayer;
+import gr.james.socialinfluence.tournament.players.LocalSearchDistancePlayer;
 import gr.james.socialinfluence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -52,7 +51,7 @@ public class TournamentMain {
          */
         Tournament tournament = new Tournament(
                 new MaxPageRankPlayer(), new ComplementaryGreedyDistancePlayer(),
-                new GreedyPlayer(), new GreedyDistancePlayer()
+                new LocalSearchDistancePlayer(), new GreedyDistancePlayer()
         );
 
         /**
@@ -60,17 +59,17 @@ public class TournamentMain {
          */
         List<TournamentDefinition> rounds = new ArrayList<>();
         rounds.add(new TournamentDefinition(
-                new TwoWheelsGenerator<>(MemoryGraph.class, 11),
+                new TwoWheelsGenerator(11),
                 new GameDefinition(1, 1.0, 2000L),
                 2
         ));
         rounds.add(new TournamentDefinition(
-                new TwoWheelsGenerator<>(MemoryGraph.class, 11),
+                new TwoWheelsGenerator(11),
                 new GameDefinition(2, 2.0, 2000L),
                 2
         ));
         rounds.add(new TournamentDefinition(
-                new BarabasiAlbertGenerator<>(MemoryGraph.class, 125, 2, 2, 1.0),
+                new BarabasiAlbertGenerator(125, 2, 2, 1.0),
                 new GameDefinition(3, 3.0, 2000L),
                 5
         ));
