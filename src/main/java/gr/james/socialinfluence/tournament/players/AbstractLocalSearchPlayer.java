@@ -8,7 +8,7 @@ import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.tournament.Utils;
 
 public abstract class AbstractLocalSearchPlayer extends Player {
-    public abstract double moveHeuristic(Move m);
+    public abstract double evaluateMove(Move m);
 
     protected void init(Graph g, GameDefinition d, MovePointer movePtr) {
         // By default this method does nothing, but you can overload it
@@ -31,7 +31,7 @@ public abstract class AbstractLocalSearchPlayer extends Player {
             m = Utils.mutateMove(m, g);
 
             /* If the mutated move creates more distance, keep it */
-            double newScore = moveHeuristic(m);
+            double newScore = evaluateMove(m);
             if (newScore > maxScore) {
                 maxScore = newScore;
                 log.debug("{}", m);

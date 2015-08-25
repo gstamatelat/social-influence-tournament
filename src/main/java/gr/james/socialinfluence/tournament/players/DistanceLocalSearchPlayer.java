@@ -22,7 +22,7 @@ public class DistanceLocalSearchPlayer extends AbstractLocalSearchPlayer {
      * Returns the product of the distances of every pair of vertices in the move (aka geometric mean).
      */
     @Override
-    public double moveHeuristic(Move m) {
+    public double evaluateMove(Move m) {
         double distance = 0.0;
         for (Vertex x : m) {
             for (Vertex y : m) {

@@ -11,9 +11,9 @@ import gr.james.socialinfluence.util.collections.Weighted;
 import java.util.Collection;
 
 public abstract class AbstractGreedyPlayer extends Player {
-    protected abstract double vertexHeuristic(Graph g,
-                                              Vertex v,
-                                              Collection<Vertex> us);
+    protected abstract double evaluateVertex(Graph g,
+                                             Vertex v,
+                                             Collection<Vertex> us);
 
     protected void init(Graph g, GameDefinition d, MovePointer movePtr) {
         // By default this method does nothing, but you can overload it
@@ -30,7 +30,7 @@ public abstract class AbstractGreedyPlayer extends Player {
         /* Gradually fill the Move object in a greedy way */
         while (m.getVerticesCount() < d.getActions()) {
             Vertex best = g.getVertices().stream().filter(i -> !m.containsVertex(i))
-                    .map(i -> new Weighted<>(i, vertexHeuristic(g, i, m.vertexSet())))
+                    .map(i -> new Weighted<>(i, evaluateVertex(g, i, m.vertexSet())))
                     .max(Weighted::compareTo).get().getObject();
             m.putVertex(best, 1.0);
         }

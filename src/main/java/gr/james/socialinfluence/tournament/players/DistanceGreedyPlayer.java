@@ -23,7 +23,7 @@ public class DistanceGreedyPlayer extends AbstractGreedyPlayer {
      * This method returns the product of distances from all vertices in 'us' to 'v'.
      */
     @Override
-    public double vertexHeuristic(Graph g, Vertex v, Collection<Vertex> us) {
+    public double evaluateVertex(Graph g, Vertex v, Collection<Vertex> us) {
         Conditions.requireArgument(!us.contains(v), "v must not be contained in us");
 
         if (us.isEmpty()) {

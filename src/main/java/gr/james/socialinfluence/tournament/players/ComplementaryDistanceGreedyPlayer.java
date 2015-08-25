@@ -23,7 +23,7 @@ public class ComplementaryDistanceGreedyPlayer extends AbstractGreedyPlayer {
      * This method returns the reciprocal product of distances from all vertices NOT in 'us' to 'v'.
      */
     @Override
-    public double vertexHeuristic(Graph g, Vertex v, Collection<Vertex> us) {
+    public double evaluateVertex(Graph g, Vertex v, Collection<Vertex> us) {
         Conditions.requireArgument(!us.contains(v), "v must not be contained in us");
 
         double totalDistance = g.getVertices().stream().filter(i -> !us.contains(i) && !v.equals(i))
