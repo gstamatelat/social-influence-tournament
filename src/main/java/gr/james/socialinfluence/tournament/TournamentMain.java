@@ -7,9 +7,8 @@ import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
 import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.game.tournament.TournamentDefinition;
-import gr.james.socialinfluence.tournament.players.ComplementaryDistanceGreedyPlayer;
 import gr.james.socialinfluence.tournament.players.DistanceGreedyPlayer;
-import gr.james.socialinfluence.tournament.players.DistanceLocalSearchPlayer;
+import gr.james.socialinfluence.tournament.players.DistanceSearchPlayer;
 import gr.james.socialinfluence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -54,8 +53,8 @@ public class TournamentMain {
          * Instantiate a Tournament
          */
         Tournament tournament = new Tournament(
-                new MaxPageRankPlayer(), new ComplementaryDistanceGreedyPlayer(),
-                new DistanceLocalSearchPlayer(), new DistanceGreedyPlayer()
+                new MaxPageRankPlayer(), new DistanceGreedyPlayer(),
+                new DistanceSearchPlayer(), new DistanceGreedyPlayer()
         );
 
         /**

@@ -20,21 +20,17 @@ public class DistanceGreedyPlayer extends AbstractGreedyPlayer {
     }
 
     /**
-     * This method returns the product of distances from all vertices in 'us' to 'v'.
+     * This method returns the reciprocal product of distances from all vertices NOT in 'us' to 'v'.
      */
     @Override
     public double evaluateVertex(Graph g, Vertex v, Collection<Vertex> us) {
         Conditions.requireArgument(!us.contains(v), "v must not be contained in us");
 
-        if (us.isEmpty()) {
-            return -1;
-        }
-
-        double totalDistance = us.stream().map(item -> distanceMap.get(new VertexPair(item, v)))
-                .reduce((x, y) -> x * y).get();
+        double totalDistance = g.getVertices().stream().filter(i -> !us.contains(i) && !v.equals(i))
+                .map(i -> distanceMap.get(new VertexPair(i, v))).reduce((x, y) -> x * y).get();
 
         Conditions.assertion(totalDistance != 0.0);
 
-        return totalDistance;
+        return 1.0 / totalDistance;
     }
 }

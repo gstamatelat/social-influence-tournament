@@ -7,8 +7,9 @@ import gr.james.socialinfluence.game.MovePointer;
 import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.tournament.Utils;
 
-public abstract class AbstractLocalSearchPlayer extends Player {
-    public abstract double evaluateMove(Move m);
+public abstract class AbstractSearchPlayer extends Player {
+    /* Returns 0 if moves are equally good, 1 if m1 is better or -1 is m2 is better */
+    protected abstract int compareMoves(Move m1, Move m2);
 
     protected void init(Graph g, GameDefinition d, MovePointer movePtr) {
         // By default this method does nothing, but you can overload it
@@ -19,21 +20,16 @@ public abstract class AbstractLocalSearchPlayer extends Player {
         /* Init */
         init(g, d, movePtr);
 
-        /* Move reference */
-        Move m = Utils.getRandomMove(g, d.getActions());
-
-        /* Keep the maximum score to update it each turn */
-        double maxScore = Double.NEGATIVE_INFINITY;
+        /* Submit a random move just for comparison with the next */
+        movePtr.submit(Utils.getRandomMove(g, d.getActions()));
 
         /* Keep searching until time is up */
         while (!this.isInterrupted()) {
             /* Generate a new, mutated move */
-            m = Utils.mutateMove(m, g);
+            Move m = Utils.mutateMove(movePtr.recall(), g);
 
-            /* If the mutated move creates more distance, keep it */
-            double newScore = evaluateMove(m);
-            if (newScore > maxScore) {
-                maxScore = newScore;
+            /* If new move is better than the old one, submit it */
+            if (compareMoves(m, movePtr.recall()) > 0) {
                 log.debug("{}", m);
                 movePtr.submit(m);
             }

@@ -10,7 +10,7 @@ import gr.james.socialinfluence.util.collections.VertexPair;
 
 import java.util.Map;
 
-public class DistanceLocalSearchPlayer extends AbstractLocalSearchPlayer {
+public class DistanceSearchPlayer extends AbstractSearchPlayer {
     private Map<VertexPair, Double> distanceMap = null;
 
     @Override
@@ -21,8 +21,7 @@ public class DistanceLocalSearchPlayer extends AbstractLocalSearchPlayer {
     /**
      * Returns the product of the distances of every pair of vertices in the move (aka geometric mean).
      */
-    @Override
-    public double evaluateMove(Move m) {
+    private double evaluateMove(Move m) {
         double distance = 0.0;
         for (Vertex x : m) {
             for (Vertex y : m) {
@@ -32,5 +31,10 @@ public class DistanceLocalSearchPlayer extends AbstractLocalSearchPlayer {
             }
         }
         return distance;
+    }
+
+    @Override
+    protected int compareMoves(Move m1, Move m2) {
+        return Double.compare(evaluateMove(m1), evaluateMove(m2));
     }
 }
