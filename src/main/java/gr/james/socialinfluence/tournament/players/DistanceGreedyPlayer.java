@@ -3,6 +3,7 @@ package gr.james.socialinfluence.tournament.players;
 import gr.james.socialinfluence.algorithms.distance.Dijkstra;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.GameDefinition;
+import gr.james.socialinfluence.game.MovePointer;
 import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.util.Conditions;
 import gr.james.socialinfluence.util.collections.VertexPair;
@@ -14,7 +15,7 @@ public class DistanceGreedyPlayer extends AbstractGreedyPlayer {
     private Map<VertexPair, Double> distanceMap = null;
 
     @Override
-    protected void init(Graph g, GameDefinition d) {
+    protected void init(Graph g, GameDefinition d, MovePointer movePtr) {
         distanceMap = Dijkstra.executeDistanceMap(g);
     }
 

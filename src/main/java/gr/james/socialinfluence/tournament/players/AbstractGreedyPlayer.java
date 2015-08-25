@@ -15,14 +15,14 @@ public abstract class AbstractGreedyPlayer extends Player {
                                               Vertex v,
                                               Collection<Vertex> us);
 
-    protected void init(Graph g, GameDefinition d) {
+    protected void init(Graph g, GameDefinition d, MovePointer movePtr) {
         // By default this method does nothing, but you can overload it
     }
 
     @Override
     public final void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         /* Init */
-        init(g, d);
+        init(g, d, movePtr);
 
         /* New move */
         Move m = new Move();

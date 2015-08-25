@@ -10,14 +10,14 @@ import gr.james.socialinfluence.tournament.Utils;
 public abstract class AbstractLocalSearchPlayer extends Player {
     public abstract double moveHeuristic(Move m);
 
-    protected void init(Graph g, GameDefinition d) {
+    protected void init(Graph g, GameDefinition d, MovePointer movePtr) {
         // By default this method does nothing, but you can overload it
     }
 
     @Override
     public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         /* Init */
-        init(g, d);
+        init(g, d, movePtr);
 
         /* Move reference */
         Move m = Utils.getRandomMove(g, d.getActions());
