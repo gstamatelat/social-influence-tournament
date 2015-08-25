@@ -1,11 +1,14 @@
 package gr.james.socialinfluence.tournament;
 
 import com.google.common.io.Resources;
+import gr.james.socialinfluence.algorithms.iterators.RandomSurferIterator;
 import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.Move;
+import gr.james.socialinfluence.graph.Vertex;
 import gr.james.socialinfluence.util.Conditions;
 import gr.james.socialinfluence.util.Helper;
+import gr.james.socialinfluence.util.RandomHelper;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -65,5 +68,26 @@ public final class Utils {
         }
 
         return options;
+    }
+
+    public static Move mutateMove(Move m, Graph g) {
+        double jump_probability = 0.2;
+
+        Move moves = new Move();
+
+        for (Vertex v : m) {
+            RandomSurferIterator randomSurfer = new RandomSurferIterator(g, 0.0, v);
+            while (RandomHelper.getRandom().nextDouble() < jump_probability) {
+                v = randomSurfer.next();
+            }
+
+            moves.putVertex(v, 1.0);
+        }
+
+        if (moves.getVerticesCount() < m.getVerticesCount()) {
+            return mutateMove(m, g);
+        } else {
+            return moves;
+        }
     }
 }

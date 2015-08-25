@@ -7,9 +7,9 @@ import gr.james.socialinfluence.game.Player;
 import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
 import gr.james.socialinfluence.game.tournament.Tournament;
 import gr.james.socialinfluence.game.tournament.TournamentDefinition;
-import gr.james.socialinfluence.tournament.players.ComplementaryGreedyDistancePlayer;
+import gr.james.socialinfluence.tournament.players.ComplementaryDistanceGreedyPlayer;
+import gr.james.socialinfluence.tournament.players.DistanceGreedyPlayer;
 import gr.james.socialinfluence.tournament.players.DistanceLocalSearchPlayer;
-import gr.james.socialinfluence.tournament.players.GreedyDistancePlayer;
 import gr.james.socialinfluence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -54,8 +54,8 @@ public class TournamentMain {
          * Instantiate a Tournament
          */
         Tournament tournament = new Tournament(
-                new MaxPageRankPlayer(), new ComplementaryGreedyDistancePlayer(),
-                new DistanceLocalSearchPlayer(), new GreedyDistancePlayer()
+                new MaxPageRankPlayer(), new ComplementaryDistanceGreedyPlayer(),
+                new DistanceLocalSearchPlayer(), new DistanceGreedyPlayer()
         );
 
         /**
@@ -65,17 +65,20 @@ public class TournamentMain {
         rounds.add(new TournamentDefinition(
                 new TwoWheelsGenerator(11),
                 new GameDefinition(1, 1.0, 2000L),
-                2
+                2,
+                true
         ));
         rounds.add(new TournamentDefinition(
                 new TwoWheelsGenerator(11),
                 new GameDefinition(2, 2.0, 2000L),
-                2
+                2,
+                true
         ));
         rounds.add(new TournamentDefinition(
                 new BarabasiAlbertGenerator(125, 2, 2, 1.0),
                 new GameDefinition(3, 3.0, 2000L),
-                5
+                5,
+                true
         ));
 
         /**
@@ -85,7 +88,8 @@ public class TournamentMain {
             /**
              * Run the tournament
              */
-            Map<Player, Integer> score = tournament.run(t.getGenerator(), t.getDefinition(), t.getRounds());
+            Map<Player, Integer> score = tournament.run(t.getGenerator(), t.getDefinition(),
+                    t.getRounds(), t.getOneGraphPerRound());
 
             /**
              * Print current rankings

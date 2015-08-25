@@ -1,14 +1,14 @@
 package gr.james.socialinfluence.tournament;
 
 import aat.AsciiArtTable;
-import gr.james.socialinfluence.algorithms.generators.PathGenerator;
+import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.socialinfluence.api.Graph;
 import gr.james.socialinfluence.game.Game;
 import gr.james.socialinfluence.game.GameDefinition;
 import gr.james.socialinfluence.game.GameResult;
 import gr.james.socialinfluence.game.Player;
-import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
-import gr.james.socialinfluence.game.players.RandomPlayer;
+import gr.james.socialinfluence.tournament.players.ComplementaryDistanceGreedyPlayer;
+import gr.james.socialinfluence.tournament.players.DistanceLocalSearchPlayer;
 
 public class PlayerDuel {
     public static void main(String[] args) {
@@ -25,12 +25,12 @@ public class PlayerDuel {
          * Graph g = new BarabasiAlbertGenerator(150, 2, 1, 1.0).create();
          * Graph g = new BarabasiAlbertGenerator(150, 2, 2, 1.0).create();
          */
-        Graph g = new PathGenerator(25).create();
+        Graph g = new TwoWheelsGenerator(11).create();
 
         /**
          * Action count
          */
-        int actions = 2;
+        int actions = 4;
 
         /**
          * Time to execute, in milliseconds; use 0 for unlimited time
@@ -40,8 +40,8 @@ public class PlayerDuel {
         /**
          * Players
          */
-        Player p1 = new MaxPageRankPlayer();
-        Player p2 = new RandomPlayer();
+        Player p1 = new ComplementaryDistanceGreedyPlayer();
+        Player p2 = new DistanceLocalSearchPlayer();
 
         duel(g, actions, execution, p1, p2);
     }

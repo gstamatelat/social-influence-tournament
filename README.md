@@ -56,20 +56,10 @@ public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
 }
 ```
 
-### Options
+### Exceptions
 
-A `Player` subclass, besides `suggestMove`, can optionally implement `Map<String, String> defaultOptions()`. Options are player-specific values that can differentiate the player behavior slightly. Every option that is used by the player has to be passed in `defaultOptions()` and can then be manipulated using `setOption()` and queried using `getOption()`.
+Unhandled exceptions and errors that occur inside `suggestMove` are propagated to the engine and will cause the player to terminate abnormally, potentially damaging its performance.
 
-Example of `defaultOptions()` taken from `BruteForcePlayer`:
+### Constructor
 
-```java
-public Map<String, String> defaultOptions() {
-    Map<String, String> defaultOptions = new HashMap<>();
-    defaultOptions.put("weight_levels", "10");
-    defaultOptions.put("epsilon", "0.0");
-    defaultOptions.put("clever", "false");
-    return defaultOptions;
-}
-```
-
-This method declares that `BruteForcePlayer` is using 3 options and sets default values for these.
+A `Player` subclass, besides `suggestMove`, can optionally implement constructors. If this is the case, a no-arg constructor must be implemented.
