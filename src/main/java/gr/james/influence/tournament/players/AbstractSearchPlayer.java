@@ -1,11 +1,11 @@
-package gr.james.socialinfluence.tournament.players;
+package gr.james.influence.tournament.players;
 
-import gr.james.socialinfluence.api.Graph;
-import gr.james.socialinfluence.game.GameDefinition;
-import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.game.MovePointer;
-import gr.james.socialinfluence.game.Player;
-import gr.james.socialinfluence.tournament.Utils;
+import gr.james.influence.api.Graph;
+import gr.james.influence.game.GameDefinition;
+import gr.james.influence.game.Move;
+import gr.james.influence.game.MovePointer;
+import gr.james.influence.game.Player;
+import gr.james.influence.tournament.Utils;
 
 public abstract class AbstractSearchPlayer extends Player {
     /* Returns 0 if moves are equally good, 1 if m1 is better or -1 is m2 is better */

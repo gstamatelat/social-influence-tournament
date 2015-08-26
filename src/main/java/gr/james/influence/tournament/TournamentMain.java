@@ -1,15 +1,16 @@
-package gr.james.socialinfluence.tournament;
+package gr.james.influence.tournament;
 
-import gr.james.socialinfluence.algorithms.generators.BarabasiAlbertGenerator;
-import gr.james.socialinfluence.algorithms.generators.TwoWheelsGenerator;
-import gr.james.socialinfluence.game.GameDefinition;
-import gr.james.socialinfluence.game.Player;
-import gr.james.socialinfluence.game.players.MaxPageRankPlayer;
-import gr.james.socialinfluence.game.tournament.Tournament;
-import gr.james.socialinfluence.game.tournament.TournamentDefinition;
-import gr.james.socialinfluence.tournament.players.DistanceGreedyPlayer;
-import gr.james.socialinfluence.tournament.players.DistanceSearchPlayer;
-import gr.james.socialinfluence.util.RandomHelper;
+import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
+import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
+import gr.james.influence.game.GameDefinition;
+import gr.james.influence.game.Player;
+import gr.james.influence.game.players.MaxPageRankPlayer;
+import gr.james.influence.game.players.RandomPlayer;
+import gr.james.influence.game.tournament.Tournament;
+import gr.james.influence.game.tournament.TournamentDefinition;
+import gr.james.influence.tournament.players.DistanceGreedyPlayer;
+import gr.james.influence.tournament.players.DistanceSearchPlayer;
+import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
@@ -53,7 +54,7 @@ public class TournamentMain {
          * Instantiate a Tournament
          */
         Tournament tournament = new Tournament(
-                new MaxPageRankPlayer(), new DistanceGreedyPlayer(),
+                new MaxPageRankPlayer(), new RandomPlayer(),
                 new DistanceSearchPlayer(), new DistanceGreedyPlayer()
         );
 
@@ -94,7 +95,7 @@ public class TournamentMain {
              * Print current rankings
              */
             System.out.println();
-            System.out.printf("%10s : %s%n", "GRAPH", t.getGenerator().create());
+            System.out.printf("%10s : %s%n", "GRAPH", t.getGenerator().generate());
             System.out.printf("%10s : %s%n", "DEFINITION", t.getDefinition());
             System.out.printf("%10s : %s%n", "SCORES", score.entrySet().stream()
                     .sorted((o1, o2) -> -o1.getValue().compareTo(o2.getValue()))

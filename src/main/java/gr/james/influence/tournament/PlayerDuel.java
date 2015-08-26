@@ -1,14 +1,14 @@
-package gr.james.socialinfluence.tournament;
+package gr.james.influence.tournament;
 
 import aat.AsciiArtTable;
-import gr.james.socialinfluence.algorithms.generators.PathGenerator;
-import gr.james.socialinfluence.api.Graph;
-import gr.james.socialinfluence.game.Game;
-import gr.james.socialinfluence.game.GameDefinition;
-import gr.james.socialinfluence.game.GameResult;
-import gr.james.socialinfluence.game.Player;
-import gr.james.socialinfluence.tournament.players.DistanceGreedyPlayer;
-import gr.james.socialinfluence.tournament.players.DistanceSearchPlayer;
+import gr.james.influence.algorithms.generators.PathGenerator;
+import gr.james.influence.api.Graph;
+import gr.james.influence.game.Game;
+import gr.james.influence.game.GameDefinition;
+import gr.james.influence.game.GameResult;
+import gr.james.influence.game.Player;
+import gr.james.influence.tournament.players.DistanceGreedyPlayer;
+import gr.james.influence.tournament.players.DistanceSearchPlayer;
 
 public class PlayerDuel {
     public static void main(String[] args) {
@@ -17,15 +17,15 @@ public class PlayerDuel {
          *
          * Here is a sample list:
          *
-         * Graph g = new PathGenerator(30).create();
-         * Graph g = new TwoWheelsGenerator(7).create();
-         * Graph g = new TwoWheelsGenerator(13).create();
-         * Graph g = new BarabasiAlbertGenerator(25, 2, 1, 1.0).create();
-         * Graph g = new BarabasiAlbertGenerator(25, 2, 2, 1.0).create();
-         * Graph g = new BarabasiAlbertGenerator(150, 2, 1, 1.0).create();
-         * Graph g = new BarabasiAlbertGenerator(150, 2, 2, 1.0).create();
+         * Graph g = new PathGenerator(30).generate();
+         * Graph g = new TwoWheelsGenerator(7).generate();
+         * Graph g = new TwoWheelsGenerator(13).generate();
+         * Graph g = new BarabasiAlbertGenerator(25, 2, 1, 1.0).generate();
+         * Graph g = new BarabasiAlbertGenerator(25, 2, 2, 1.0).generate();
+         * Graph g = new BarabasiAlbertGenerator(150, 2, 1, 1.0).generate();
+         * Graph g = new BarabasiAlbertGenerator(150, 2, 2, 1.0).generate();
          */
-        Graph g = new PathGenerator(30).create();
+        Graph g = new PathGenerator(30).generate();
 
         /**
          * Action count

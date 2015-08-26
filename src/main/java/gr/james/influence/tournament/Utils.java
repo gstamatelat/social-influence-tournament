@@ -1,14 +1,14 @@
-package gr.james.socialinfluence.tournament;
+package gr.james.influence.tournament;
 
 import com.google.common.io.Resources;
-import gr.james.socialinfluence.algorithms.iterators.RandomSurferIterator;
-import gr.james.socialinfluence.algorithms.iterators.RandomVertexIterator;
-import gr.james.socialinfluence.api.Graph;
-import gr.james.socialinfluence.game.Move;
-import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.util.Conditions;
-import gr.james.socialinfluence.util.Helper;
-import gr.james.socialinfluence.util.RandomHelper;
+import gr.james.influence.algorithms.iterators.RandomSurferIterator;
+import gr.james.influence.algorithms.iterators.RandomVertexIterator;
+import gr.james.influence.api.Graph;
+import gr.james.influence.game.Move;
+import gr.james.influence.graph.Vertex;
+import gr.james.influence.util.Conditions;
+import gr.james.influence.util.Helper;
+import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;

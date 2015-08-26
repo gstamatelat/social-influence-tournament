@@ -8,7 +8,7 @@ props.load(new FileInputStream('src/main/resources/app.properties'))
 
 version = props.getProperty("version")
 
-mainClassName = "gr.james.socialinfluence.tournament.TournamentMain"
+mainClassName = "gr.james.influence.tournament.TournamentMain"
 applicationDefaultJvmArgs = ["-Dapp.env=tournament"]
 
 repositories {
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:5d74a12cec',
+    compile 'com.github.gstamatelat:social-influence:80fa4a5354',
             'net.sf.jopt-simple:jopt-simple:4.9',
             'com.github.gstamatelat:ascii-art-table:c0f8c09270',
             'com.github.gstamatelat:Java-Text-Table-Formatter:5949f58d08'

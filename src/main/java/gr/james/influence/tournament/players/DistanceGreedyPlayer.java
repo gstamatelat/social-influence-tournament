@@ -1,12 +1,12 @@
-package gr.james.socialinfluence.tournament.players;
+package gr.james.influence.tournament.players;
 
-import gr.james.socialinfluence.algorithms.distance.Dijkstra;
-import gr.james.socialinfluence.api.Graph;
-import gr.james.socialinfluence.game.GameDefinition;
-import gr.james.socialinfluence.game.MovePointer;
-import gr.james.socialinfluence.graph.Vertex;
-import gr.james.socialinfluence.util.Conditions;
-import gr.james.socialinfluence.util.collections.VertexPair;
+import gr.james.influence.algorithms.distance.Dijkstra;
+import gr.james.influence.api.Graph;
+import gr.james.influence.game.GameDefinition;
+import gr.james.influence.game.MovePointer;
+import gr.james.influence.graph.Vertex;
+import gr.james.influence.util.Conditions;
+import gr.james.influence.util.collections.VertexPair;
 
 import java.util.Collection;
 import java.util.Map;
