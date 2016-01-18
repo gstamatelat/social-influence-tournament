@@ -13,7 +13,7 @@ import gr.james.influence.tournament.players.DistanceSearchPlayer;
 public class PlayerDuel {
     public static void main(String[] args) {
         /**
-         * The graph object of the game. Use different ones from gr.james.socialinfluence.algorithms.generators.
+         * The graph object of the game. Use different ones from gr.james.influence.algorithms.generators.
          *
          * Here is a sample list:
          *
