@@ -1,7 +1,7 @@
 package gr.james.influence.tournament;
 
 import aat.AsciiArtTable;
-import gr.james.influence.algorithms.generators.MasterGenerator;
+import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.influence.api.Graph;
 import gr.james.influence.game.Game;
 import gr.james.influence.game.GameDefinition;
@@ -15,14 +15,22 @@ public class PlayerDuel {
         /**
          * The graph object of the game. Use different ones from gr.james.influence.algorithms.generators.
          *
-         * Here is a sample list:
+         * Here is a list:
          *
-         * Graph g = new PathGenerator(30).generate();
          * Graph g = new TwoWheelsGenerator(6).generate();
          * Graph g = new TwoWheelsGenerator(13).generate();
+         *
          * Graph g = new BarabasiAlbertGenerator(50, 2, 2, 1.0).generate();
+         * Graph g = new BarabasiAlbertGenerator(50, 2, 1, 1.0).generate();
+         * Graph g = new BarabasiAlbertGenerator(150, 2, 2, 1.0).generate();
+         * Graph g = new BarabasiAlbertGenerator(150, 2, 1, 1.0).generate();
+         *
+         * Graph g = new WattsStrogatzGenerator(30, 6, 0.2).generate();
+         * Graph g = new WattsStrogatzGenerator(30, 6, 0.5).generate();
+         * Graph g = new WattsStrogatzGenerator(100, 14, 0.2).generate();
+         * Graph g = new WattsStrogatzGenerator(100, 14, 0.5).generate();
          */
-        Graph g = new MasterGenerator().generate();
+        Graph g = new TwoWheelsGenerator(6).generate();
 
         /**
          * Action count

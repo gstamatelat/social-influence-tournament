@@ -1,3 +1,7 @@
+## v2.1
+
+- Added declarations for tournament graphs.
+
 ## v2.0
 
 - Major overhaul to interfaces due to massive changes in social-influence library.
