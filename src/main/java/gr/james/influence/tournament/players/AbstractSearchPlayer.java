@@ -20,6 +20,9 @@ public abstract class AbstractSearchPlayer extends Player {
         /* Init */
         init(g, d, movePtr);
 
+        /* Tries counter */
+        int tries = 0;
+
         /* Submit a random move just for comparison with the next */
         movePtr.submit(Utils.getRandomMove(g, d.getActions()));
 
@@ -33,6 +36,11 @@ public abstract class AbstractSearchPlayer extends Player {
                 log.debug("{}", m);
                 movePtr.submit(m);
             }
+
+            /* We have completed a try */
+            tries++;
         }
+
+        log.debug("{} tries", tries);
     }
 }

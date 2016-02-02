@@ -71,13 +71,15 @@ public final class Utils {
     }
 
     public static Move mutateMove(Move m, Graph g) {
-        double jump_probability = 0.2;
+        return mutateMove(m, g, 0.2);
+    }
 
+    public static Move mutateMove(Move m, Graph g, double jumpProbability) {
         Move moves = new Move();
 
         for (Vertex v : m) {
             RandomSurferIterator randomSurfer = new RandomSurferIterator(g, 0.0, v);
-            while (RandomHelper.getRandom().nextDouble() < jump_probability) {
+            while (RandomHelper.getRandom().nextDouble() < jumpProbability) {
                 v = randomSurfer.next();
             }
 
