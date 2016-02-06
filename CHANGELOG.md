@@ -1,7 +1,7 @@
 ## UNRELEASED
 
-- `AbstractSearchPlayer` now prints number of tries too
-- `mutateMove` accepts the jump probability as argument
+- `AbstractSearchPlayer` now prints number of tries too.
+- `mutateMove` accepts the jump probability as argument.
 
 ## v2.1
 
