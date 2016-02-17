@@ -20,6 +20,11 @@ public abstract class AbstractSearchPlayer extends Player {
         return Utils.mutateMove(m, g);
     }
 
+    protected Move initialMove(Graph g, GameDefinition d) {
+        // By default this method invokes Utils.getRandomMove, but you can overload it
+        return Utils.getRandomMove(g, d.getActions());
+    }
+
     @Override
     public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         /* Init */
@@ -29,7 +34,7 @@ public abstract class AbstractSearchPlayer extends Player {
         int tries = 0;
 
         /* Submit a random move just for comparison with the next */
-        movePtr.submit(Utils.getRandomMove(g, d.getActions()));
+        movePtr.submit(initialMove(g, d));
 
         /* Keep searching until time is up */
         while (!this.isInterrupted()) {
