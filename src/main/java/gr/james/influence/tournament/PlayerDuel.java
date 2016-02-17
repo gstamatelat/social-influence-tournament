@@ -48,7 +48,7 @@ public class PlayerDuel {
         Player p1 = new DistanceGreedyPlayer();
         Player p2 = new DistanceSearchPlayer();
 
-        duel(g, actions, execution, p1, p2);
+        duel(g, actions, execution, p1, p2, 0.0);
 
         /**
          * Hardcoded moves (optional)
@@ -70,10 +70,10 @@ public class PlayerDuel {
         });*/
     }
 
-    public static void duel(Graph g, int actions, long execution, Player p1, Player p2) {
+    public static void duel(Graph g, int actions, long execution, Player p1, Player p2, double e) {
         GameDefinition d = new GameDefinition(actions, (double) actions, execution);
 
-        GameResult gResult = Game.runPlayers(p1, p2, g, d);
+        GameResult gResult = Game.runPlayers(p1, p2, g, d, e);
 
         String scoreString;
         if (gResult.score > 0) {
