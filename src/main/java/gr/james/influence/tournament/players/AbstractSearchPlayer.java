@@ -35,6 +35,7 @@ public abstract class AbstractSearchPlayer extends Player {
 
         /* Submit a random move just for comparison with the next */
         movePtr.submit(initialMove(g, d));
+        log.debug("{}", movePtr.recall());
 
         /* Keep searching until time is up */
         while (!this.isInterrupted()) {
