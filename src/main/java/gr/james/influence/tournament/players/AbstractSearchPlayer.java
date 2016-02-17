@@ -15,6 +15,11 @@ public abstract class AbstractSearchPlayer extends Player {
         // By default this method does nothing, but you can overload it
     }
 
+    protected Move mutateMove(Move m, Graph g) {
+        // By default this method invokes Utils.mutateMove, but you can overload it
+        return Utils.mutateMove(m, g);
+    }
+
     @Override
     public void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
         /* Init */
@@ -29,7 +34,7 @@ public abstract class AbstractSearchPlayer extends Player {
         /* Keep searching until time is up */
         while (!this.isInterrupted()) {
             /* Generate a new, mutated move */
-            Move m = Utils.mutateMove(movePtr.recall(), g);
+            Move m = mutateMove(movePtr.recall(), g);
 
             /* If new move is better than the old one, submit it */
             if (compareMoves(m, movePtr.recall()) > 0) {

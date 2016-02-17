@@ -2,6 +2,7 @@
 
 - `AbstractSearchPlayer` now prints number of tries too.
 - `mutateMove` accepts the jump probability as argument.
+- Add `mutateMove` as protected method in AbstractSearchPlayer.
 
 ## v2.1
 
