@@ -5,6 +5,7 @@
 - Add `mutateMove` as protected method in AbstractSearchPlayer.
 - Add `initialMove` as protected method in AbstractSearchPlayer.
 - Add precision inside `GameDefinition`.
+- The game is now drawn if the average limiting belief is close to 0.5.
 
 ## v2.1
 
