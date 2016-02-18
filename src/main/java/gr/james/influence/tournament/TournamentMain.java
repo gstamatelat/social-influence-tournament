@@ -64,19 +64,19 @@ public class TournamentMain {
         List<TournamentDefinition> rounds = new ArrayList<>();
         rounds.add(new TournamentDefinition(
                 new TwoWheelsGenerator(11),
-                new GameDefinition(1, 1.0, 2000L),
+                new GameDefinition(1, 1.0, 2000L, 0.0),
                 2,
                 true
         ));
         rounds.add(new TournamentDefinition(
                 new TwoWheelsGenerator(11),
-                new GameDefinition(2, 2.0, 2000L),
+                new GameDefinition(2, 2.0, 2000L, 0.0),
                 2,
                 true
         ));
         rounds.add(new TournamentDefinition(
                 new BarabasiAlbertGenerator(125, 2, 2, 1.0),
-                new GameDefinition(3, 3.0, 2000L),
+                new GameDefinition(3, 3.0, 2000L, 0.0),
                 5,
                 true
         ));

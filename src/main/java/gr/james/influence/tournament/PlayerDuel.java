@@ -71,9 +71,9 @@ public class PlayerDuel {
     }
 
     public static void duel(Graph g, int actions, long execution, Player p1, Player p2, double e) {
-        GameDefinition d = new GameDefinition(actions, (double) actions, execution);
+        GameDefinition d = new GameDefinition(actions, (double) actions, execution, e);
 
-        GameResult gResult = Game.runPlayers(p1, p2, g, d, e);
+        GameResult gResult = Game.runPlayers(p1, p2, g, d);
 
         String scoreString;
         if (gResult.score > 0) {

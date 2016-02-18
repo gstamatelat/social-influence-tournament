@@ -4,6 +4,7 @@
 - `mutateMove` accepts the jump probability as argument.
 - Add `mutateMove` as protected method in AbstractSearchPlayer.
 - Add `initialMove` as protected method in AbstractSearchPlayer.
+- Add precision inside `GameDefinition`.
 
 ## v2.1
 

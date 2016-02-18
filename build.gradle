@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.gstamatelat:social-influence:a76b7a2a4f',
+    compile 'com.github.gstamatelat:social-influence:1154ae760a',
             'net.sf.jopt-simple:jopt-simple:4.9',
             'com.github.gstamatelat:ascii-art-table:c0f8c09270',
             'com.github.gstamatelat:Java-Text-Table-Formatter:5949f58d08'
