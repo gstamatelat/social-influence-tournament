@@ -33,7 +33,7 @@ public abstract class AbstractSearchPlayer extends Player {
         /* Tries counter */
         int tries = 0;
 
-        /* Submit a random move just for comparison with the next */
+        /* Submit the initial move */
         movePtr.submit(initialMove(g, d));
         log.debug("{}", movePtr.recall());
 
