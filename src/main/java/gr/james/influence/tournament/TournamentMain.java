@@ -1,13 +1,15 @@
 package gr.james.influence.tournament;
 
 import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
+import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.influence.game.GameDefinition;
 import gr.james.influence.game.Player;
+import gr.james.influence.game.players.MaxPageRankPlayer;
+import gr.james.influence.game.players.RandomPlayer;
 import gr.james.influence.game.tournament.Tournament;
 import gr.james.influence.game.tournament.TournamentDefinition;
-import gr.james.influence.tournament.myplayers.ParallelRandomSearchPlayer;
-import gr.james.influence.tournament.myplayers.RandomSearchPlayer;
-import gr.james.influence.tournament.myplayers.WeightedRandomSearchPlayer;
+import gr.james.influence.tournament.players.DistanceGreedyPlayer;
+import gr.james.influence.tournament.players.DistanceSearchPlayer;
 import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -52,38 +54,32 @@ public class TournamentMain {
          * Instantiate a Tournament
          */
         Tournament tournament = new Tournament(
-                new WeightedRandomSearchPlayer(), new ParallelRandomSearchPlayer(),
-                new RandomSearchPlayer()
+                new MaxPageRankPlayer(), new RandomPlayer(),
+                new DistanceSearchPlayer(), new DistanceGreedyPlayer()
         );
 
         /**
          * Create a TournamentDefinition list
          */
         List<TournamentDefinition> rounds = new ArrayList<>();
-        /*rounds.add(new TournamentDefinition(
-                new BarabasiAlbertGenerator(125, 2, 1, 1.0),
-                new GameDefinition(3, 3.0, 5000L, 1.0e-5),
-                5,
+        rounds.add(new TournamentDefinition(
+                new TwoWheelsGenerator(11),
+                new GameDefinition(1, 1.0, 2000L, 0.0),
+                2,
                 true
-        ));*/
+        ));
+        rounds.add(new TournamentDefinition(
+                new TwoWheelsGenerator(11),
+                new GameDefinition(2, 2.0, 2000L, 0.0),
+                2,
+                true
+        ));
         rounds.add(new TournamentDefinition(
                 new BarabasiAlbertGenerator(125, 2, 2, 1.0),
-                new GameDefinition(3, 3.0, 5000L, 1.0e-5),
-                10,
-                false
+                new GameDefinition(3, 3.0, 2000L, 0.0),
+                5,
+                true
         ));
-        /*rounds.add(new TournamentDefinition(
-                new WattsStrogatzGenerator(100, 14, 0.5),
-                new GameDefinition(3, 3.0, 5000L, 1.0e-5),
-                5,
-                true
-        ));*/
-        /*rounds.add(new TournamentDefinition(
-                new TwoWheelsGenerator(13),
-                new GameDefinition(4, 4.0, 5000L, 1.0e-5),
-                5,
-                true
-        ));*/
 
         /**
          * Execute each scenario
