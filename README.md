@@ -34,6 +34,7 @@ The method `suggestMove` has the following arguments:
     - `int actions`: How many nodes you are allowed to influence at most. The `Move` object that you return must have at most this amount of nodes. It is recommended to exhaust this limit. Players that exceed this have their moves automatically sliced by the engine.
     - `double budget`: Maximum sum of weights for all chosen move vertices. This is most of the time equal to `actions`. If your player exceeds this amount, the engine will automatically normalize your move.
     - `long execution`: Time in milliseconds available to the player to complete their execution. Moves that are submitted after this period is exhausted will be ignored.
+    - `double precision`: The precision of the DeGroot model which will be used for this game.
 - `MovePointer movePtr`: Used to submit a move with `MovePointer.submit(Move)`. Subsequent calls will overwrite the previous one. When a move is submitted, a deep copy is performed first, thus any subsequent mutations will not affect the submitted object.
 
 The `Player` class contains the following additional members that you can use:
