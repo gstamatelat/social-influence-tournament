@@ -1,3 +1,7 @@
+## UNRELEASED
+
+- Win/Draw/Loss scores are now 4/2/1 instead of 2/1/0.
+
 ## v2.2
 
 - `AbstractSearchPlayer` now prints number of tries too.
