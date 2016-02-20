@@ -52,6 +52,6 @@ public abstract class AbstractSearchPlayer extends Player {
             tries++;
         }
 
-        log.debug("{} tries", tries);
+        log.info("{} tries", tries);
     }
 }
