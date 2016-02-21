@@ -7,8 +7,8 @@ import gr.james.influence.game.Game;
 import gr.james.influence.game.GameDefinition;
 import gr.james.influence.game.GameResult;
 import gr.james.influence.game.Player;
-import gr.james.influence.tournament.players.DistanceGreedyPlayer;
-import gr.james.influence.tournament.players.DistanceSearchPlayer;
+import gr.james.influence.tournament.myplayers.RandomSearchPlayer;
+import gr.james.influence.tournament.tournamentplayers.WeightedRandomSearchPlayer;
 
 public class PlayerDuel {
     public static void main(String[] args) {
@@ -35,20 +35,20 @@ public class PlayerDuel {
         /**
          * Action count
          */
-        int actions = 2;
+        int actions = 10;
 
         /**
          * Time to execute, in milliseconds; use 0 for unlimited time
          */
-        long execution = 2000;
+        long execution = 5000;
 
         /**
          * Players
          */
-        Player p1 = new DistanceGreedyPlayer();
-        Player p2 = new DistanceSearchPlayer();
+        Player p1 = new RandomSearchPlayer();
+        Player p2 = new WeightedRandomSearchPlayer();
 
-        duel(g, actions, execution, p1, p2, 0.0);
+        duel(g, actions, execution, p1, p2, 1.0e-5);
 
         /**
          * Hardcoded moves (optional)

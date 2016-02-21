@@ -2,18 +2,23 @@ package gr.james.influence.tournament;
 
 import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
 import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
+import gr.james.influence.algorithms.generators.WattsStrogatzGenerator;
+import gr.james.influence.api.GraphGenerator;
 import gr.james.influence.game.GameDefinition;
 import gr.james.influence.game.Player;
-import gr.james.influence.game.players.MaxPageRankPlayer;
-import gr.james.influence.game.players.RandomPlayer;
+import gr.james.influence.game.players.MasterGreedyPlayer;
 import gr.james.influence.game.tournament.Tournament;
 import gr.james.influence.game.tournament.TournamentDefinition;
-import gr.james.influence.tournament.players.DistanceGreedyPlayer;
-import gr.james.influence.tournament.players.DistanceSearchPlayer;
+import gr.james.influence.graph.io.Csv;
+import gr.james.influence.graph.io.Edges;
+import gr.james.influence.tournament.tournamentplayers.FinalPlayer;
+import gr.james.influence.tournament.tournamentplayers.ParallelWeightedRandomSearchPlayer;
 import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +26,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TournamentMain {
-    public static void main(String[] args) {
+    private static final double PRECISION = 1.0e-5;
+
+    public static void main(String[] args) throws IOException {
         /**
          * Command line parameters
          */
@@ -54,32 +61,123 @@ public class TournamentMain {
          * Instantiate a Tournament
          */
         Tournament tournament = new Tournament(
-                new MaxPageRankPlayer(), new RandomPlayer(),
-                new DistanceSearchPlayer(), new DistanceGreedyPlayer()
+                new ParallelWeightedRandomSearchPlayer(),
+                new FinalPlayer(),
+                new MasterGreedyPlayer()
         );
 
         /**
          * Create a TournamentDefinition list
          */
         List<TournamentDefinition> rounds = new ArrayList<>();
-        rounds.add(new TournamentDefinition(
-                new TwoWheelsGenerator(11),
-                new GameDefinition(1, 1.0, 2000L, 0.0),
-                2,
-                true
-        ));
-        rounds.add(new TournamentDefinition(
-                new TwoWheelsGenerator(11),
-                new GameDefinition(2, 2.0, 2000L, 0.0),
-                2,
-                true
-        ));
-        rounds.add(new TournamentDefinition(
-                new BarabasiAlbertGenerator(125, 2, 2, 1.0),
-                new GameDefinition(3, 3.0, 2000L, 0.0),
-                5,
-                true
-        ));
+
+        for (int i : new int[]{1, 2, 3, 4, 11}) {
+            rounds.add(new TournamentDefinition(
+                    new TwoWheelsGenerator(6),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{1, 2, 3, 4, 25}) {
+            rounds.add(new TournamentDefinition(
+                    new TwoWheelsGenerator(13),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 25, 50}) {
+            rounds.add(new TournamentDefinition(
+                    new BarabasiAlbertGenerator(50, 2, 1, 1.0),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 25, 50}) {
+            rounds.add(new TournamentDefinition(
+                    new BarabasiAlbertGenerator(50, 2, 2, 1.0),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 75, 150}) {
+            rounds.add(new TournamentDefinition(
+                    new BarabasiAlbertGenerator(150, 2, 1, 1.0),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 75, 150}) {
+            rounds.add(new TournamentDefinition(
+                    new BarabasiAlbertGenerator(150, 2, 2, 1.0),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 15, 30}) {
+            rounds.add(new TournamentDefinition(
+                    new WattsStrogatzGenerator(30, 6, 0.2),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 15, 30}) {
+            rounds.add(new TournamentDefinition(
+                    new WattsStrogatzGenerator(30, 6, 0.5),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 50, 100}) {
+            rounds.add(new TournamentDefinition(
+                    new WattsStrogatzGenerator(100, 14, 0.2),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 3, 7, 50, 100}) {
+            rounds.add(new TournamentDefinition(
+                    new WattsStrogatzGenerator(100, 14, 0.5),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 5, 50}) {
+            rounds.add(new TournamentDefinition(
+                    GraphGenerator.decorate(new Csv().from(new URL("https://euclid.ee.duth.gr:25312/index.php/s/wXmIirefZKmv95w/download?path=%2F&files=school-2.csv"))),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
+
+        for (int i : new int[]{2, 5, 50}) {
+            rounds.add(new TournamentDefinition(
+                    GraphGenerator.decorate(new Edges(" ").from(new URL("https://euclid.ee.duth.gr:25312/index.php/s/wXmIirefZKmv95w/download?path=%2F&files=twitter.edges"))),
+                    new GameDefinition(i, i, 5000L, PRECISION),
+                    5,
+                    true
+            ));
+        }
 
         /**
          * Execute each scenario
