@@ -6,7 +6,6 @@ import gr.james.influence.algorithms.generators.WattsStrogatzGenerator;
 import gr.james.influence.api.GraphGenerator;
 import gr.james.influence.game.GameDefinition;
 import gr.james.influence.game.Player;
-import gr.james.influence.game.players.MasterGreedyPlayer;
 import gr.james.influence.game.tournament.Tournament;
 import gr.james.influence.game.tournament.TournamentDefinition;
 import gr.james.influence.graph.io.Csv;
@@ -64,8 +63,7 @@ public class TournamentMain {
         Tournament tournament = new Tournament(
                 new ParallelWeightedRandomSearchPlayer(),
                 new FinalPlayer(),
-                new IroGiannisHaris(),
-                new MasterGreedyPlayer()
+                new IroGiannisHaris()
         );
 
         /**
