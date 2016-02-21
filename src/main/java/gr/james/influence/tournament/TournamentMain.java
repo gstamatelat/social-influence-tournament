@@ -12,6 +12,7 @@ import gr.james.influence.game.tournament.TournamentDefinition;
 import gr.james.influence.graph.io.Csv;
 import gr.james.influence.graph.io.Edges;
 import gr.james.influence.tournament.tournamentplayers.FinalPlayer;
+import gr.james.influence.tournament.tournamentplayers.IroGiannisHaris;
 import gr.james.influence.tournament.tournamentplayers.ParallelWeightedRandomSearchPlayer;
 import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionParser;
@@ -63,6 +64,7 @@ public class TournamentMain {
         Tournament tournament = new Tournament(
                 new ParallelWeightedRandomSearchPlayer(),
                 new FinalPlayer(),
+                new IroGiannisHaris(),
                 new MasterGreedyPlayer()
         );
 
