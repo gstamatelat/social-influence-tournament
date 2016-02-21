@@ -1,14 +1,11 @@
 package gr.james.influence.tournament.tournamentplayers;
 
-import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
 import gr.james.influence.algorithms.iterators.GraphStateIterator;
 import gr.james.influence.algorithms.scoring.PageRank;
 import gr.james.influence.api.Graph;
 import gr.james.influence.game.*;
-import gr.james.influence.game.players.MasterGreedyPlayer;
 import gr.james.influence.graph.GraphUtils;
 import gr.james.influence.graph.Vertex;
-import gr.james.influence.tournament.PlayerDuel;
 import gr.james.influence.tournament.players.AbstractSearchPlayer;
 import gr.james.influence.util.Helper;
 import gr.james.influence.util.RandomHelper;
@@ -25,16 +22,6 @@ public class WeightedRandomSearchPlayer extends AbstractSearchPlayer {
     private GameDefinition d;
     private MovePointer movePtr;
     private GraphState<Double> pr;
-
-    public static void main(String[] args) {
-        //Graph g = new WattsStrogatzGenerator(100, 14, 0.5).generate();
-        Graph g = new BarabasiAlbertGenerator(50, 2, 2, 1.0).generate();
-        Player p1 = new WeightedRandomSearchPlayer();
-        //Player p2 = new DistanceGreedyPlayer();
-        //Player p2 = new MasterBruteForcePlayer();
-        Player p2 = new MasterGreedyPlayer();
-        PlayerDuel.duel(g, 2, 5000, p1, p2, 1.0e-5);
-    }
 
     public MovePointer getMovePtr() {
         return this.movePtr;

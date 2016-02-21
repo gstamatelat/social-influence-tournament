@@ -1,11 +1,8 @@
 package gr.james.influence.tournament.tournamentplayers;
 
-import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.influence.api.Graph;
 import gr.james.influence.game.*;
 import gr.james.influence.graph.GraphUtils;
-import gr.james.influence.tournament.PlayerDuel;
-import gr.james.influence.tournament.myplayers.RandomSearchPlayer;
 
 public class ParallelWeightedRandomSearchPlayer extends Player {
     private static final int THREADS = 8;
@@ -14,21 +11,6 @@ public class ParallelWeightedRandomSearchPlayer extends Player {
 
     private Thread[] threads = new Thread[THREADS];
     private WeightedRandomSearchPlayer[] players = new WeightedRandomSearchPlayer[THREADS];
-
-    public static void main(String[] args) {
-        //Graph g = new WattsStrogatzGenerator(100, 14, 0.5).generate();
-        //Graph g = new BarabasiAlbertGenerator(150, 2, 2, 1.0).generate();
-        Graph g = new TwoWheelsGenerator(6).generate();
-
-        Player p1 = new ParallelWeightedRandomSearchPlayer();
-        //Player p1 = new RandomSearchPlayer();
-
-        //Player p2 = new DistanceGreedyPlayer();
-        //Player p2 = new MasterBruteForcePlayer();
-        //Player p2 = new MasterGreedyPlayer();
-        Player p2 = new RandomSearchPlayer();
-        PlayerDuel.duel(g, 3, 0, p1, p2, 1.0e-5);
-    }
 
     @Override
     protected void suggestMove(Graph g, GameDefinition d, MovePointer movePtr) {
