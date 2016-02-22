@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class TournamentMain {
     private static final double PRECISION = 1.0e-5;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         /**
          * Command line parameters
          */
@@ -199,6 +199,11 @@ public class TournamentMain {
                     .sorted((o1, o2) -> -o1.getValue().compareTo(o2.getValue()))
                     .map(item -> String.format("%2s %s", item.getValue(), item.getKey()))
                     .collect(Collectors.joining(String.format("%n%13s", ""))));
+
+            /**
+             * OK so we *really* don't want to damage the CPU at this point ...
+             */
+            Thread.sleep(5000);
         }
 
         /**
