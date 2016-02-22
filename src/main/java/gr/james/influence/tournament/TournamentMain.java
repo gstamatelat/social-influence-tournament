@@ -3,11 +3,13 @@ package gr.james.influence.tournament;
 import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
 import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
 import gr.james.influence.algorithms.generators.WattsStrogatzGenerator;
+import gr.james.influence.api.Graph;
 import gr.james.influence.api.GraphGenerator;
 import gr.james.influence.game.GameDefinition;
 import gr.james.influence.game.Player;
 import gr.james.influence.game.tournament.Tournament;
 import gr.james.influence.game.tournament.TournamentDefinition;
+import gr.james.influence.graph.GraphUtils;
 import gr.james.influence.graph.io.Csv;
 import gr.james.influence.graph.io.Edges;
 import gr.james.influence.tournament.tournamentplayers.FinalPlayer;
@@ -161,19 +163,23 @@ public class TournamentMain {
             ));
         }
 
+        Graph school = new Csv().from(new URL("https://euclid.ee.duth.gr:25312/index.php/s/wXmIirefZKmv95w/download?path=%2F&files=school-2.csv"));
+        GraphUtils.connect(school);
         for (int i : new int[]{2, 5, 50}) {
             rounds.add(new TournamentDefinition(
-                    GraphGenerator.decorate(new Csv().from(new URL("https://euclid.ee.duth.gr:25312/index.php/s/wXmIirefZKmv95w/download?path=%2F&files=school-2.csv"))),
-                    new GameDefinition(i, i, 5000L, PRECISION),
+                    GraphGenerator.decorate(school),
+                    new GameDefinition(i, i, 10000L, PRECISION * 10),
                     5,
                     true
             ));
         }
 
+        Graph twitter = new Edges(" ").from(new URL("https://euclid.ee.duth.gr:25312/index.php/s/wXmIirefZKmv95w/download?path=%2F&files=twitter.edges"));
+        GraphUtils.connect(twitter);
         for (int i : new int[]{2, 5, 50}) {
             rounds.add(new TournamentDefinition(
-                    GraphGenerator.decorate(new Edges(" ").from(new URL("https://euclid.ee.duth.gr:25312/index.php/s/wXmIirefZKmv95w/download?path=%2F&files=twitter.edges"))),
-                    new GameDefinition(i, i, 5000L, PRECISION),
+                    GraphGenerator.decorate(twitter),
+                    new GameDefinition(i, i, 10000L, PRECISION * 10),
                     5,
                     true
             ));
