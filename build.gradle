@@ -1,7 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
 
 Properties props = new Properties()
 props.load(new FileInputStream('src/main/resources/app.properties'))
@@ -12,7 +10,7 @@ mainClassName = "gr.james.influence.tournament.TournamentMain"
 applicationDefaultJvmArgs = ["-Dapp.env=tournament"]
 
 repositories {
-    mavenCentral()
+    jcenter()
     maven {
         url "https://jitpack.io"
     }
@@ -45,17 +43,3 @@ task srcZip(type: Zip, group: 'distribution') {
     include 'gradlew.bat'
 }
 build.dependsOn srcZip
-
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
-}
-
-eclipse {
-    classpath {
-        downloadSources = true
-        downloadJavadoc = true
-    }
-}
