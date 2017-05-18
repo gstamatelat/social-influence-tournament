@@ -1,19 +1,18 @@
 package gr.james.influence.tournament;
 
-import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
-import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
-import gr.james.influence.algorithms.generators.WattsStrogatzGenerator;
+import gr.james.influence.algorithms.generators.random.BarabasiAlbertGenerator;
+import gr.james.influence.algorithms.generators.random.WattsStrogatzGenerator;
+import gr.james.influence.algorithms.generators.test.TwoWheelsGenerator;
 import gr.james.influence.api.Graph;
 import gr.james.influence.api.GraphGenerator;
 import gr.james.influence.game.GameDefinition;
 import gr.james.influence.game.Player;
-import gr.james.influence.game.tournament.Tournament;
-import gr.james.influence.game.tournament.TournamentDefinition;
+import gr.james.influence.game.Tournament;
+import gr.james.influence.game.TournamentDefinition;
 import gr.james.influence.graph.GraphUtils;
 import gr.james.influence.graph.io.Csv;
 import gr.james.influence.graph.io.Edges;
 import gr.james.influence.tournament.tournamentplayers.FinalPlayer;
-import gr.james.influence.tournament.tournamentplayers.IroGiannisHaris;
 import gr.james.influence.tournament.tournamentplayers.ParallelWeightedRandomSearchPlayer;
 import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionParser;
@@ -64,8 +63,7 @@ public class TournamentMain {
          */
         Tournament tournament = new Tournament(
                 new ParallelWeightedRandomSearchPlayer(),
-                new FinalPlayer(),
-                new IroGiannisHaris()
+                new FinalPlayer()
         );
 
         /**

@@ -1,7 +1,7 @@
 package gr.james.influence.tournament.players;
 
 import gr.james.influence.algorithms.distance.Dijkstra;
-import gr.james.influence.algorithms.generators.WattsStrogatzGenerator;
+import gr.james.influence.algorithms.generators.random.WattsStrogatzGenerator;
 import gr.james.influence.algorithms.scoring.PageRank;
 import gr.james.influence.api.Graph;
 import gr.james.influence.game.*;

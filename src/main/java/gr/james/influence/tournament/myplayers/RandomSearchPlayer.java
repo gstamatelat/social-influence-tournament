@@ -1,6 +1,6 @@
 package gr.james.influence.tournament.myplayers;
 
-import gr.james.influence.algorithms.generators.BarabasiAlbertGenerator;
+import gr.james.influence.algorithms.generators.random.BarabasiAlbertGenerator;
 import gr.james.influence.algorithms.iterators.GraphStateIterator;
 import gr.james.influence.algorithms.iterators.RandomVertexIterator;
 import gr.james.influence.algorithms.scoring.PageRank;

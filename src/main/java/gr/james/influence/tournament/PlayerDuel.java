@@ -1,7 +1,7 @@
 package gr.james.influence.tournament;
 
 import aat.AsciiArtTable;
-import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
+import gr.james.influence.algorithms.generators.test.TwoWheelsGenerator;
 import gr.james.influence.api.Graph;
 import gr.james.influence.game.Game;
 import gr.james.influence.game.GameDefinition;

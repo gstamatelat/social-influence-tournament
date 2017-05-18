@@ -1,6 +1,6 @@
 package gr.james.influence.tournament.myplayers;
 
-import gr.james.influence.algorithms.generators.TwoWheelsGenerator;
+import gr.james.influence.algorithms.generators.test.TwoWheelsGenerator;
 import gr.james.influence.api.Graph;
 import gr.james.influence.game.*;
 import gr.james.influence.graph.GraphUtils;
