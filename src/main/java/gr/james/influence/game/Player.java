@@ -2,6 +2,7 @@ package gr.james.influence.game;
 
 import gr.james.influence.api.Graph;
 import gr.james.influence.graph.ImmutableGraph;
+import gr.james.influence.tournament.Utils;
 import gr.james.influence.util.Finals;
 import gr.james.influence.util.Helper;
 import org.slf4j.Logger;
@@ -90,7 +91,7 @@ public abstract class Player {
                 throw new AssertionError(e);
             } else {
                 Finals.LOG.warn(Finals.L_PLAYER_EXCEPTION, this.getClass().getSimpleName(), finalGraph, d,
-                        Helper.getExceptionString(e));
+                        Utils.getExceptionString(e));
             }
         }
 
