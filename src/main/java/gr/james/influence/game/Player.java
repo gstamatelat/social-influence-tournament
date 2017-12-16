@@ -4,13 +4,15 @@ import gr.james.influence.api.Graph;
 import gr.james.influence.graph.ImmutableGraph;
 import gr.james.influence.tournament.Utils;
 import gr.james.influence.util.Finals;
-import gr.james.influence.util.Helper;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
+    public static final String L_PLAYER_EXCEPTION = "Player {} triggered exception on graph {} with definition {}\n{}";
+    public static final String L_PLAYER_WAITING = "Been waiting {} seconds for {} to terminate gracefully.";
+
     protected static final Logger log = Finals.LOG; // TODO: This should probably be private
 
     private final Object lock = new Object();
@@ -75,22 +77,22 @@ public abstract class Player {
             int count = 0;
             while (t.isAlive()) {
                 if (count > 0) {
-                    log.warn(Finals.L_PLAYER_WAITING, count * d.getExecution() / 1000, this.getClass().getSimpleName());
+                    log.warn(L_PLAYER_WAITING, count * d.getExecution() / 1000, this.getClass().getSimpleName());
                 }
                 t.join(d.getExecution());
                 count++;
             }
         } catch (InterruptedException e) {
-            throw Helper.convertCheckedException(e);
+            throw Utils.convertCheckedException(e);
         }
 
         this.isInterrupted(); // This is called to clear the interrupt flag
 
         for (Throwable e : thrown) {
-            if ((e instanceof Error) && Helper.isAssertionEnabled()) {
+            if ((e instanceof Error) && Utils.isAssertionEnabled()) {
                 throw new AssertionError(e);
             } else {
-                Finals.LOG.warn(Finals.L_PLAYER_EXCEPTION, this.getClass().getSimpleName(), finalGraph, d,
+                Finals.LOG.warn(L_PLAYER_EXCEPTION, this.getClass().getSimpleName(), finalGraph, d,
                         Utils.getExceptionString(e));
             }
         }

@@ -7,7 +7,6 @@ import gr.james.influence.api.Graph;
 import gr.james.influence.game.Move;
 import gr.james.influence.graph.Vertex;
 import gr.james.influence.util.Conditions;
-import gr.james.influence.util.Helper;
 import gr.james.influence.util.RandomHelper;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
@@ -38,7 +37,7 @@ public final class Utils {
         try {
             props.load(Resources.getResource("app.properties").openStream());
         } catch (IOException e) {
-            throw Helper.convertCheckedException(e);
+            throw Utils.convertCheckedException(e);
         }
         return Conditions.requireNonNull(props.getProperty("version"), "version property doesn't exist");
     }
@@ -100,5 +99,16 @@ public final class Utils {
         } else {
             return moves;
         }
+    }
+
+    @SuppressWarnings({"AssertWithSideEffects", "ConstantConditions", "UnusedAssignment"})
+    public static boolean isAssertionEnabled() {
+        boolean assertsEnabled = false;
+        assert assertsEnabled = true;
+        return assertsEnabled;
+    }
+
+    public static RuntimeException convertCheckedException(Exception e) {
+        throw new RuntimeException(String.format("%s: %s", e.getClass().getName(), e.getMessage()));
     }
 }

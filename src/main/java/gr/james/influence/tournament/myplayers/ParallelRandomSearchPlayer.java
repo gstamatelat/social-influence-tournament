@@ -5,6 +5,7 @@ import gr.james.influence.api.Graph;
 import gr.james.influence.game.*;
 import gr.james.influence.graph.GraphUtils;
 import gr.james.influence.tournament.PlayerDuel;
+import gr.james.influence.tournament.Utils;
 
 public class ParallelRandomSearchPlayer extends Player {
     private static final int THREADS = 8;
@@ -65,7 +66,7 @@ public class ParallelRandomSearchPlayer extends Player {
             try {
                 Thread.sleep((long) (wait = Math.max(wait / WAIT_FACTOR, WAIT_MIN)));
             } catch (InterruptedException e) {
-                throw gr.james.influence.util.Helper.convertCheckedException(e);
+                throw Utils.convertCheckedException(e);
             }
 
             //log.info("wait: {}", wait);
