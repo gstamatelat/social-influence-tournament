@@ -2,7 +2,6 @@ package gr.james.influence.game;
 
 import gr.james.influence.graph.Vertex;
 import gr.james.influence.util.Conditions;
-import gr.james.influence.util.Finals;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,6 +9,8 @@ import java.util.stream.Collectors;
 // TODO: Consider converting `Move` to immutable
 // TODO: Consider changing the iterator of Move to Iterator<MovePoint> or Iterator<GenericPair<Vertex,Double>>
 public class Move implements Iterable<Vertex> {
+    private static final String E_MOVE_WEIGHT_NEGATIVE = "A player is trying to add a Vertex on a Move object with a non-positive weight %f. This is caused when .putVertex() is called with a negative weight argument.";
+
     private Map<Vertex, Double> m;
 
     public Move() {
@@ -59,7 +60,7 @@ public class Move implements Iterable<Vertex> {
      */
     public Move putVertex(Vertex v, double weight) {
         Conditions.requireNonNull(v);
-        Conditions.requireArgument(weight > 0, Finals.E_MOVE_WEIGHT_NEGATIVE, weight);
+        Conditions.requireArgument(weight > 0, E_MOVE_WEIGHT_NEGATIVE, weight);
 
         this.m.put(v, weight);
 
